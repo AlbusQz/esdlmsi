@@ -1,12 +1,12 @@
 {
   "database": {
     "default": {
-      "ENGINE": "django.db.backends.postgresql",
-      "NAME": "dlmsi",
-      "USER": "username",
-      "PASSWORD": "password",
+      "ENGINE": "django.db.backends.mysql",
+      "NAME": "esdlmsi",
+      "USER": "test",
+      "PASSWORD": "12345678",
       "HOST": "192.168.200.1",
-      "PORT": "5432"
+      "PORT": "3306"
     }
   }
 }
