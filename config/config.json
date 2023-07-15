@@ -1,0 +1,12 @@
+{
+  "database": {
+    "default": {
+      "ENGINE": "django.db.backends.postgresql",
+      "NAME": "dlmsi",
+      "USER": "username",
+      "PASSWORD": "password",
+      "HOST": "192.168.200.1",
+      "PORT": "5432"
+    }
+  }
+}
