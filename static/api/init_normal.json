@@ -1,0 +1,145 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "test"
+  },
+  "logoInfo": {
+    "title": "ESDLMSI",
+    "image": "/static/images/zju_logo.png",
+    "href": "/index"
+  },
+  "menuInfo": [
+    {
+      "title": "常规管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "数据采集模块",
+          "href": "",
+          "icon": "fa fa-gear",
+          "target": "_self",
+          "child": [
+            {
+              "title": "数据上传",
+              "href": "/data_upload",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "数据预处理",
+              "href": "/data_process",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "数据下载",
+              "href": "/data_download",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "数据编辑",
+              "href": "/data_update",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "模型构建模块",
+          "href": "",
+          "icon": "fa fa-window-maximize",
+          "target": "_self",
+          "child": [
+            {
+              "title": "模型选择",
+              "href": "/model_select",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "模型调参",
+              "href": "/model_update",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+            ]
+        },
+        {
+          "title": "数据分析模块",
+          "href": "",
+          "icon": "fa fa-window-maximize",
+          "target": "_self",
+          "child": [
+            {
+              "title": "分析流程设计",
+              "href": "/analysis_design",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "分析模型调用",
+              "href": "/analysis_model",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+            ]
+        },
+        {
+          "title": "报告分析模块",
+          "href": "",
+          "icon": "fa fa-window-maximize",
+          "target": "_self",
+          "child": [
+            {
+              "title": "分析结果查看",
+              "href": "/result_show",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "分析报告导出",
+              "href": "/result_export",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "分析结果评论",
+              "href": "/result_evaluation",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "决策支持模块",
+          "href": "",
+          "icon": "fa fa-window-maximize",
+          "target": "_self",
+          "child": [
+            {
+              "title": "关键要素归因",
+              "href": "/key_element",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "发展建议生成",
+              "href": "/advice_generate",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "企业合作推荐",
+              "href": "/cooperation_recommand",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

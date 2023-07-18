@@ -35,11 +35,20 @@
     </style>
 </head>
 
+  {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
+
 <body>
 <div class="layui-container layui-anim layui-anim-upbit">
     <div class="admin-login-background">
         <div class="layui-form login-form">
             <form class="layui-form" method="post">
+                {% csrf_token %}
                 <div class="layui-form-item logo-title">
                     <h1>服务业发展水平评估系统登录</h1>
                 </div>
@@ -51,6 +60,7 @@
                     <label class="layui-icon layui-icon-password" for="password"></label>
                     <input type="password" name="user_pwd" lay-verify="required|password" placeholder="请输入用户密码" autocomplete="off" class="layui-input" value="">
                 </div>
+                <!-- 这部分暂且注释掉（包括验证码、记住密码、注册部分）
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-vercode" for="captcha"></label>
                     <input type="text" name="captcha" lay-verify="required|captcha" placeholder="请输入验证码" autocomplete="off" class="layui-input verification captcha" value="">
@@ -60,10 +70,11 @@
                 </div>
                 <div class="layui-form-item">
                     <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码">
-                </div>
+                </div>-->
                 <div class="layui-form-item">
-                    <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="login">点击登录</button>
+                    <button class="layui-btn layui-btn-fluid" lay-submit="" type="submit" lay-filter="login">点击登录</button>
                 </div>
+
             </form>
         </div>
     </div>

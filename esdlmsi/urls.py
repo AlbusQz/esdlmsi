@@ -20,5 +20,7 @@ from users import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.login),
-    path("index/",views.index)
+    path("index/",views.index),
+    path("index/normal/",views.index_normal),
+    path("data_upload/",views.test)
 ]
