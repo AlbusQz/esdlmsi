@@ -476,6 +476,15 @@
     text-align: center !important;
 }
 
+.texttest-center {
+    height: 40px !important;
+    line-height: 60px !important;
+    font-size: 30px;
+    text-align: center !important;
+    color:#f2f2f2 ;
+    font-family: 微软简粗黑;
+}
+
 .layui-nav {
     padding: 0 !important;
 }
