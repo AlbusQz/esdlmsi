@@ -24,8 +24,10 @@ def login(request):
             tempuser = Users.objects.get(id=user_id)
             if tempuser.password == user_pwd:
                 messages.success(request, "登录成功")
+                print(tempuser.type)
                 if tempuser.type == "企业/政府用户":
-                    redirect("/index_normal/", {"user": tempuser})
+                    print("here")
+                    return redirect("/index/normal/", {"user": tempuser})
                 elif tempuser.type == "管理员用户":
                     redirect("/index_admin/", {"user": tempuser})
                 elif tempuser.type == "行业专家用户":
