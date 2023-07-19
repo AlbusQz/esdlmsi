@@ -22,5 +22,8 @@ urlpatterns = [
     path('',views.login),
     path("index/",views.index),
     path("index/normal/",views.index_normal),
-    path("data_upload/",views.test)
+    path("data_upload/",views.test),
+    path("index_ent",views.index_ent),
+    path("index_gov", views.index_gov),
+    path("index_admin",views.index_admin)
 ]

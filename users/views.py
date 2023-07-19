@@ -53,3 +53,11 @@ def index(request):
 def test(request):
     return render(request,"data_upload.html")
 
+def index_ent(request):
+    return render(request,"index_ent.html")
+
+def index_gov(request):
+    return render(request,"index_gov.html")
+
+def index_admin(request):
+    return render(request,"index_admin.html")
