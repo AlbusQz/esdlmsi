@@ -10,22 +10,30 @@
   },
   "menuInfo": [
     {
-      "title": "常规管理",
-      "icon": "fa fa-address-book",
+      "title": "政府用户功能",
+      "icon": "fa fa-tasks",
       "href": "",
       "target": "_self",
       "child": [
         {
-          "title": "数据处理模块",
+          "title": "数据处理",
           "href": "",
-          "icon": "fa fa-gear",
+          "icon": "fa fa-list-alt",
           "target": "_self",
           "child": [
             {
               "title": "数据选择",
-              "href": "/data_select",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
+              "href": "",
+              "icon": "fa fa-table",
+              "target": "_self",
+              "child": [
+                {
+                  "title": "数据查询",
+                  "href": "/data_select",
+                  "icon":"fa fa-filter",
+                  "target": "_self"
+                }
+              ]
             },
             {
               "title": "数据预处理",
@@ -36,65 +44,59 @@
             {
               "title": "数据下载",
               "href": "/data_download",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-floppy-o",
               "target": "_self"
             }
           ]
         },
         {
-          "title": "数据分析模块",
+          "title": "数据分析",
           "href": "",
-          "icon": "fa fa-window-maximize",
+          "icon": "fa fa-pie-chart",
           "target": "_self",
           "child": [
             {
-              "title": "企业指标分析",
+              "title": "指标分析",
               "href": "/ent_analyse",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-bar-chart",
               "target": "_self"
             },
             {
-              "title": "发展建议生成",
-              "href": "/advice_generate",
-              "icon": "fa fa-tachometer",
+              "title": "报告生成/预览",
+              "href": "/report_generate",
+              "icon": "fa fa-file-text-o",
               "target": "_self"
             },
             {
-              "title": "企业合作推荐",
-              "href": "co_recommand",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
-            },
-            {
-              "title": "分析报告下载",
-              "href": "/result_export",
-              "icon": "fa fa-tachometer",
+              "title": "报告下载",
+              "href": "/report_download",
+              "icon": "fa fa-download",
               "target": "_self"
             },
             {
               "title": "分析评论上传",
               "href": "/remark_upload",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-comment",
               "target": "_self"
             }
           ]
         },
         {
-          "title": "个人中心模块",
+          "title": "个人中心",
           "href": "",
-          "icon": "fa fa-window-maximize",
+          "icon": "fa fa-home",
           "target": "_self",
           "child": [
             {
-              "title": "查看分析记录",
-              "href": "/history",
-              "icon": "fa fa-tachometer",
+              "title": "个人信息",
+              "href": "/personal_infor",
+              "icon": "fa fa-user",
               "target": "_self"
             },
             {
-              "title": "个人信息管理",
-              "href": "/personal_infor",
-              "icon": "fa fa-tachometer",
+              "title": "分析历史记录",
+              "href": "/history",
+              "icon": "fa fa-history",
               "target": "_self"
             }
           ]
