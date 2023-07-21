@@ -51,7 +51,7 @@ def index(request):
     return render(request, "index.html", )
 
 def test(request):
-    return render(request,"data_upload.html")
+    return render(request,"index_single.html")
 
 def index_ent(request):
     return render(request,"index_ent.html")
