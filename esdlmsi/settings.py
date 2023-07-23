@@ -1,5 +1,7 @@
 import json
 import os
+#import myUser.myUser
+#import myUser.models
 
 conf = json.load(open("config/config.json","r",encoding="utf-8"))
 
@@ -43,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
+    #'users',
+    'myUser'
 ]
 
 MIDDLEWARE = [
@@ -89,6 +92,10 @@ DATABASES = {
         'PASSWORD':"12345678",
         'HOST':"localhost",
         'PORT':"3306",
+        'OPTIONS': {
+
+            "init_command": "SET foreign_key_checks = 0;",
+        }
 
     }
 }
@@ -97,7 +104,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
-AUTH_USER_MODEL = 'users.Users'
+#AUTH_USER_MODEL = 'myUser.myuser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
