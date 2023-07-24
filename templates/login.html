@@ -72,17 +72,6 @@
                     <input type="radio" name="user_type" lay-verify="required|type" class="layui-input" id="type3" value="管理员用户" title="管理员用户" >
 
                 </div>
-                <!-- 这部分暂且注释掉（包括验证码、记住密码、注册部分）>
-                <div class="layui-form-item">
-                    <label class="layui-icon layui-icon-vercode" for="captcha"></label>
-                    <input type="text" name="captcha" lay-verify="required|captcha" placeholder="请输入验证码" autocomplete="off" class="layui-input verification captcha" value="">
-                    <div class="captcha-img">
-                        <img id="captchaPic" src="{% static 'images/captcha.jpg' %}">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码">
-                </div>-->
                 <div class="layui-form-item">
                     <button class="layui-btn layui-btn-fluid" lay-submit="" type="submit" lay-filter="login">点击登录</button>
                 </div>
@@ -100,14 +89,7 @@
 <script src="{% static 'lib/jquery.particleground.min.js' %}" charset="utf-8"></script>
 <script>
     layui.use(['form'], function () {
-        /*
-        var form = layui.form,
-            layer = layui.layer;
 
-        // 登录过期的时候，跳出ifram框架
-        if (top.location != self.location) top.location = self.location;
-        */
-        // 粒子线条背景
         $(document).ready(function(){
             $('.layui-container').particleground({
                 dotColor:'#5cbdaa',
@@ -115,26 +97,6 @@
             });
         });
 
-      /*  // 进行登录操作
-        form.on('submit(login)', function (data) {
-            data = data.field;
-            if (data.username == '') {
-                layer.msg('用户名不能为空');
-                return false;
-            }
-            if (data.password == '') {
-                layer.msg('密码不能为空');
-                return false;
-            }
-            if (data.captcha == '') {
-                layer.msg('验证码不能为空');
-                return false;
-            }
-            layer.msg('登录成功', function () {
-                window.location = '/index.html';
-            });
-            return false;
-        });*/
     });
 </script>
 </body>
