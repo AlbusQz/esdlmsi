@@ -20,7 +20,8 @@ import myUser.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/',myUser.views.login)
+    path('login/',myUser.views.login),
+    path('register/',myUser.views.register)
     ]
 '''
     path('',views.login),
