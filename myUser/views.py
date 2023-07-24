@@ -40,6 +40,10 @@ def login(request):
     return render(request, "login.html")
 
 def register_index(request):
+    if request.method == "POST":
+        user_id = request.POST.get("user_name")
+
+        messages.add_message(request,messages.SUCCESS,'test')
     return render(request,"register.html")
 #注册函数
 def register(request):
