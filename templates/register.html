@@ -10,34 +10,8 @@
     <link rel="stylesheet" href="{% static 'lib/layui-v2.6.3/css/layui.css' %}" media="all">
     <link rel="stylesheet" href="{% static 'css/public.css' %}" media="all">
     <link rel="stylesheet" href="{% static 'js/lay-module/step-lay/step.css' %}" media="all">
-    <!--script>
-        function show_test(){
-            var name = document.getElementById("user_name").value;
-            var email = document.getElementById("user_email").value;
-            var type = document.getElementById("user_type").value;
-            document.getElementById("name_show").value = name;
-            document.getElementById("email_show").value = email;
-            document.getElementById("type_show").value = type;
-        }
 
-
-    </script-->
     <style>
-        .layui-container {
-            width: 100%;
-            height: 100%;
-            overflow: hidden
-        }
-
-        .admin-login-background {
-            width: 360px;
-            height: 300px;
-            position: absolute;
-            left: 50%;
-            top: 40%;
-            margin-left: -180px;
-            margin-top: -100px;
-        }
 
         .logo-title {
             text-align: center;
@@ -51,25 +25,14 @@
             font-weight: bold;
         }
 
-        .login-form {
-            background-color: #fff;
-            border: 1px solid #fff;
-            border-radius: 3px;
-            padding: 14px 20px;
-            box-shadow: 0 0 8px #eeeeee;
-            width: 100%;
-            height: 120%;
-        }
 
     </style>
-</head>
-{% if messages %}
     <script>
-        {% for msg in messages %}
-            alert('{{ msg.message }}');
-        {% endfor %}
+
+
     </script>
-{% endif %}
+</head>
+
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
@@ -83,7 +46,7 @@
         <!--div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
             <div carousel-item-->
         <div>
-            <form class="layui-form" id="register_form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;" method="POST">
+            <form class="layui-form" id="register_form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;" method="POST"  >
                 <div class="layui-form-item">
                     <label class="layui-form-label">用户名:</label>
                     <div class="layui-input-block">
@@ -109,7 +72,7 @@
                     <label class="layui-form-label">验证码:</label>
                     <div class="layui-input-block">
                         <input type="text" name="v_code" id="v_code" placeholder="请填写邮箱收到的验证码" value=""
-                               class="layui-input" lay-verify="number">
+                               class="layui-input" lay-verify="number" required>
                         <input type="hidden" name="h_code" id="h_code" value="">
                     </div>
                 </div>
@@ -123,8 +86,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">请重新输入密码:</label>
                     <div class="layui-input-block">
-                        <input type="password" name="pwd_confirm" lay-verify="confirmPass" placeholder="请重新输入密码"
-                               autocomplete="off" class="layui-input" value="">
+                        <input type="password" id="pwd_confirm" lay-verify="confirmPass" placeholder="请重新输入密码"
+                               autocomplete="off" class="layui-input" value="" required>
                     </div>
                 </div>
                 <!--div class="layui-form-item">
@@ -151,7 +114,7 @@
                 </-->
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-fluid" lay-submit="" type="submit" lay-filter="register">
+                        <button class="layui-btn layui-btn-fluid" lay-submit type="submit" lay-filter="register">
                             &emsp;确认注册&emsp;
                         </button>
                     </div>
@@ -221,148 +184,71 @@
 <script src="{% static 'lib/layui-v2.6.3/layui.js' %}" charset="utf-8"></script>
 <script src="{% static 'js/lay-config.js' %}" charset="utf-8"></script>
 <script>
-    /*layui.use(['form', 'step'], function () {
-        var $ = layui.$,
-            form = layui.form,
-            step = layui.step;
-*/
-        /*
-        step.render({
-            elem: '#stepForm',
-            filter: 'stepForm',
-            width: '100%', //设置容器宽度
-            stepWidth: '750px',
-            height: '500px',
-            stepItems: [{
-                title: '填写用户信息'
-            }, {
-                title: '确认用户信息'
-            }, {
-                title: '完成注册'
-            }]
-        });
 
-
- */
-
-        //发送验证码模块js代码
-        var but = document.getElementById("send_email")
-        var time = 60; //定义剩下的秒数
-        but.addEventListener('click', function () {
-            but.disabled = true;
-            var email = document.getElementById("user_email").value;
-            var hcode = document.getElementById("h_code")
-            $.ajax({
-                url: '/sendVcode',
-                method: 'get',
-                data: {'user_email': email},
-                success: function (code) {
-                    hcode.value = code
-                }
-            })
-            var timer = setInterval(function () {
-                if (time == 0) {
-                    //清除定时器和复原按钮
-                    clearInterval(timer);
-                    but.disabled = false;
-                    but.innerHTML = '重新发送验证码';
-                    time = 60; //这个10是重新开始
-                } else {
-                    but.innerHTML = '请在' + time + '秒后重试';
-                    time--;
-                }
-            }, 1000);
-        })
-
-        /* var but2 = document.getElementById("submit_bt")
-         but2.addEventListener('click',function register(){
-             alert("test1")
-             //var data1 = document.getElementById("register_form")
-             //var data2 =data1.serialize()
-
-             var user_name = document.getElementById("user_name").value
-             var user_pwd = document.getElementById("user_pwd").value
-             var user_type = document.getElementById("user_type").value
-             var user_email = document.getElementById("user_email").value
-             var v_code = document.getElementById("v_code").value
-             var h_code = document.getElementById("h_code").value
-
-             var text1 = document.getElementById("text_show")
-             var text2 = document.getElementById("result_show")
-             alert("test2")
+     layui.use([ 'form', 'step'], function () {
+         var $ = layui.$,
+             form = layui.form,
+             step = layui.step;
+         //发送验证码模块js代码
+         var but = document.getElementById("send_email")
+         var time = 60; //定义剩下的秒数
+         but.addEventListener('click', function () {
+             but.disabled = true;
+             var email = document.getElementById("user_email").value;
+             var hcode = document.getElementById("h_code")
              $.ajax({
-                 type : "POST",
-                 url : "/register_handle/",
-                 data:{"user_name":user_name,
-                       "user_pwd" :user_pwd,
-                       "user_type":user_type,
-                       "user_email":user_email,
-                       "v_code":v_code,
-                       "h_code":h_code
-                 },
-                  error: function(request) {
-                     alert("Connection error");
-                     },
-                 success : function(res){
-                     if(res != null){
-                         text_forshow = "注册成功！您的ID为："+res+",之后可凭邮箱以及此ID登录本系统，请牢记。"
-                         text2.value =text_forshow
+                 url: '/sendVcode',
+                 method: 'get',
+                 data: {'user_email': email},
+
+                 success: function (msg) {
+                     var xml = msg
+
+                     var json = JSON.parse(xml)
+                     console.log(json)
+                     var status = json.status
+                     var code = json['code']
+                     if (status == "1"){
+                         hcode.value = code
                      }
                      else{
-                         text2.value="注册失败"
+                         alert(code)
                      }
+
+                 },
+                 error: function (msg) {
+                     alert(msg)
                  }
              })
+             var timer = setInterval(function () {
+                 if (time == 0) {
+                     //清除定时器和复原按钮
+                     clearInterval(timer);
+                     but.disabled = false;
+                     but.innerHTML = '重新发送验证码';
+                     time = 60; //这个10是重新开始
+                 } else {
+                     but.innerHTML = '请在' + time + '秒后重试';
+                     time--;
+                 }
+             }, 1000);
+         })
+         form.verify(
+             {
+                 confirmPass: function (value) {
+                     if ($('input[name=user_pwd]').val() !== value)
+                         return '提示：两次输入密码不一致！';
 
-         })*/
-        /*
-            form.on('submit(formStep)', function (data) {
-                show_test()
-                step.next('#stepForm');
-                return false;
-            });
+                 }
+             }
+         )
 
-            form.on('submit(formStep2)', function (data) {
 
-                step.next('#stepForm');
-                return false;
-            });
-    */
-        form.verify(
-            {
-                confirmPass: function (value) {
-                    if ($('input[name=user_pwd]').val() !== value)
-                        return '提示：两次输入密码不一致！';
 
-                }
-            }
-        )
-        /*
-                $('.pre').click(function () {
-                    step.pre('#stepForm');
-                });
 
-                $('.next').click(function () {
-                    step.next('#stepForm');
-                });
+     })
 
-        */
-    })
+
 </script>
-<!--script>
-    var bt_send = document.getElementById("send_email");
-    alert("nice");
-    bt_send.click(function (){
-        var email = document.getElementById("user_email").value;
-        $.ajax({
-            url:'sendVcode',
-            method: 'get',
-            data:{'user_email': email},
-            success: function(code){
-                alert(code);
-            }
-        })
-    })
-</script-->
 </body>
 </html>

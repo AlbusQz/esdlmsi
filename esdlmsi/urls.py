@@ -23,7 +23,8 @@ urlpatterns = [
     path('login/',myUser.views.login),
     path('register/',myUser.views.register_index),
     path('register_handle/',myUser.views.register),
-    path('sendVcode',myUser.views.sendVcode)
+    path('sendVcode',myUser.views.sendVcode),
+    #path('test/',myUser.views.test)
     ]
 '''
     path('',views.login),
