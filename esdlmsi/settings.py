@@ -80,6 +80,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'esdlmsi.wsgi.application'
 
+TIME_ZONE = 'Asia/Shanghai'
+
 #APPEND_SLASH=False
 
 # Database

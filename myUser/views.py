@@ -13,6 +13,7 @@ import smtplib
 from email.mime.text import MIMEText
 import json
 from django.contrib.auth.models import User
+import pytz
 
 
 # Create your views here.
@@ -57,7 +58,7 @@ def register_index(request):
         v_code = request.POST.get("v_code")
         h_code = request.POST.get("h_code")
         if check_password(v_code, h_code):
-            now = datetime.now()
+            now = datetime.now(pytz.timezone('Asia/Shanghai'))
             format_time = now.strftime('%Y-%m-%d %H:%M:%S')
             tempMyuser = Myuser(password=user_pwd, email=user_email, type=user_type, name=user_name,create_time=format_time)
             print(tempMyuser.id)
@@ -68,7 +69,9 @@ def register_index(request):
             tempUser.save()
             tempMyuser.u_id = tempUser.id
             tempMyuser.save()
-            redirect("/")
+            messages.add_message(request,messages.SUCCESS,"注册成功！，您的ID为"+str(tempid)+"，请牢记。")
+            messages.add_message(request,messages.SUCCESS,"接下来将跳转至登录界面")
+            return redirect("/login")
 
         else:
             messages.add_message(request, messages.ERROR, '验证码错误，请重新注册！')
