@@ -26,8 +26,8 @@ urlpatterns = [
     path('sendVcode',myUser.views.sendVcode),
     path('sendVcode2', myUser.views.sendVcode2),
     path('resetVerify',myUser.views.resetVerify),
-    path('reset',myUser.views.reset)
-    #path('test/',myUser.views.test)
+    path('reset',myUser.views.reset),
+    path('admin/',myUser.views.test),
     ]
 '''
     path('',views.login),

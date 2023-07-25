@@ -17,6 +17,7 @@ import pytz
 
 
 # Create your views here.
+#处理登录过程的函数
 def login(request):
     if request.method == "POST":
 
@@ -162,7 +163,7 @@ def reset(request):
         return redirect("/login")
     return render(request,"reset.html")
 
-# 用于向用户邮箱发送验证码邮件的函数
+# 用于在注册功能中向用户邮箱发送验证码邮件的函数
 def sendVcode(request):
     email = str(request.GET.get("user_email"))
     if Myuser.objects.filter(email=email):
@@ -180,6 +181,7 @@ def sendVcode(request):
         print(json_data)
         return JsonResponse(json_data, safe=False)
 
+# 用于在重置密码功能中向用户邮箱发送验证码邮件的函数
 def sendVcode2(request):
     email = str(request.GET.get("user_email"))
     if Myuser.objects.filter(email=email):
@@ -246,7 +248,61 @@ def send_sample_email(vcode, receiver, title="现代服务业发展水平评估�
     except smtplib.SMTPException as e:
         print('error', e)  # 打印错误
 
+#处理用户权限的中间件
+class UserAuthMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
 
+    def __call__(self, request):
+        # 在每个请求之前进行组权限判断
+        print("test1")
+        flag,path = self.check_type_auth(request)
+        print("test2")
+        print(flag)
+        if flag == False:
+            print('test')
+            return redirect(path)
+        else:
+            return self.get_response(request)
+
+    def check_type_auth(self, request):
+        # 获取当前请求的用户对象
+        user = request.user
+        # 获取当前请求的路径
+        path = request.path
+        print(user.id)
+        print(user.username)
+        if(user is None):
+            return False,'/login'
+        tempMyuser = Myuser.objects.get(u=user)
+        type = tempMyuser.type
+        print(type)
+        if type == "企业用户":
+            go_path ="/ent/"
+        elif type == "政府用户":
+            go_path = "/gov/"
+        else:
+            go_path = "/admin"
+        # 设置需要进行限制访问的路径列表和对应的组
+        restricted_paths = {
+            'url存在的路径': '对应的组名',
+            # 拿刚才创建的group1来举例
+            '/ent/': '企业用户',
+
+            '/gov/': '政府用户',
+            '/admin/': '管理员用户',
+        }
+
+        # 检查用户是否属于指定组，并判断是否允许访问特定页面
+        for restricted_path, restricted_type in restricted_paths.items():
+            #print(restricted_path,restricted_type,path)
+            print(restricted_path in path,restricted_type!=type)
+            if restricted_path in path and restricted_type!=type:
+                return False,go_path
+
+        return True,path
+
+#单纯的测试函数
 def test(request):
     return render(request, "index_admin.html")
 
