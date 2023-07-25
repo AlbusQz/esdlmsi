@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>密码找回界面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{% static 'lib/layui-v2.6.3/css/layui.css' %}" media="all">
+    <link rel="stylesheet" href="{% static 'css/public.css' %}" media="all">
+    <link rel="stylesheet" href="{% static 'js/lay-module/step-lay/step.css' %}" media="all">
+
+    <style>
+
+        .logo-title {
+            text-align: center;
+            letter-spacing: 2px;
+            padding: 14px 0;
+        }
+
+        .logo-title h1 {
+            color: #009688;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .logo-title h2 {
+            color: #001c19;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+
+    </style>
+    <script>
+
+
+    </script>
+</head>
+ {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
+<body>
+<div class="layuimini-container" style="height: 1200px">
+    <div class="layuimini-main" style="width:90%;margin: 0 auto;margin-top: 60px;margin-bottom: 60px;height: 600px">
+
+
+        <div class="layui-form-item logo-title">
+            <legend><b><h1>密码找回界面</h1></b></legend>
+        </div>
+
+        <div class="layui-form-item logo-title">
+            <legend><b><h2>输入账号信息</h2></b></legend>
+        </div>
+        <!--div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
+            <div carousel-item-->
+        <div>
+            <form class="layui-form" id="register_form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;" method="POST"  >
+
+                <div class="layui-form-item">
+
+
+                    <div class="layui-input-block">
+                        <label class="layui-form-label"style="width:68%;">请输入需要帐号注册时设置的邮箱地址</label>
+                        <input id="user_email" type="text" name="user_email" placeholder="请填写用户邮箱"
+                               class="layui-input" lay-verify="email" required/>
+                        <button class="layui-btn" id="send_email" type="button">
+                            &emsp;点击发送验证码&emsp;
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="text" name="v_code" id="v_code" placeholder="请填写邮箱收到的验证码" value=""
+                               class="layui-input" lay-verify="number" required>
+                        <input type="hidden" name="h_code" id="h_code" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-fluid" lay-submit type="submit" lay-filter="register">
+                            &emsp;点击进入下一步
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+<script src="{% static 'lib/layui-v2.6.3/layui.js' %}" charset="utf-8"></script>
+<script src="{% static 'js/lay-config.js' %}" charset="utf-8"></script>
+<script>
+
+     layui.use([ 'form', 'step'], function () {
+         var $ = layui.$,
+             form = layui.form,
+             step = layui.step;
+         //发送验证码模块js代码
+         var but = document.getElementById("send_email")
+         var time = 60; //定义剩下的秒数
+         but.addEventListener('click', function () {
+             but.disabled = true;
+             var email = document.getElementById("user_email").value;
+             var hcode = document.getElementById("h_code")
+             $.ajax({
+                 url: '/sendVcode2',
+                 method: 'get',
+                 data: {'user_email': email},
+
+                 success: function (msg) {
+                     var xml = msg
+
+                     var json = JSON.parse(xml)
+                     console.log(json)
+                     var status = json.status
+                     var code = json['code']
+                     if (status == "1"){
+                         hcode.value = code
+                     }
+                     else{
+                         alert(code)
+                     }
+
+                 },
+                 error: function (msg) {
+                     alert(msg)
+                 }
+             })
+             var timer = setInterval(function () {
+                 if (time == 0) {
+                     //清除定时器和复原按钮
+                     clearInterval(timer);
+                     but.disabled = false;
+                     but.innerHTML = '重新发送验证码';
+                     time = 60; //这个10是重新开始
+                 } else {
+                     but.innerHTML = '请在' + time + '秒后重试';
+                     time--;
+                 }
+             }, 1000);
+         })
+
+
+
+
+
+     })
+
+
+</script>
+</body>
+</html>

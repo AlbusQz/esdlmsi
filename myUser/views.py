@@ -24,10 +24,11 @@ def login(request):
         user_pwd = request.POST.get("user_pwd")
         user_type = str(request.POST.get('user_type'))
         tempuser = None
-        if Myuser.objects.filter(id=user_id):
-            tempuser = Myuser.objects.get(id=user_id)
-        elif Myuser.objects.filter(email=user_id):
+        if  Myuser.objects.filter(email=user_id):
             tempuser = Myuser.objects.get(email=user_id)
+            user_id = tempuser.id
+        elif Myuser.objects.filter(id=user_id):
+            tempuser = Myuser.objects.get(id=user_id)
         else:
             messages.add_message(request, messages.WARNING, '用户不存在！')
 
@@ -45,42 +46,44 @@ def login(request):
 
     return render(request, "login.html")
 
-
-def register_index(request):
+#注册功能函数
+def register(request):
     #if request.method == "POST":
     #    user_id = request.POST.get("user_name")
     if request.method == "POST":
-        user_id = request.POST.get("user_id")
         user_pwd = request.POST.get("user_pwd")
         user_type = str(request.POST.get('user_type'))
         user_name = request.POST.get("user_name")
         user_email = request.POST.get("user_email")
         v_code = request.POST.get("v_code")
         h_code = request.POST.get("h_code")
-        if check_password(v_code, h_code):
-            now = datetime.now(pytz.timezone('Asia/Shanghai'))
-            format_time = now.strftime('%Y-%m-%d %H:%M:%S')
-            tempMyuser = Myuser(password=user_pwd, email=user_email, type=user_type, name=user_name,create_time=format_time)
-            print(tempMyuser.id)
-            tempMyuser.save()
-            tempid = tempMyuser.id
-
-            tempUser = User(username=tempid, password=make_password(user_pwd))
-            tempUser.save()
-            tempMyuser.u_id = tempUser.id
-            tempMyuser.save()
-            messages.add_message(request,messages.SUCCESS,"注册成功！，您的ID为"+str(tempid)+"，请牢记。")
-            messages.add_message(request,messages.SUCCESS,"接下来将跳转至登录界面")
-            return redirect("/login")
-
+        if Myuser.objects.filter(email=user_email):
+            messages.add_message(request, messages.ERROR, '该邮箱已被注册过了，请更换后重新注册！')
         else:
-            messages.add_message(request, messages.ERROR, '验证码错误，请重新注册！')
+            if check_password(v_code, h_code):
+                now = datetime.now(pytz.timezone('Asia/Shanghai'))
+                format_time = now.strftime('%Y-%m-%d %H:%M:%S')
+                tempMyuser = Myuser(password=user_pwd, email=user_email, type=user_type, name=user_name,create_time=format_time)
+                print(tempMyuser.id)
+                tempMyuser.save()
+                tempid = tempMyuser.id
+
+                tempUser = User(username=tempid, password=make_password(user_pwd))
+                tempUser.save()
+                tempMyuser.u_id = tempUser.id
+                tempMyuser.save()
+                messages.add_message(request,messages.SUCCESS,"注册成功！，您的ID为"+str(tempid)+"，请牢记。")
+                messages.add_message(request,messages.SUCCESS,"接下来将跳转至登录界面")
+                return redirect("/login")
+
+            else:
+                messages.add_message(request, messages.ERROR, '验证码错误，请重新注册！')
     #    messages.add_message(request, messages.SUCCESS, 'test')
     return render(request, "register.html")
 
 
-# 注册函数
-def register(request):
+# 注册函数（测试用，已停用）
+def register_index(request):
     if request.method == "POST":
         user_id = request.POST.get("user_id")
         user_pwd = request.POST.get("user_pwd")
@@ -114,10 +117,53 @@ def register(request):
         name = None
         return HttpResponse(name)
 
+#修改密码功能中确认用户存在的函数
+def resetVerify(request):
+    if request.method == "POST":
+        user_email = request.POST.get("user_email")
+        v_code = request.POST.get("v_code")
+        h_code = request.POST.get("h_code")
+        if Myuser.objects.filter(email=user_email):
+            tempMyuser = Myuser.objects.get(email=user_email)
+            if check_password(v_code, h_code):
+                request.session['user_id']=tempMyuser.id
+                return redirect("/reset")
+            else:
+                messages.add_message(request, messages.ERROR, '验证码错误，请重新输入！')
+        else:
+            messages.add_message(request, messages.ERROR, '不存在该用户，请重新输入！')
+    return render(request,"resetVerify.html")
+
+#修改密码功能中执行密码修改的函数
+def reset(request):
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        if Myuser.objects.filter(id=user_id):
+            if request.method == 'POST':
+                user_pwd_new = request.POST.get("user_pwd")
+                check_pwd = request.POST.get("")
+                tempMyuser = Myuser.objects.get(id=user_id)
+                tempUser = tempMyuser.u
+                if check_password(user_pwd_new,tempUser.password):
+                    messages.add_message(request,messages.ERROR,"密码与上次相同，请重新输入新的密码")
+                #elif
+                else:
+                    tempUser.password = make_password(user_pwd_new)
+                    tempMyuser.password = user_pwd_new
+                    tempUser.save()
+                    tempMyuser.save()
+                    messages.add_message(request, messages.SUCCESS, "ID为"+str(user_id)+"的账号的密码重置成功！")
+                    messages.add_message(request, messages.SUCCESS, "接下来将跳转至登录界面")
+                    return redirect("/login")
+        else:
+            messages.add_message(request,messages.ERROR,"session出现错误")
+            return redirect("/login")
+    else:
+        return redirect("/login")
+    return render(request,"reset.html")
 
 # 用于向用户邮箱发送验证码邮件的函数
 def sendVcode(request):
-    print("here")
     email = str(request.GET.get("user_email"))
     if Myuser.objects.filter(email=email):
         data = {'status': 0, 'code': '此邮箱已被注册过！'}
@@ -134,6 +180,21 @@ def sendVcode(request):
         print(json_data)
         return JsonResponse(json_data, safe=False)
 
+def sendVcode2(request):
+    email = str(request.GET.get("user_email"))
+    if Myuser.objects.filter(email=email):
+        vcode = get_vcode()
+        send_sample_email(vcode=vcode, receiver=email)
+        code = make_password(vcode)
+        print(vcode, code)
+        data = {"status": "1", "code": code}
+        json_data = json.dumps(data)
+        print(json_data)
+        return JsonResponse(json_data, safe=False)
+    else:
+        data = {'status': 0, 'code': '此邮箱不存在！'}
+        json_data = json.dumps(data)
+        return JsonResponse(json_data, safe=False)
 
 # 用于获得6位验证码的函数
 def get_vcode():
@@ -188,3 +249,4 @@ def send_sample_email(vcode, receiver, title="现代服务业发展水平评估�
 
 def test(request):
     return render(request, "index_admin.html")
+

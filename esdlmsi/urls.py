@@ -21,9 +21,12 @@ import myUser.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/',myUser.views.login),
-    path('register/',myUser.views.register_index),
-    path('register_handle/',myUser.views.register),
+    path('register/',myUser.views.register),
+    #path('register_handle/',myUser.views.register),
     path('sendVcode',myUser.views.sendVcode),
+    path('sendVcode2', myUser.views.sendVcode2),
+    path('resetVerify',myUser.views.resetVerify),
+    path('reset',myUser.views.reset)
     #path('test/',myUser.views.test)
     ]
 '''

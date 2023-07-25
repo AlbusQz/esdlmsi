@@ -3,7 +3,7 @@
 <head>
     {% load static %}
     <meta charset="utf-8">
-    <title>用户注册界面</title>
+    <title>密码找回界面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -25,6 +25,12 @@
             font-weight: bold;
         }
 
+        .logo-title h2 {
+            color: #001c19;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
 
     </style>
     <script>
@@ -32,38 +38,26 @@
 
     </script>
 </head>
- {% if messages %}
-        <script>
-            {% for msg in messages %}
-                alert('{{ msg.message }}');
-            {% endfor %}
-        </script>
-    {% endif %}
+
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
 
 
         <div class="layui-form-item logo-title">
-            <legend><b><h1>现代服务业发展水平评估系统<br>用户注册界面</h1></b></legend>
+            <legend><b><h1>现代服务业发展水平评估系统<br>密码找回界面</h1></b></legend>
         </div>
 
-
+        <div class="layui-form-item logo-title">
+            <legend><b><h2>输入账号信息</h2></b></legend>
+        </div>
         <!--div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
             <div carousel-item-->
         <div>
             <form class="layui-form" id="register_form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;" method="POST"  >
-                <div class="layui-form-item">
-                    <label class="layui-form-label">用户名:</label>
-                    <div class="layui-input-block">
-                        <input id="user_name" type="text" name="user_name" placeholder="请填写用户名"
-                               class="layui-input" lay-verify="" required/>
-
-                    </div>
-                </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">用户邮箱:</label>
+                    <label class="layui-form-label">请输入需要帐号注册时设置的邮箱地址</label><br>
                     <div class="layui-input-block">
                         <input id="user_email" type="text" name="user_email" placeholder="请填写用户邮箱"
                                class="layui-input" lay-verify="email" required/>
@@ -83,45 +77,9 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">账号密码:</label>
-                    <div class="layui-input-block">
-                        <input type="password" id="user_pwd" name="user_pwd" lay-verify="required|pass"
-                               placeholder="请输入密码" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">请重新输入密码:</label>
-                    <div class="layui-input-block">
-                        <input type="password" id="pwd_confirm" lay-verify="confirmPass" placeholder="请重新输入密码"
-                               autocomplete="off" class="layui-input" value="" required>
-                    </div>
-                </div>
-                <!--div class="layui-form-item">
-                    <label class="layui-form-label">用户手机号:</label>
-                    <div class="layui-input-block">
-                        <input type="text" placeholder="请填写用户手机号" class="layui-input" lay-verify="phone" />
-
-                    </div>
-                </div-->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">用户类型:</label>
-                    <div class="layui-input-block">
-                        <select lay-verify="required" id="user_type" name="user_type">
-                            <option value="企业用户" selected>企业用户</option>
-                            <option value="政府用户">政府用户</option>
-                        </select>
-                    </div>
-                </div>
-                <!--div class="layui-form-item">
-                    <label class="layui-form-label">备注说明:</label>
-                    <div class="layui-input-block">
-                        <textarea placeholder="入款备注" value="" class="layui-textarea"></textarea>
-                    </div>
-                </-->
-                <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn layui-btn-fluid" lay-submit type="submit" lay-filter="register">
-                            &emsp;确认注册&emsp;
+                            &emsp;点击进入下一步
                         </button>
                     </div>
                 </div>
