@@ -14,7 +14,7 @@ import json
 from django.contrib.auth.models import User
 import pytz
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.db.models import Q
 
 # Create your views here.
 # 处理登录过程的函数
@@ -326,6 +326,59 @@ def user_manage(request):
 # 返回用户信息并进行分页的函数
 def get_pageinfo(request):
     data = Myuser.objects.all()
+    dataCount = data.count()
+    pageIndex = request.GET.get('pageIndex')
+    pageSize = request.GET.get('pageSize')
+
+    list = []
+    res = []
+    for item in data:
+        dict = {}
+        dict['id'] = item.id
+        dict['name'] = item.name
+        dict['email'] = item.email
+        dict['mobile'] = item.mobile
+        dict['type'] = item.type
+        dict['createtime'] = item.create_time.strftime('%Y-%m-%d %H:%M:%S')
+        #print(dict['creatime'])
+        list.append(dict)
+    #print(pageIndex)
+    #print(pageSize)
+    pageInator = Paginator(list, pageSize)
+    context = pageInator.page(pageIndex)
+    for item in context:
+        res.append(item)
+    result = {
+        'code': 0,
+        'msg': 'nice',
+        'DataCount': dataCount,
+        'data': res
+    }
+    return HttpResponse(json.dumps(result))
+
+def search_pageinfo(request):
+
+    params = request.GET.get('searchParams')
+    params = json.loads(params)
+    q = Q()
+    id = params['id']
+    if(id!=''):
+        q = q&Q(id__contains=id)
+    name = params['name']
+    if (name != ''):
+        q = q & Q(name__contains=name)
+    email = params['email']
+    if (email != ''):
+        q = q & Q(email__contains=email)
+    mobile = params['mobile']
+    if (mobile != ''):
+        q = q & Q(mobile__contains=mobile)
+    type = params['type']
+    if (type != ''):
+        q = q & Q(type__contains=type)
+  #  q = Q(name__contains=name)&Q(email__contains=email)&Q(mobile__contains=mobile)&Q(type__contains=type)
+
+    data = Myuser.objects.filter(q)
     dataCount = data.count()
     pageIndex = request.GET.get('pageIndex')
     pageSize = request.GET.get('pageSize')

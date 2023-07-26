@@ -30,7 +30,8 @@ urlpatterns = [
     path('admin/',myUser.views.test),
     path('admin/user_manage/',myUser.views.user_manage),
     re_path(r'./test/',myUser.views.test),
-    path('admin/get_pageinfo',myUser.views.get_pageinfo)
+    path('admin/get_pageinfo',myUser.views.get_pageinfo),
+    path('admin/search_pageinfo',myUser.views.search_pageinfo)
     ]
 '''
     path('',views.login),
