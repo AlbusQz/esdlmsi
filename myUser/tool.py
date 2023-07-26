@@ -12,6 +12,7 @@ def get_vcode():
     return result
 
 def send_sample_email(vcode,receiver = 'albusqz@163.com',title="现代服务业发展水平评估系统验证码",):
+
     #设置服务器所需信息
     #163邮箱服务器地址
     mail_host = 'smtp.163.com'

@@ -4,7 +4,6 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from django.contrib import auth
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Myuser
 from django.contrib.auth.hashers import make_password, check_password
@@ -19,6 +18,7 @@ import pytz
 # Create your views here.
 #处理登录过程的函数
 def login(request):
+    auth.logout(request)
     if request.method == "POST":
 
         user_id = request.POST.get("user_id")
@@ -51,6 +51,7 @@ def login(request):
 def register(request):
     #if request.method == "POST":
     #    user_id = request.POST.get("user_name")
+    auth.logout(request)
     if request.method == "POST":
         user_pwd = request.POST.get("user_pwd")
         user_type = str(request.POST.get('user_type'))
@@ -75,13 +76,13 @@ def register(request):
                 tempMyuser.save()
                 messages.add_message(request,messages.SUCCESS,"注册成功！，您的ID为"+str(tempid)+"，请牢记。")
                 messages.add_message(request,messages.SUCCESS,"接下来将跳转至登录界面")
+
                 return redirect("/login")
 
             else:
                 messages.add_message(request, messages.ERROR, '验证码错误，请重新注册！')
     #    messages.add_message(request, messages.SUCCESS, 'test')
     return render(request, "register.html")
-
 
 # 注册函数（测试用，已停用）
 def register_index(request):
@@ -139,6 +140,7 @@ def resetVerify(request):
 def reset(request):
     if 'user_id' in request.session:
         user_id = request.session['user_id']
+        del request.session['user_id']
         if Myuser.objects.filter(id=user_id):
             if request.method == 'POST':
                 user_pwd_new = request.POST.get("user_pwd")
@@ -206,7 +208,6 @@ def get_vcode():
         result += str(num)
     return result
 
-
 # 用于向指定邮箱发送验证码的函数
 def send_sample_email(vcode, receiver, title="现代服务业发展水平评估系统验证码", ):
     # 设置服务器所需信息
@@ -257,10 +258,14 @@ class UserAuthMiddleware:
         # 在每个请求之前进行组权限判断
         print("test1")
         flag,path = self.check_type_auth(request)
-        print("test2")
-        print(flag)
+        paths = [
+            "/login/",
+            "/register/",
+
+        ]
         if flag == False:
             print('test')
+            messages.add_message(request,messages.ERROR,"无访问权限，正在重定向")
             return redirect(path)
         else:
             return self.get_response(request)
@@ -270,34 +275,35 @@ class UserAuthMiddleware:
         user = request.user
         # 获取当前请求的路径
         path = request.path
-        print(user.id)
-        print(user.username)
-        if(user is None):
-            return False,'/login'
-        tempMyuser = Myuser.objects.get(u=user)
-        type = tempMyuser.type
-        print(type)
-        if type == "企业用户":
-            go_path ="/ent/"
-        elif type == "政府用户":
-            go_path = "/gov/"
-        else:
-            go_path = "/admin"
+        login_flag = user.is_authenticated
         # 设置需要进行限制访问的路径列表和对应的组
         restricted_paths = {
             'url存在的路径': '对应的组名',
             # 拿刚才创建的group1来举例
             '/ent/': '企业用户',
-
+            '/ent': '企业用户',
             '/gov/': '政府用户',
+            '/gov': '政府用户',
             '/admin/': '管理员用户',
+            '/admin':'管理员用户'
         }
+        go_path = '/login'
+        type = "未登录"
+        if login_flag:
+            tempMyuser = Myuser.objects.get(u=user)
+            type = tempMyuser.type
+            if type == "企业用户":
+                go_path ="/ent/"
+            elif type == "政府用户":
+                go_path = "/gov/"
+            else:
+                go_path = "/admin"
 
         # 检查用户是否属于指定组，并判断是否允许访问特定页面
         for restricted_path, restricted_type in restricted_paths.items():
             #print(restricted_path,restricted_type,path)
-            print(restricted_path in path,restricted_type!=type)
-            if restricted_path in path and restricted_type!=type:
+            #print(restricted_path in path,restricted_type!=type)
+            if restricted_path in path and (restricted_type!=type or user.is_authenticated==False):
                 return False,go_path
 
         return True,path

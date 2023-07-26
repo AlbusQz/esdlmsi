@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "myUser.views.UserAuthMiddleware"
+    #"myUser.views.UserAuthMiddleware"
 ]
 
 ROOT_URLCONF = 'esdlmsi.urls'
