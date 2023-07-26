@@ -28,7 +28,9 @@ urlpatterns = [
     path('resetVerify',myUser.views.resetVerify),
     path('reset',myUser.views.reset),
     path('admin/',myUser.views.test),
-    re_path(r'./test/',myUser.views.test)
+    path('admin/user_manage/',myUser.views.user_manage),
+    re_path(r'./test/',myUser.views.test),
+    path('admin/get_pageinfo',myUser.views.get_pageinfo)
     ]
 '''
     path('',views.login),

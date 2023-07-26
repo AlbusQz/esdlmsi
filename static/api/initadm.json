@@ -127,7 +127,7 @@
           "child": [
             {
               "title": "用户信息管理",
-              "href": "/user_manage",
+              "href": "./user_manage",
               "icon": "fa fa-group",
               "target": "_self"
             },

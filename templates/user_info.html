@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% load static %}
     <meta charset="utf-8">
     <title>layui</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
-    <link rel="stylesheet" href="../css/public.css" media="all">
+    <link rel="stylesheet" href="{% static '/lib/layui-v2.6.3/css/layui.css' %}" media="all">
+    <link rel="stylesheet" href="{% static '/css/public.css' %}" media="all">
 </head>
 <body>
 <div class="layuimini-container">
@@ -66,7 +67,7 @@
 
     </div>
 </div>
-<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<script src="{% static '/lib/layui-v2.6.3/layui.js' %}" charset="utf-8"></script>
 <script>
     layui.use(['form', 'table'], function () {
         var $ = layui.jquery,
@@ -75,25 +76,13 @@
 
         table.render({
             elem: '#currentTableId',
-            url: '../api/table.json',
-            method:'get',
+            url: '{% static '/api/table.json' %}',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
                 layEvent: 'LAYTABLE_TIPS',
                 icon: 'layui-icon-tips'
             }],
-            request:{
-                pageName:'pageIndex',
-                limitName:'pageSize'
-            },
-            response:{
-                statusName:'code',
-                statusCode:0,
-                msgName:'msg',
-                countName:'DataCount',
-                dataName:'data'
-            },
             cols: [[
                 {type: "checkbox", width: 50},
                 {field: 'id', width: 80, title: 'ID', sort: true},
@@ -145,7 +134,7 @@
                     maxmin:true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../page/table/add.html',
+                    content: '{% static '/page/table/add.html' %}',
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
@@ -173,7 +162,7 @@
                     maxmin:true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../page/table/edit.html',
+                    content: '{% static '/page/table/edit.html' %}',
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
