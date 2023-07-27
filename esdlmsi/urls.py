@@ -34,6 +34,7 @@ urlpatterns = [
     path('admin/search_pageinfo',myUser.views.search_pageinfo),
     path('admin/delete_singleinfo',myUser.views.delete_singleinfo),
     path('admin/update_singleinfo',myUser.views.update_singleinfo),
+    path('admin/delete_pageinfo',myUser.views.delete_pageinfo),
     ]
 '''
     path('',views.login),

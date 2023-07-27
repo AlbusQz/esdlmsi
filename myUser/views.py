@@ -413,8 +413,21 @@ def search_pageinfo(request):
 #用户管理功能中的删除单行数据的功能函数
 def delete_singleinfo(request):
     get_id = request.GET.get('id')
-    #Myuser.objects.filter(id = get_id).delete()
+    Myuser.objects.filter(id = get_id).delete()
     return HttpResponse('nice')
+
+#用户管理功能中的删除多行数据的功能函数
+def delete_pageinfo(request):
+    #get_id = request.GET.get('id')
+    params = request.GET.get('searchParams')
+    params = json.loads(params)
+    for param in params:
+        tempid = param['id']
+        print(tempid)
+        Myuser.objects.filter(id = tempid).delete()
+    #Myuser.objects.filter(id = get_id).delete()
+    return get_pageinfo(request)
+
 
 #用户管理功能中的修改单行数据的功能函数
 def update_singleinfo(request):

@@ -162,7 +162,20 @@
             } else if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
+                var result = JSON.stringify(data)
+                layer.confirm('确认进行删除？', function (index) {
+                table.reload('currentTableId', {
+                url: '/admin/delete_pageinfo',
+                method: "GET",
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    searchParams: result
+                }
+            }, 'data'),
+                layer.msg("修改已完成", {icon: 6});
+                layer.close(index)});
             }
         });
 
@@ -213,7 +226,7 @@
                                       mobile: mobile,
                                       type: type
                                   });
-                                  layer.msg("修改完成了..", {icon: 6});
+                                  layer.msg("修改已完成", {icon: 6});
                                   layer.close(index);
                               }
                           });
@@ -227,7 +240,7 @@
 
                 return false;
             } else if (obj.event === 'delete') {
-                layer.confirm('真的删除行么', function (index) {
+                layer.confirm('确认进行删除？', function (index) {
 
                     $.ajax({
                         url:"/admin/delete_singleinfo",
