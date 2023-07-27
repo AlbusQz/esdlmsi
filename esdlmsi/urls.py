@@ -31,7 +31,9 @@ urlpatterns = [
     path('admin/user_manage/',myUser.views.user_manage),
     re_path(r'./test/',myUser.views.test),
     path('admin/get_pageinfo',myUser.views.get_pageinfo),
-    path('admin/search_pageinfo',myUser.views.search_pageinfo)
+    path('admin/search_pageinfo',myUser.views.search_pageinfo),
+    path('admin/delete_singleinfo',myUser.views.delete_singleinfo),
+    path('admin/update_singleinfo',myUser.views.update_singleinfo),
     ]
 '''
     path('',views.login),

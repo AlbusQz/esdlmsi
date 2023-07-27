@@ -356,6 +356,7 @@ def get_pageinfo(request):
     }
     return HttpResponse(json.dumps(result))
 
+#用户管理功能中的模糊搜索函数
 def search_pageinfo(request):
 
     params = request.GET.get('searchParams')
@@ -408,6 +409,32 @@ def search_pageinfo(request):
         'data': res
     }
     return HttpResponse(json.dumps(result))
+
+#用户管理功能中的删除单行数据的功能函数
+def delete_singleinfo(request):
+    get_id = request.GET.get('id')
+    #Myuser.objects.filter(id = get_id).delete()
+    return HttpResponse('nice')
+
+#用户管理功能中的修改单行数据的功能函数
+def update_singleinfo(request):
+    get_id = request.GET.get('id')
+    name = request.GET.get('name')
+    email = request.GET.get('email')
+    mobile = request.GET.get('mobile')
+    type = request.GET.get('type')
+    temp = Myuser.objects.get(id = get_id)
+    if(name!=""):
+        temp.name = name
+    if(email!=""):
+        temp.email = email
+    if(mobile!=''):
+        temp.mobile = mobile
+    if(type!=''):
+        temp.type = type
+        temp.save()
+    #Myuser.objects.filter(id = get_id).delete()
+    return HttpResponse('nice')
 
 # 单纯的测试函数
 def test(request):
