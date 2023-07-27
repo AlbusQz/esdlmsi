@@ -113,7 +113,7 @@
              var hcode = document.getElementById("h_code")
              $.ajax({
                  url: '/sendVcode2',
-                 method: 'get',
+                 method: 'post',
                  data: {'user_email': email},
 
                  success: function (msg) {

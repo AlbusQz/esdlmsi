@@ -15,6 +15,7 @@ from django.contrib.auth.models import User
 import pytz
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 # 处理登录过程的函数
@@ -40,7 +41,16 @@ def login(request):
                 if user is not None:
                     auth.login(request, user)
                     messages.add_message(request, messages.SUCCESS, '登录成功！')
-                    return redirect('/')
+                    type = tempuser.type
+                    if type == '管理员用户':
+                        return redirect('/admin/')
+                    elif type == '企业用户':
+                        return redirect('/ent/')
+                    elif type == '政府用户':
+                        return redirect('/gov/')
+                    else :
+                        messages.add_message(request,messages.ERROR,'用户类型出现错误！！请联系管理员')
+                        return redirect('/')
                 else:
                     messages.add_message(request, messages.WARNING, '密码错误！请重新输入！')
             else:
@@ -172,7 +182,8 @@ def reset(request):
 
 # 用于在注册功能中向用户邮箱发送验证码邮件的函数
 def sendVcode(request):
-    email = str(request.GET.get("user_email"))
+    print('test')
+    email = str(request.POST.get("user_email"))
     if Myuser.objects.filter(email=email):
         data = {'status': 0, 'code': '此邮箱已被注册过！'}
         json_data = json.dumps(data)
@@ -191,7 +202,7 @@ def sendVcode(request):
 
 # 用于在重置密码功能中向用户邮箱发送验证码邮件的函数
 def sendVcode2(request):
-    email = str(request.GET.get("user_email"))
+    email = str(request.POST.get("user_email"))
     if Myuser.objects.filter(email=email):
         vcode = get_vcode()
         send_sample_email(vcode=vcode, receiver=email)
@@ -448,6 +459,62 @@ def update_singleinfo(request):
         temp.save()
     #Myuser.objects.filter(id = get_id).delete()
     return HttpResponse('nice')
+
+#用来返回企业用户主页的函数
+def ent_index(request):
+    return render(request, "index_ent.html")
+
+#用来返回政府用户主页的函数
+def gov_index(request):
+    return render(request, "index_gov.html")
+
+#用来返回管理员用户主页的函数
+def admin_index(request):
+    return render(request, "index_admin.html")
+
+#用于返回用户个人信息界面的函数
+#@login_required
+def personal_info(request):
+    user = request.user
+    tempuser = Myuser.objects.get(u=user)
+    id = tempuser.id
+    name = tempuser.name
+    email = tempuser.email
+    type = tempuser.type
+    mobile = tempuser.mobile
+    ctime = tempuser.create_time.strftime('%Y-%m-%d %H:%M:%S')
+    del user
+    del tempuser
+
+    return render(request,'personal_info.html',locals())
+
+#用于修改用户个人信息的函数
+#@login_required
+def update_personalinfo(request):
+    user = request.user
+    tempuser = Myuser.objects.get(u=user)
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        mobile = request.POST.get('mobile')
+        v_code = request.POST.get("v_code")
+        h_code = request.POST.get("h_code")
+        if email!=tempuser.email:
+            if check_password(v_code, h_code):
+                tempuser.email=email
+                tempuser.name=name
+                tempuser.mobile=mobile
+                tempuser.save()
+                messages.add_message(request,messages.SUCCESS,'修改成功！')
+            else:
+                messages.add_message(request, messages.ERROR, '验证码错误，请重新输入！')
+        else:
+            tempuser.name = name
+            tempuser.mobile = mobile
+            tempuser.save()
+            messages.add_message(request, messages.SUCCESS, '修改成功！')
+    return redirect('/personal_infor/')
+
 
 # 单纯的测试函数
 def test(request):

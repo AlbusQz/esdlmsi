@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">验证码:</label>
+                    <label class="layui-form-label ">验证码:</label>
                     <div class="layui-input-block">
                         <input type="text" name="v_code" id="v_code" placeholder="请填写邮箱收到的验证码" value=""
                                class="layui-input" lay-verify="number" required>
@@ -204,7 +204,7 @@
              var hcode = document.getElementById("h_code")
              $.ajax({
                  url: '/sendVcode',
-                 method: 'get',
+                 method: 'post',
                  data: {'user_email': email},
 
                  success: function (msg) {

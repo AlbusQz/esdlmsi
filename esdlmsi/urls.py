@@ -19,6 +19,7 @@ import myUser.views
 
 
 urlpatterns = [
+    #以下为未登录情况下的登录、注册、找回密码相关url
     path('admin1/', admin.site.urls),
     path('login/',myUser.views.login),
     path('register/',myUser.views.register),
@@ -27,7 +28,13 @@ urlpatterns = [
     path('sendVcode2', myUser.views.sendVcode2),
     path('resetVerify',myUser.views.resetVerify),
     path('reset',myUser.views.reset),
+
+    #以下为不同类型用户主页跳转的url
     path('admin/',myUser.views.test),
+    path('ent/',myUser.views.ent_index),
+    path('gov/',myUser.views.gov_index),
+
+    #以下为管理员用户管理功能相关的url
     path('admin/user_manage/',myUser.views.user_manage),
     re_path(r'./test/',myUser.views.test),
     path('admin/get_pageinfo',myUser.views.get_pageinfo),
@@ -35,6 +42,11 @@ urlpatterns = [
     path('admin/delete_singleinfo',myUser.views.delete_singleinfo),
     path('admin/update_singleinfo',myUser.views.update_singleinfo),
     path('admin/delete_pageinfo',myUser.views.delete_pageinfo),
+
+    #以下为用户页面中心的返回url
+    path('personal_infor/',myUser.views.personal_info),
+    path('update_personalinfo/',myUser.views.update_personalinfo)
+
     ]
 '''
     path('',views.login),
