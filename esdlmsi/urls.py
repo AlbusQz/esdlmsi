@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,re_path
 import myUser.views
-
+import dataHandler.views
 
 urlpatterns = [
     #以下为未登录情况下的登录、注册、找回密码相关url
@@ -28,6 +28,7 @@ urlpatterns = [
     path('sendVcode2', myUser.views.sendVcode2),
     path('resetVerify',myUser.views.resetVerify),
     path('reset',myUser.views.reset),
+    path('logout',myUser.views.logout),
 
     #以下为不同类型用户主页跳转的url
     path('admin/',myUser.views.test),
@@ -36,7 +37,6 @@ urlpatterns = [
 
     #以下为管理员用户管理功能相关的url
     path('admin/user_manage/',myUser.views.user_manage),
-    re_path(r'./test/',myUser.views.test),
     path('admin/get_pageinfo',myUser.views.get_pageinfo),
     path('admin/search_pageinfo',myUser.views.search_pageinfo),
     path('admin/delete_singleinfo',myUser.views.delete_singleinfo),
@@ -45,7 +45,10 @@ urlpatterns = [
 
     #以下为用户页面中心的返回url
     path('personal_infor/',myUser.views.personal_info),
-    path('update_personalinfo/',myUser.views.update_personalinfo)
+    path('update_personalinfo/',myUser.views.update_personalinfo),
+
+    #以下为
+   # path("data_upload/",dataHandler.views.),
 
     ]
 '''

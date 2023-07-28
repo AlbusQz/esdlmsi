@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
@@ -37,10 +36,12 @@ def login(request):
 
         if tempuser is not None:
             if tempuser.type == user_type:
+                #print(tempuser.type)
+                #print(user_type)
                 user = authenticate(username=user_id, password=user_pwd)
                 if user is not None:
                     auth.login(request, user)
-                    messages.add_message(request, messages.SUCCESS, '登录成功！')
+                    #messages.add_message(request, messages.SUCCESS, '登录成功！')
                     type = tempuser.type
                     if type == '管理员用户':
                         return redirect('/admin/')
@@ -57,7 +58,6 @@ def login(request):
                 messages.add_message(request, messages.WARNING, '用户类型错误！')
 
     return render(request, "login.html")
-
 
 # 注册功能函数
 def register(request):
@@ -97,6 +97,11 @@ def register(request):
     #    messages.add_message(request, messages.SUCCESS, 'test')
     return render(request, "register.html")
 
+# 注销函数
+def logout(request):
+    auth.logout(request)
+    messages.add_message(request, messages.SUCCESS, '退出登录！')
+    return redirect("/login")
 
 # 注册函数（测试用，已停用）
 def register_index(request):
@@ -152,9 +157,12 @@ def resetVerify(request):
 
 # 修改密码功能中执行密码修改的函数
 def reset(request):
+
     if 'user_id' in request.session:
         user_id = request.session['user_id']
-        del request.session['user_id']
+        #del request.session['user_id']
+        print("here")
+
         if Myuser.objects.filter(id=user_id):
             if request.method == 'POST':
                 user_pwd_new = request.POST.get("user_pwd")
@@ -171,6 +179,7 @@ def reset(request):
                     tempMyuser.save()
                     messages.add_message(request, messages.SUCCESS, "ID为" + str(user_id) + "的账号的密码重置成功！")
                     messages.add_message(request, messages.SUCCESS, "接下来将跳转至登录界面")
+                    del request.session['user_id']
                     return redirect("/login")
         else:
             messages.add_message(request, messages.ERROR, "session出现错误")
@@ -473,7 +482,7 @@ def admin_index(request):
     return render(request, "index_admin.html")
 
 #用于返回用户个人信息界面的函数
-#@login_required
+@login_required
 def personal_info(request):
     user = request.user
     tempuser = Myuser.objects.get(u=user)
@@ -481,22 +490,21 @@ def personal_info(request):
     name = tempuser.name
     email = tempuser.email
     type = tempuser.type
-    mobile = tempuser.mobile
+    phone = tempuser.mobile
     ctime = tempuser.create_time.strftime('%Y-%m-%d %H:%M:%S')
     del user
     del tempuser
-
     return render(request,'personal_info.html',locals())
 
 #用于修改用户个人信息的函数
-#@login_required
+@login_required
 def update_personalinfo(request):
     user = request.user
     tempuser = Myuser.objects.get(u=user)
     if request.method == "POST":
         name = request.POST.get('name')
         email = request.POST.get('email')
-        mobile = request.POST.get('mobile')
+        mobile = request.POST.get('phone')
         v_code = request.POST.get("v_code")
         h_code = request.POST.get("h_code")
         if email!=tempuser.email:
@@ -514,7 +522,6 @@ def update_personalinfo(request):
             tempuser.save()
             messages.add_message(request, messages.SUCCESS, '修改成功！')
     return redirect('/personal_infor/')
-
 
 # 单纯的测试函数
 def test(request):
