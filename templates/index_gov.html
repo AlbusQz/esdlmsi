@@ -41,14 +41,19 @@
                 <li class="layui-nav-item layuimini-setting">
                     <a href="javascript:;">admin</a>
                     <dl class="layui-nav-child">
+                        <div id="switchbuttom1" hidden=true>
+                            <dd>
+                                <a href={{ path1 }} layuimini-content-href="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">{{ type1 }}</a>
+                            </dd>
+                            <dd>
+                                <a href={{ path2 }} layuimini-content-href="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">{{ type2 }}</a>
+                            </dd>
+                            <dd>
+                                <hr>
+                            </dd>
+                        </div>
                         <dd>
-                            <a href="javascript:;" layuimini-content-href="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
-                        </dd>
-                       <dd>
                             <a href="/resetVerify" layuimini-content-href="page/user-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
-                        </dd>
-                        <dd>
-                            <hr>
                         </dd>
                         <dd>
                             <a href="/logout" class="login-out">退出登录</a>
@@ -123,6 +128,15 @@
             layer = layui.layer,
             miniAdmin = layui.miniAdmin,
             miniTongji = layui.miniTongji;
+
+
+        var type ={{ type|safe }}
+        if(type=="专家用户")
+        {
+            //alert({{ type|safe }})
+            var test =document.getElementById("switchbuttom1")
+            test.hidden=false
+        }
 
         var options = {
             iniUrl: "{% static 'api/initgov.json' %}",    // 初始化接口

@@ -22,6 +22,8 @@ urlpatterns = [
     #以下为未登录情况下的登录、注册、找回密码相关url
     path('admin1/', admin.site.urls),
     path('login/',myUser.views.login),
+    path('',myUser.views.login),
+    path('index/', myUser.views.login),
     path('register/',myUser.views.register),
     #path('register_handle/',myUser.views.register),
     path('sendVcode',myUser.views.sendVcode),
@@ -31,7 +33,7 @@ urlpatterns = [
     path('logout',myUser.views.logout),
 
     #以下为不同类型用户主页跳转的url
-    path('admin/',myUser.views.test),
+    path('admin/',myUser.views.admin_index),
     path('ent/',myUser.views.ent_index),
     path('gov/',myUser.views.gov_index),
 

@@ -16,10 +16,17 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
+path_dict = {
+    '企业用户':"/ent/",
+    '政府用户':'/gov/',
+    '管理员用户':'/admin/'
+}
+
 # Create your views here.
 # 处理登录过程的函数
 def login(request):
     auth.logout(request)
+    temp ={}
     if request.method == "POST":
 
         user_id = request.POST.get("user_id")
@@ -35,27 +42,45 @@ def login(request):
             messages.add_message(request, messages.WARNING, '用户不存在！')
 
         if tempuser is not None:
-            if tempuser.type == user_type:
-                #print(tempuser.type)
-                #print(user_type)
+            if tempuser.type != "专家用户":
+                print(tempuser.type)
+                if tempuser.type == user_type:
+                    user = authenticate(username=user_id, password=user_pwd)
+                    if user is not None:
+                        auth.login(request, user)
+                        type = tempuser.type
+                        if type == '管理员用户':
+                            return redirect('/admin/')
+                        elif type == '企业用户':
+                            return redirect('/ent/')
+                        elif type == '政府用户':
+                            return redirect('/gov/')
+                        else :
+                            messages.add_message(request,messages.ERROR,'用户类型出现错误！！请联系管理员')
+                            return redirect('/')
+                    else:
+                        messages.add_message(request, messages.WARNING, '密码错误！请重新输入！')
+                else:
+                    messages.add_message(request, messages.WARNING, '用户类型错误！')
+
+            else:
                 user = authenticate(username=user_id, password=user_pwd)
                 if user is not None:
                     auth.login(request, user)
-                    #messages.add_message(request, messages.SUCCESS, '登录成功！')
-                    type = tempuser.type
+                    # messages.add_message(request, messages.SUCCESS, '登录成功！')
+                    type = user_type
                     if type == '管理员用户':
                         return redirect('/admin/')
                     elif type == '企业用户':
                         return redirect('/ent/')
                     elif type == '政府用户':
                         return redirect('/gov/')
-                    else :
-                        messages.add_message(request,messages.ERROR,'用户类型出现错误！！请联系管理员')
+                    else:
+                        messages.add_message(request, messages.ERROR, '用户类型出现错误！！请联系管理员')
                         return redirect('/')
                 else:
                     messages.add_message(request, messages.WARNING, '密码错误！请重新输入！')
-            else:
-                messages.add_message(request, messages.WARNING, '用户类型错误！')
+
 
     return render(request, "login.html")
 
@@ -314,7 +339,16 @@ class UserAuthMiddleware:
             '/gov/': '政府用户',
             '/gov': '政府用户',
             '/admin/': '管理员用户',
-            '/admin': '管理员用户'
+            '/admin': '管理员用户',
+
+            ## 以下专门用于专家用户：
+            '/ent/': '专家用户',
+            '/ent': '专家用户',
+            '/gov/': '专家用户',
+            '/gov': '专家用户',
+            '/admin/': '专家用户',
+            '/admin': '专家用户',
+
         }
         go_path = '/login'
         type = "未登录"
@@ -471,15 +505,45 @@ def update_singleinfo(request):
 
 #用来返回企业用户主页的函数
 def ent_index(request):
-    return render(request, "index_ent.html")
+    user = request.user
+    tempuser = Myuser.objects.get(u=user)
+    id = tempuser.id
+    name = tempuser.name
+    type = tempuser.type
+    type = json.dumps(type)
+    type1 = "政府用户界面"
+    path1 = '/gov/'
+    type2 = "管理员用户界面"
+    path2 = '/admin/'
+    return render(request, "index_ent.html",locals())
 
 #用来返回政府用户主页的函数
 def gov_index(request):
-    return render(request, "index_gov.html")
+    user = request.user
+    tempuser = Myuser.objects.get(u=user)
+    id = tempuser.id
+    name = tempuser.name
+    type = tempuser.type
+    type = json.dumps(type)
+    type1 = "企业用户界面"
+    path1 = '/ent/'
+    type2 = "管理员用户界面"
+    path2 = '/admin/'
+    return render(request, "index_gov.html",locals())
 
 #用来返回管理员用户主页的函数
 def admin_index(request):
-    return render(request, "index_admin.html")
+    user = request.user
+    tempuser = Myuser.objects.get(u=user)
+    id = tempuser.id
+    name = tempuser.name
+    type = tempuser.type
+    type = json.dumps(type)
+    type1 = "企业用户界面"
+    path1 = '/ent/'
+    type2 = "政府用户界面"
+    path2 = '/gov/'
+    return render(request, "index_admin.html",locals())
 
 #用于返回用户个人信息界面的函数
 @login_required

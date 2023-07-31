@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{% static '/css/public.css' %}" media="all">
     <style>
         .layui-form-item .layui-input-company {width: auto;padding-right: 10px;line-height: 38px;}
+
     </style>
 </head>
  {% if messages %}
@@ -29,13 +30,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">用户ID</label>
                 <div class="layui-input-block">
-                    <input type="text" name="id" disabled="disabled" value={{ id }} class="layui-input">
+                    <input type="text" name="id" disabled value={{ id }} class="layui-input layui-disabled">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">用户类型</label>
                 <div class="layui-input-block">
-                    <input type="text" name="type" disabled="disabled" value={{ type }} class="layui-input">
+                    <input type="text" name="type" disabled="disabled" value={{ type }} class="layui-input layui-disabled">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -72,7 +73,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">账号创建时间</label>
                 <div class="layui-input-block">
-                    <input type="text" name="ctime" value={{ ctime }} disabled="disabled" class="layui-input">
+                    <input type="text" name="ctime" value={{ ctime }} disabled="disabled" class="layui-input layui-disabled">
                 </div>
             </div>
 

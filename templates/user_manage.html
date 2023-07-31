@@ -104,12 +104,12 @@
                 dataName:'data'
             },
             cols: [[
-                {type: "checkbox", width: 50},
-                {field: 'id', width: 100, title: '账号ID', sort: true},
-                {field: 'name', width: 150, title: '用户名',sort:true},
-                {field: 'email', width: 150, title: '邮箱'},
-                {field: 'mobile', width: 150, title: '手机号'},
-                {field: 'type', width:120, title: '账号类型', sort:true},
+                {type: "checkbox", minWidth: 50},
+                {field: 'id', minWidth: 100, title: '账号ID', sort: true},
+                {field: 'name', minWidth: 150, title: '用户名',sort:true},
+                {field: 'email', minWidth: 150, title: '邮箱'},
+                {field: 'mobile', minWidth: 150, title: '手机号'},
+                {field: 'type', minWidth:120, title: '账号类型', sort:true},
                 {field: 'createtime', minWidth: 150, title: '账号创建时间', sort: true},
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
@@ -198,6 +198,7 @@
                                                 <option value="企业用户">企业用户</option>
                                                 <option value="政府用户">政府用户</option>
                                                 <option value="管理员用户">管理员用户</option>
+                                                <option value="专家用户">专家用户</option>
                                             </select>
                                </div>`,
                       yes:function (index,layero)
