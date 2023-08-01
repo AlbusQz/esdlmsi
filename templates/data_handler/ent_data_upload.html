@@ -48,6 +48,7 @@
             onDelete: function (file, files) {              // 删除一个文件的回调方法 file:当前删除的文件  files:删除之后的文件
                 console.info("当前删除了此文件：");
                 console.info(file.name);
+                layer.msg(file.name+"删除成功", {icon: 1});
             },
             onSuccess: function (file, response) {          // 文件上传成功的回调方法
                 console.info("此文件上传成功：");
