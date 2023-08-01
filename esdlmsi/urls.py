@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path,re_path
 import myUser.views
 import dataHandler.views
+urlpatterns = []
 
-urlpatterns = [
+##以下为有关myUser类的url（即用户信息有关的功能）
+myUser_urls = [
     #以下为未登录情况下的登录、注册、找回密码相关url
     path('admin1/', admin.site.urls),
     path('login/',myUser.views.login),
@@ -49,10 +51,19 @@ urlpatterns = [
     path('personal_infor/',myUser.views.personal_info),
     path('update_personalinfo/',myUser.views.update_personalinfo),
 
-    #以下为
-   # path("data_upload/",dataHandler.views.),
+    ]
+urlpatterns += myUser_urls
+
+##以下为有关dataHandler类的url（即数据处理有关的功能）
+dataHandler_urls =[
+
+    #以下为数据上传有关的url
+    path('ent/data_upload',dataHandler.views.ent_upload_data),
 
     ]
+
+urlpatterns += dataHandler_urls
+
 '''
     path('',views.login),
     path("index/",views.index),

@@ -7,5 +7,5 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 #测试函数
 @login_required
-def upload_data(request):
-    return render('data_upload')
+def ent_upload_data(request):
+    return render(request,'data_handler/ent_data_upload.html')

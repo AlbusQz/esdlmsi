@@ -29,7 +29,7 @@
               "child": [
                 {
                   "title": "数据上传",
-                  "href": "/data_upload",
+                  "href": "/ent/data_upload",
                   "icon":"fa fa-upload",
                   "target": "_self"
                 },
