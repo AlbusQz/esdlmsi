@@ -1,0 +1,119 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "test"
+  },
+  "logoInfo": {
+    "title": "",
+    "image": "/static/images/zjulogo.png",
+    "href": "/index"
+  },
+  "menuInfo": [
+    {
+      "title": "企业用户功能",
+      "icon": "fa fa-tasks",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "数据处理",
+          "href": "",
+          "icon": "fa fa-list-alt",
+          "target": "_self",
+          "child": [
+            {
+              "title": "数据选择",
+              "href": "",
+              "icon": "fa fa-table",
+              "target": "_self",
+              "child": [
+                {
+                  "title": "数据上传",
+                  "href": "/ent/data_upload",
+                  "icon":"fa fa-upload",
+                  "target": "_self"
+                },
+                {
+                  "title": "数据输入",
+                  "href": "/data_input",
+                  "icon":"fa fa-keyboard-o",
+                  "target": "_self"
+                },
+                {
+                  "title": "数据查询",
+                  "href": "/data_select",
+                  "icon":"fa fa-filter",
+                  "target": "_self"
+                }
+              ]
+            },
+            {
+              "title": "数据预处理",
+              "href": "/data_process",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "数据下载",
+              "href": "/data_download",
+              "icon": "fa fa-floppy-o",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "数据分析",
+          "href": "",
+          "icon": "fa fa-pie-chart",
+          "target": "_self",
+          "child": [
+            {
+              "title": "指标分析",
+              "href": "/ent_analyse",
+              "icon": "fa fa-bar-chart",
+              "target": "_self"
+            },
+            {
+              "title": "报告生成/预览",
+              "href": "/report_generate",
+              "icon": "fa fa-file-text-o",
+              "target": "_self"
+            },
+            {
+              "title": "报告下载",
+              "href": "/report_download",
+              "icon": "fa fa-download",
+              "target": "_self"
+            },
+            {
+              "title": "分析评论上传",
+              "href": "/remark_upload",
+              "icon": "fa fa-comment",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "个人中心",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "个人信息",
+              "href": "/personal_infor",
+              "icon": "fa fa-user",
+              "target": "_self"
+            },
+            {
+              "title": "分析历史记录",
+              "href": "/history",
+              "icon": "fa fa-history",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

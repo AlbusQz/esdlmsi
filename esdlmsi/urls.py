@@ -58,7 +58,9 @@ urlpatterns += myUser_urls
 dataHandler_urls =[
 
     #以下为数据上传有关的url
-    path('ent/data_upload',dataHandler.views.ent_upload_data),
+    path('ent/data_upload',dataHandler.views.ent_uploadData),
+    path('ent/data_download',dataHandler.views.ent_downloadSample),
+    path('ent/uploadFile',dataHandler.views.ent_getUpload),
 
     ]
 
