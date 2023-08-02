@@ -62,6 +62,9 @@ dataHandler_urls =[
     path('ent/data_download',dataHandler.views.ent_downloadSample),
     path('ent/uploadFile',dataHandler.views.ent_getUpload),
 
+    #以下为数据输入有关的url
+    path('ent/data_input',dataHandler.views.ent_inputData)
+
     ]
 
 urlpatterns += dataHandler_urls

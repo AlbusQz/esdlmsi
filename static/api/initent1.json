@@ -35,7 +35,7 @@
                 },
                 {
                   "title": "数据输入",
-                  "href": "/data_input",
+                  "href": "/ent/data_input",
                   "icon":"fa fa-keyboard-o",
                   "target": "_self"
                 },

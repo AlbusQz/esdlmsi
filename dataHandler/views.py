@@ -61,3 +61,10 @@ def ent_getUpload(request):
             print(tempfile.name)
             print('nice!')
             return HttpResponse("文件"+filename+"上传成功!")
+
+
+#企业用户数据输入函数
+@login_required
+def ent_inputData(request):
+
+    return render(request,'data_handler/ent_data_input.html')
