@@ -29,6 +29,14 @@
     font-size: 10px;
     color: #a29c9c;
 }
+
+.layui-form > .layui-form-item > .layui-form-label{
+    width: 160px;
+}
+.layui-form > .layui-form-item > .layui-input-block {
+    margin-left: 160px;
+}
+
 </style>
 
 </head>
@@ -37,12 +45,8 @@
     <div class="layuimini-main">
 
         <blockquote class="layui-elem-quote layui-text">
-            鉴于小伙伴的普遍反馈，先温馨提醒两个常见“问题”：1. <a href="/doc/base/faq.html#form" target="_blank">为什么select/checkbox/radio没显示？</a> 2. <a href="/doc/modules/form.html#render" target="_blank">动态添加的表单元素如何更新？</a>
+            请在此按照提示输入您需要处理的企业的数据
         </blockquote>
-
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>表单集合演示</legend>
-        </fieldset>
 
         <form class="layui-form layui-form-pane" action="">
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
@@ -50,7 +54,7 @@
             </fieldset>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">企业名称</label>
+                <label class="layui-form-label required">企业名称</label>
                 <div class="layui-input-block">
                     <input type="text" name="basic_name" id="basic_name" lay-verify="required" lay-reqtext="企业名称不能为空" placeholder="请输入企业名称"  class="layui-input">
                 </div>
@@ -58,7 +62,7 @@
 
             <div class="layui-form-item">
 
-                <label class="layui-form-label">组织机构代码</label>
+                <label class="layui-form-label required">组织机构代码</label>
                 <div class="layui-input-block">
                     <input type="text" name="basic_code" id="basic_name" lay-verify="required" lay-reqtext="组织机构代码不能为空" placeholder="请输入组织机构代码"  class="layui-input">
                 </div>
@@ -101,13 +105,15 @@
             </div>
 
             <div class="layui-form-item">
+
                 <label class="layui-form-label">企业四级行业代码</label>
                 <div class="layui-input-block">
+
                     <input type="text" name="basic_ind_code" id="basic_ind_code"  placeholder="请输入企业四级行业代码"  class="layui-input">
                 </div>
             </div>
 
-             <div class="layui-form-item">
+            <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">上市时间</label>
                     <div class="layui-input-inline">
@@ -123,454 +129,280 @@
                 </div>
             </div>
 
+            <div class="layui-form-item">
+                <label class="layui-form-label" title="所属省/市/区">
+                    企业注册地址
+                </label>
+                <div class="layui-input-block">
+                    <div class="layui-input-inline"  style="width: 30%;">
+                        <select name="basic_reg_pro" id="province" lay-filter="province" lay-search="" placeholder="省" ></select>
+                    </div>
+                    <div class="layui-input-inline"  style="width: 30%;">
+                        <select name="basic_reg_city" id="city" lay-filter="city" lay-search=""></select>
+                    </div>
+                    <div class="layui-input-inline"  style="width: 30%;">
+                        <select name="basic_reg_area" id="area" lay-filter="area" lay-search=""></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" title="所属省/市/区">
+                    企业实际地址
+                </label>
+                <div class="layui-input-block">
+                    <div class="layui-input-inline"  style="width: 30%;">
+                        <select name="basic_real_pro" id="province2" lay-filter="province2" lay-search="" placeholder="省" ></select>
+                    </div>
+                    <div class="layui-input-inline"  style="width: 30%;">
+                        <select name="basic_real_city" id="city2" lay-filter="city2" lay-search=""></select>
+                    </div>
+                    <div class="layui-input-inline"  style="width: 30%;">
+                        <select name="basic_real_area" id="area2" lay-filter="area2" lay-search=""></select>
+                    </div>
+                </div>
+            </div>
+
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>经营范围</legend>
             </fieldset>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">企业服务领域</label>
+                <div class="layui-input-block">
+                    <input type="text" name="ser_field" id="ser_field"  placeholder="请输入企业服务领域"  class="layui-input">
+                </div>
+            </div>
+
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>人才结构</legend>
             </fieldset>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">人才招聘数量</label>
+                <div class="layui-input-block">
+                    <input type="number" name="peo_count1" id="peo_count1"  placeholder="请输入企业当年人才招聘数量"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">本科以上学历招聘数量</label>
+                <div class="layui-input-block">
+                    <input type="number" name="peo_count2" id="peo_count2"  placeholder="请输入企业当年本科以上学历招聘数量"  class="layui-input">
+                </div>
+            </div>
+
+
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>财务信息</legend>
             </fieldset>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">总资产负债率</label>
+                <div class="layui-input-block">
+                    <input type="number" name="debt" id="debt"  placeholder="请输入总资产负债率"  class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">总资产负债率=负债总额／资产总额</div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">产权比率</label>
+                <div class="layui-input-block">
+                    <input type="number" name="equity" id="equity"  placeholder="请输入产权比率"  class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">产权比率=负债总额／股东权益</div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">平均净资产</label>
+                <div class="layui-input-block">
+                    <input type="number" name="net_worth" id="net_worth"  placeholder="请输入平均净资产"  class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">平均净资产=（股东权益年初数+股东权益年末数）/2</div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">总资产增长率</label>
+                <div class="layui-input-block">
+                    <input type="number" name="grate_total" id="grate_total"  placeholder="请输入总资产增长率"  class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">总资产增长率=本年总资产增长额/上年总资产总额（其中，本年总资产增长额=资产总额年末数-资产总额年初数）</div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">营业收入增长率</label>
+                <div class="layui-input-block">
+                    <input type="number" name="grate_bus" id="grate_bus"  placeholder="请输入营业收入增长率"  class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">营业收入增长率=（本年营业收入-上年营业收入）/上年营业收入</div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">企业纳税总额</label>
+                <div class="layui-input-block">
+                    <input type="number" name="tax" id="tax"  placeholder="请输入企业当年纳税总额企业当年纳税总额"  class="layui-input">
+                </div>
+            </div>
+
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>专利/知识产权</legend>
             </fieldset>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">发明专利总数</label>
+                <div class="layui-input-block">
+                    <input type="number" name="ip_total" id="ip_total"  placeholder="请输入截至本年企业申请的发明专利总数"  class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">高级专利数量</label>
+                <div class="layui-input-block">
+                    <input type="number" name="ap_total" id="ap_total"  placeholder="请输入企业截至当年IPC类别（二级分类，例如A01）前10类及对应的专利数量"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">合作开发专利数</label>
+                <div class="layui-input-block">
+                    <input type="number" name="jp_total" id="jp_total"  placeholder="请输入企业本年合作开发申请专利数"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">软件著作数量</label>
+                <div class="layui-input-block">
+                    <input type="number" name="sp_total" id="sp_total"  placeholder="请输入截至当年企业软件著作累计数量"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">参与制定新标准数</label>
+                <div class="layui-input-block">
+                    <input type="number" name="ns_total" id="ns_total"  placeholder="请输入截至当年参与制定新标准数"  class="layui-input">
+                </div>
+            </div>
+
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>信息化建设</legend>
             </fieldset>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">信息化平台数量</label>
+                <div class="layui-input-block">
+                    <input type="number" name="inforplat_total" id="inforplat_total"  placeholder="请输入企业APP、网站、公众号等信息化平台的数量"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">ICP申请数</label>
+                <div class="layui-input-block">
+                    <input type="number" name="icp_total" id="icp_total"  placeholder="请输入企业截至当年ICP申请的数量"  class="layui-input">
+                </div>
+            </div>
+
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>企业荣誉和信用</legend>
             </fieldset>
-            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">获得荣誉数量</label>
+                <div class="layui-input-block">
+                    <input type="number" name="honor_total" id="honor_total"  placeholder="请输入企业截止当年获得的荣誉数量"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">A级纳税人</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="a_taxpayer" value="是" title="是" checked="">
+                    <input type="radio" name="a_taxpayer" value="否" title="否">
+                </div>
+                 <div class="layui-form-mid layui-word-aux">企业当年是否被评为A级纳税人</div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否失信被执行</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="dishonesty" value="是" title="是" checked="">
+                    <input type="radio" name="dishonesty" value="否" title="否">
+                </div>
+                 <div class="layui-form-mid layui-word-aux">企业近3年是否失信被执行</div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">民事诉讼数量</label>
+                <div class="layui-input-block">
+                    <input type="number" name="lawsuit_total" id="lawsuit_total"  placeholder="请输入企业当年被民事诉讼的数量"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否受到环保处罚</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="is_ep" value="是" title="是" checked="">
+                    <input type="radio" name="is_ep" value="否" title="否">
+                </div>
+                 <div class="layui-form-mid layui-word-aux">企业当年是否受到环保处罚</div>
+            </div>
+
+             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>对外投资和招投标</legend>
             </fieldset>
+
             <div class="layui-form-item">
-                <label class="layui-form-label">单行输入框</label>
+                <label class="layui-form-label">企业投资总次数</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">验证必填项</label>
-                <div class="layui-input-block">
-                    <input type="text" name="username" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
+                    <input type="number" name="invest_time" id="invest_time"  placeholder="请输入截至当年企业投资的总次数"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">验证手机</label>
-                    <div class="layui-input-inline">
-                        <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">验证邮箱</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">多规则验证</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">验证日期</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">验证链接</label>
-                    <div class="layui-input-inline">
-                        <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">验证身份证</label>
+                <label class="layui-form-label">企业投资总金额</label>
                 <div class="layui-input-block">
-                    <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
+                    <input type="number" name="invest_amount" id="invest_amount"  placeholder="请输入截至当年企业投资的总金额"  class="layui-input">
                 </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">自定义验证</label>
-                <div class="layui-input-inline">
-                    <input type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
             </div>
 
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">范围</label>
-                    <div class="layui-input-inline" style="width: 100px;">
-                        <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
-                    </div>
-                    <div class="layui-form-mid">-</div>
-                    <div class="layui-input-inline" style="width: 100px;">
-                        <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-                    </div>
+             <div class="layui-form-item">
+                <label class="layui-form-label">企业参与招标次数</label>
+                <div class="layui-input-block">
+                    <input type="number" name="bidding_time" id="bidding_time"  placeholder="请输入截至当年企业参与政府招标的总次数"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">单行选择框</label>
+                <label class="layui-form-label">企业参与招标总金额</label>
                 <div class="layui-input-block">
-                    <select name="interest" lay-filter="aihao">
-                        <option value=""></option>
-                        <option value="0">写作</option>
-                        <option value="1" selected="">阅读</option>
-                        <option value="2">游戏</option>
-                        <option value="3">音乐</option>
-                        <option value="4">旅行</option>
-                    </select>
+                    <input type="number" name="bidding_amount" id="bidding_amount"  placeholder="请输入截至当年企业参与政府招标的总金额"  class="layui-input">
                 </div>
             </div>
 
+             <div class="layui-form-item" style="margin: auto">
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1" style="margin: auto" >立即提交</button>
+             </div>
 
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">分组选择框</label>
-                    <div class="layui-input-inline">
-                        <select name="quiz">
-                            <option value="">请选择问题</option>
-                            <optgroup label="城市记忆">
-                                <option value="你工作的第一个城市">你工作的第一个城市</option>
-                            </optgroup>
-                            <optgroup label="学生时代">
-                                <option value="你的工号">你的工号</option>
-                                <option value="你最喜欢的老师">你最喜欢的老师</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">搜索选择框</label>
-                    <div class="layui-input-inline">
-                        <select name="modules" lay-verify="required" lay-search="">
-                            <option value="">直接选择或搜索选择</option>
-                            <option value="1">layer</option>
-                            <option value="2">form</option>
-                            <option value="3">layim</option>
-                            <option value="4">element</option>
-                            <option value="5">laytpl</option>
-                            <option value="6">upload</option>
-                            <option value="7">laydate</option>
-                            <option value="8">laypage</option>
-                            <option value="9">flow</option>
-                            <option value="10">util</option>
-                            <option value="11">code</option>
-                            <option value="12">tree</option>
-                            <option value="13">layedit</option>
-                            <option value="14">nav</option>
-                            <option value="15">tab</option>
-                            <option value="16">table</option>
-                            <option value="17">select</option>
-                            <option value="18">checkbox</option>
-                            <option value="19">switch</option>
-                            <option value="20">radio</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">联动选择框</label>
-                <div class="layui-input-inline">
-                    <select name="quiz1">
-                        <option value="">请选择省</option>
-                        <option value="浙江" selected="">浙江省</option>
-                        <option value="你的工号">江西省</option>
-                        <option value="你最喜欢的老师">福建省</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline">
-                    <select name="quiz2">
-                        <option value="">请选择市</option>
-                        <option value="杭州">杭州</option>
-                        <option value="宁波" disabled="">宁波</option>
-                        <option value="温州">温州</option>
-                        <option value="温州">台州</option>
-                        <option value="温州">绍兴</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline">
-                    <select name="quiz3">
-                        <option value="">请选择县/区</option>
-                        <option value="西湖区">西湖区</option>
-                        <option value="余杭区">余杭区</option>
-                        <option value="拱墅区">临安市</option>
-                    </select>
-                </div>
-                <div class="layui-form-mid layui-word-aux">此处只是演示联动排版，并未做联动交互</div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">复选框</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="like[write]" title="写作">
-                    <input type="checkbox" name="like[read]" title="阅读" checked="">
-                    <input type="checkbox" name="like[game]" title="游戏">
-                </div>
-            </div>
-
-            <div class="layui-form-item" pane="">
-                <label class="layui-form-label">原始复选框</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="like1[write]" lay-skin="primary" title="写作" checked="">
-                    <input type="checkbox" name="like1[read]" lay-skin="primary" title="阅读">
-                    <input type="checkbox" name="like1[game]" lay-skin="primary" title="游戏" disabled="">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">开关-默认关</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">开关-默认开</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">单选框</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
-                    <input type="radio" name="sex" value="女" title="女">
-                    <input type="radio" name="sex" value="禁" title="禁用" disabled="">
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">普通文本域</label>
-                <div class="layui-input-block">
-                    <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
-                </div>
-            </div>
-            <!--<div class="layui-form-item layui-form-text">
-              <label class="layui-form-label">编辑器</label>
-              <div class="layui-input-block">
-                <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
-              </div>
-            </div>-->
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                </div>
-            </div>
         </form>
 
-        <!-- 示例-970 -->
-        <ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
-
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-            <legend>初始赋值演示</legend>
-        </fieldset>
-
-        <form class="layui-form" action="" lay-filter="example">
-            <div class="layui-form-item">
-                <label class="layui-form-label">输入框</label>
-                <div class="layui-input-block">
-                    <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">密码框</label>
-                <div class="layui-input-block">
-                    <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">选择框</label>
-                <div class="layui-input-block">
-                    <select name="interest" lay-filter="aihao">
-                        <option value=""></option>
-                        <option value="0">写作</option>
-                        <option value="1">阅读</option>
-                        <option value="2">游戏</option>
-                        <option value="3">音乐</option>
-                        <option value="4">旅行</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">复选框</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="like[write]" title="写作">
-                    <input type="checkbox" name="like[read]" title="阅读">
-                    <input type="checkbox" name="like[daze]" title="发呆">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">开关</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">单选框</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
-                    <input type="radio" name="sex" value="女" title="女">
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">文本域</label>
-                <div class="layui-input-block">
-                    <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-                </div>
-            </div>
-        </form>
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-            <legend>方框风格的表单集合</legend>
-        </fieldset>
-        <form class="layui-form layui-form-pane" action="">
-            <div class="layui-form-item">
-                <label class="layui-form-label">长输入框</label>
-                <div class="layui-input-block">
-                    <input type="text" name="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">短输入框</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">日期选择</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">行内表单</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="number" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">密码</label>
-                <div class="layui-input-inline">
-                    <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-form-mid layui-word-aux">请务必填写用户名</div>
-            </div>
-
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">范围</label>
-                    <div class="layui-input-inline" style="width: 100px;">
-                        <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
-                    </div>
-                    <div class="layui-form-mid">-</div>
-                    <div class="layui-input-inline" style="width: 100px;">
-                        <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">单行选择框</label>
-                <div class="layui-input-block">
-                    <select name="interest" lay-filter="aihao">
-                        <option value=""></option>
-                        <option value="0">写作</option>
-                        <option value="1" selected="">阅读</option>
-                        <option value="2">游戏</option>
-                        <option value="3">音乐</option>
-                        <option value="4">旅行</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">行内选择框</label>
-                <div class="layui-input-inline">
-                    <select name="quiz1">
-                        <option value="">请选择省</option>
-                        <option value="浙江" selected="">浙江省</option>
-                        <option value="你的工号">江西省</option>
-                        <option value="你最喜欢的老师">福建省</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline">
-                    <select name="quiz2">
-                        <option value="">请选择市</option>
-                        <option value="杭州">杭州</option>
-                        <option value="宁波" disabled="">宁波</option>
-                        <option value="温州">温州</option>
-                        <option value="温州">台州</option>
-                        <option value="温州">绍兴</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline">
-                    <select name="quiz3">
-                        <option value="">请选择县/区</option>
-                        <option value="西湖区">西湖区</option>
-                        <option value="余杭区">余杭区</option>
-                        <option value="拱墅区">临安市</option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-form-item" pane="">
-                <label class="layui-form-label">开关-开</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" title="开关">
-                </div>
-            </div>
-            <div class="layui-form-item" pane="">
-                <label class="layui-form-label">单选框</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
-                    <input type="radio" name="sex" value="女" title="女">
-                    <input type="radio" name="sex" value="禁" title="禁用" disabled="">
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">文本域</label>
-                <div class="layui-input-block">
-                    <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <button class="layui-btn" lay-submit="" lay-filter="demo2">跳转式提交</button>
-            </div>
-        </form>
     </div>
 </div>
 
 <script src="{% static '/lib/layui-v2.6.3/layui.js' %}" charset="utf-8"></script>
+<script type="text/javascript" src="{% static '/lib/area.js' %}" ></script>
+
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
+
+
     layui.use(['form', 'layedit', 'laydate'], function () {
+        var $ = layui.jquery;
         var form = layui.form
             , layer = layui.layer
             , layedit = layui.layedit
             , laydate = layui.laydate;
+
+        //var layArea =layui.layArea
 
         //日期
         laydate.render({
@@ -626,6 +458,52 @@
             , "desc": "我爱 layui"
         })
 
+        function loadAddress(array, lables, notId,title) {
+
+            var s = '<option value="">'+title+'</option>';
+            if (array) {
+                for (var i = 0; i < array.length; i++) {
+                    var obj = array[i];
+                    s += '<option value="' + obj.address + '" lay-id="' + obj.code + '">' + obj.address + '</option>';
+                }
+            }
+            $(notId).empty();
+            $(lables).html(s);
+            form.render("select");
+        }
+
+            // 省级选择，获取市
+        form.on('select(province)', function (data) {
+            //alert("test4")
+            var array = layArea.getCityList(data.value);
+            loadAddress(array, "#city", "#city,#area","市")
+        });
+
+        // 市级选择，获取地区/县
+        form.on('select(city)', function (data) {
+            var name1 = $("#province").val();
+            var array = layArea.getAreaList(name1, data.value);
+            loadAddress(array, "#area", "#area","区")
+        });
+
+
+        // 加载省份
+        loadAddress(layArea.array, "#province", "#city,#area","省");
+
+         form.on('select(province2)', function (data) {
+            //alert("test4")
+            var array = layArea.getCityList(data.value);
+            loadAddress(array, "#city2", "#city2,#area2","市")
+        });
+
+        // 市级选择，获取地区/县
+        form.on('select(city2)', function (data) {
+            var name1 = $("#province2").val();
+            var array = layArea.getAreaList(name1, data.value);
+            loadAddress(array, "#area2", "#area2","区")
+        });
+
+        loadAddress(layArea.array, "#province2", "#city2,#area2","省");
 
     });
 </script>
