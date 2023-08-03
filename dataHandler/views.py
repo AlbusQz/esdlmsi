@@ -49,7 +49,7 @@ def ent_getUpload(request):
                 os.makedirs(path)
             filename = tempfile.name
             if(filename[-3:] == "csv"):
-                temp_data = pd.read_csv(tempfile.file,encoding='UTF-8')
+                temp_data = pd.read_csv(tempfile.file,sep='\s|,|;',error_bad_lines = False,encoding='UTF-8')
                 temp_data.to_csv(path+filename,encoding='utf_8_sig')
                 print(temp_data)
             else:

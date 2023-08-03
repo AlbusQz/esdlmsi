@@ -30,6 +30,8 @@
     color: #a29c9c;
 }
 
+
+
 .layui-form > .layui-form-item > .layui-form-label{
     width: 160px;
 }
@@ -37,7 +39,36 @@
     margin-left: 160px;
 }
 
+
+.layui-form > .layui-form-item > .layui-temp>.layui-form-label{
+    width: 160px;
+}
+.layui-form > .layui-form-item > .layui-temp>.layui-input-block {
+    margin-left: 160px;
+}
+
+.layui-form > .layui-form-item > .layui-inline>.layui-form-label{
+    width: 160px;
+}
+.layui-form > .layui-form-item > .layui-inline>.layui-input-block {
+    margin-left: 160px;
+}
 </style>
+
+<script>
+    function RegularNum(obj) {
+            obj.value = obj.value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
+            obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字
+            obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个, 清除多余的
+            obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+            obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d\d).*$/, '$1$2.$3'); //只能输入三个小数
+        };
+    function zhzs(obj){
+
+             obj.value = obj.value.replace(/[^\d]/g,'');
+        }
+</script>
+
 
 </head>
 
@@ -60,7 +91,7 @@
             请在此按照提示输入您需要处理的企业的数据
         </blockquote>
 
-        <form class="layui-form layui-form-pane" action="" method="post" >
+        <form class="layui-form layui-form-pane" id="mainform" action="" method="post" >
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>基础信息</legend>
             </fieldset>
@@ -93,8 +124,9 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">注册资本</label>
                     <div class="layui-input-inline">
-                        <input type="number" name="basic_fund"  autocomplete="off"  placeholder="单位：万元"  class="layui-input">
+                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="basic_fund"  autocomplete="off"  placeholder=""  onkeyup="RegularNum(this)" class="layui-input">
                     </div>
+                    <div class="layui-form-mid layui-word-aux">（单位：万元）</div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">注册资本币种</label>
@@ -136,7 +168,15 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">上市交易所</label>
                     <div class="layui-input-block">
-                        <input type="text" name="basic_exchange" id="basic_exchange"  placeholder="请输入上市交易所"  class="layui-input">
+                         <select name="basic_exchange" lay-filter="fund_kind">
+                            <option value="上海证券交易所" selected="">上海证券交易所</option>
+                            <option value="深圳证券交易所">深圳证券交易所</option>
+                            <option value="香港证券交易所">香港证券交易所</option>
+                            <option value="纽约证券交易所">纽约证券交易所</option>
+                            <option value="伦敦证券交易所">伦敦证券交易所</option>
+                            <option value="纳斯达克证券交易所">纳斯达克证券交易所</option>
+                            <option value="其他证券交易所">其他证券交易所</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -147,7 +187,7 @@
                 </label>
                 <div class="layui-input-block">
                     <div class="layui-input-inline"  style="width: 30%;">
-                        <select name="basic_reg_pro" id="province" lay-filter="province" lay-search="" placeholder="省" ></select>
+                        <select name="basic_reg_pro" id="province" lay-filter="province" lay-search="" ></select>
                     </div>
                     <div class="layui-input-inline"  style="width: 30%;">
                         <select name="basic_reg_city" id="city" lay-filter="city" lay-search=""></select>
@@ -164,7 +204,7 @@
                 </label>
                 <div class="layui-input-block">
                     <div class="layui-input-inline"  style="width: 30%;">
-                        <select name="basic_real_pro" id="province2" lay-filter="province2" lay-search="" placeholder="省" ></select>
+                        <select name="basic_real_pro" id="province2" lay-filter="province2" lay-search=""  ></select>
                     </div>
                     <div class="layui-input-inline"  style="width: 30%;">
                         <select name="basic_real_city" id="city2" lay-filter="city2" lay-search=""></select>
@@ -193,14 +233,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">人才招聘数量</label>
                 <div class="layui-input-block">
-                    <input type="number" name="peo_count1" id="peo_count1"  placeholder="请输入企业当年人才招聘数量"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="peo_count1" id="peo_count1"  placeholder="请输入企业当年人才招聘数量"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">本科以上学历招聘数量</label>
                 <div class="layui-input-block">
-                    <input type="number" name="peo_count2" id="peo_count2"  placeholder="请输入企业当年本科以上学历招聘数量"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="peo_count2" id="peo_count2" placeholder="请输入企业当年本科以上学历招聘数量"  class="layui-input">
                 </div>
             </div>
 
@@ -210,9 +250,37 @@
             </fieldset>
 
             <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">负债总额</label>
+                    <div class="layui-input-block">
+                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="debt1"  placeholder="请输入负债总额"  class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">资产总额</label>
+                    <div class="layui-input-block">
+                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="debt2"  placeholder="请输入资产总额"  class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                     <label class="layui-form-label">总资产负债率(%)</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="debt" id="debt" readonly="readonly" placeholder=""  class="layui-input">
+                    </div>
+
+                </div >
+                <div class="layui-inline">
+                      <button class="layui-btn" type="button" id="debt_btn"  style="margin: auto" >点击计算</button>
+                </div >
+                <div>
+                    <div class="layui-form-mid layui-word-aux">总资产负债率=负债总额／资产总额</div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
                 <label class="layui-form-label">总资产负债率(%)</label>
                 <div class="layui-input-block">
-                    <input type="number" name="debt" id="debt"  placeholder="请输入总资产负债率"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="debt" id="debt"  placeholder="请输入总资产负债率"  class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">总资产负债率=负债总额／资产总额</div>
             </div>
@@ -220,7 +288,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">产权比率(%)</label>
                 <div class="layui-input-block">
-                    <input type="number" name="equity" id="equity"  placeholder="请输入产权比率"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="equity" id="equity"  placeholder="请输入产权比率"  class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">产权比率=负债总额／股东权益</div>
             </div>
@@ -228,7 +296,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">平均净资产</label>
                 <div class="layui-input-block">
-                    <input type="number" name="net_worth" id="net_worth"  placeholder="请输入平均净资产"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="net_worth" id="net_worth"  placeholder="请输入平均净资产"  class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">平均净资产=（股东权益年初数+股东权益年末数）/2</div>
             </div>
@@ -236,7 +304,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">总资产增长率(%)</label>
                 <div class="layui-input-block">
-                    <input type="number" name="grate_total" id="grate_total"  placeholder="请输入总资产增长率"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="grate_total" id="grate_total"  placeholder="请输入总资产增长率"  class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">总资产增长率=本年总资产增长额/上年总资产总额（其中，本年总资产增长额=资产总额年末数-资产总额年初数）</div>
             </div>
@@ -244,7 +312,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">营业收入增长率(%)</label>
                 <div class="layui-input-block">
-                    <input type="number" name="grate_bus" id="grate_bus"  placeholder="请输入营业收入增长率"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="grate_bus" id="grate_bus"  placeholder="请输入营业收入增长率"  class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">营业收入增长率=（本年营业收入-上年营业收入）/上年营业收入</div>
             </div>
@@ -252,7 +320,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">企业纳税总额</label>
                 <div class="layui-input-block">
-                    <input type="number" name="tax" id="tax"  placeholder="请输入企业当年纳税总额企业当年纳税总额"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="tax" id="tax"  placeholder="请输入企业当年纳税总额企业当年纳税总额"  class="layui-input">
                 </div>
             </div>
 
@@ -263,7 +331,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">发明专利总数</label>
                 <div class="layui-input-block">
-                    <input type="number" name="ip_total" id="ip_total"  placeholder="请输入截至本年企业申请的发明专利总数"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="ip_total" id="ip_total"  placeholder="请输入截至本年企业申请的发明专利总数"  class="layui-input">
                 </div>
             </div>
 
@@ -271,28 +339,28 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">高级专利数量</label>
                 <div class="layui-input-block">
-                    <input type="number" name="ap_total" id="ap_total"  placeholder="请输入企业截至当年IPC类别（二级分类，例如A01）前10类及对应的专利数量"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="ap_total" id="ap_total"  placeholder="请输入企业截至当年IPC类别（二级分类，例如A01）前10类及对应的专利数量"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">合作开发专利数</label>
                 <div class="layui-input-block">
-                    <input type="number" name="jp_total" id="jp_total"  placeholder="请输入企业本年合作开发申请专利数"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="jp_total" id="jp_total"  placeholder="请输入企业本年合作开发申请专利数"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">软件著作数量</label>
                 <div class="layui-input-block">
-                    <input type="number" name="sp_total" id="sp_total"  placeholder="请输入截至当年企业软件著作累计数量"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="sp_total" id="sp_total"  placeholder="请输入截至当年企业软件著作累计数量"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">参与制定新标准数</label>
                 <div class="layui-input-block">
-                    <input type="number" name="ns_total" id="ns_total"  placeholder="请输入截至当年参与制定新标准数"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="ns_total" id="ns_total"  placeholder="请输入截至当年参与制定新标准数"  class="layui-input">
                 </div>
             </div>
 
@@ -303,14 +371,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">信息化平台数量</label>
                 <div class="layui-input-block">
-                    <input type="number" name="inforplat_total" id="inforplat_total"  placeholder="请输入企业APP、网站、公众号等信息化平台的数量"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="inforplat_total" id="inforplat_total"  placeholder="请输入企业APP、网站、公众号等信息化平台的数量"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">ICP申请数</label>
                 <div class="layui-input-block">
-                    <input type="number" name="icp_total" id="icp_total"  placeholder="请输入企业截至当年ICP申请的数量"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="icp_total" id="icp_total"  placeholder="请输入企业截至当年ICP申请的数量"  class="layui-input">
                 </div>
             </div>
 
@@ -321,7 +389,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">获得荣誉数量</label>
                 <div class="layui-input-block">
-                    <input type="number" name="honor_total" id="honor_total"  placeholder="请输入企业截止当年获得的荣誉数量"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="honor_total" id="honor_total"  placeholder="请输入企业截止当年获得的荣誉数量"  class="layui-input">
                 </div>
             </div>
 
@@ -346,7 +414,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">民事诉讼数量</label>
                 <div class="layui-input-block">
-                    <input type="number" name="lawsuit_total" id="lawsuit_total"  placeholder="请输入企业当年被民事诉讼的数量"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="lawsuit_total" id="lawsuit_total"  placeholder="请输入企业当年被民事诉讼的数量"  class="layui-input">
                 </div>
             </div>
 
@@ -366,33 +434,33 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">企业投资总次数</label>
                 <div class="layui-input-block">
-                    <input type="number" name="invest_time" id="invest_time"  placeholder="请输入截至当年企业投资的总次数"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="invest_time" id="invest_time"  placeholder="请输入截至当年企业投资的总次数"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">企业投资总金额</label>
                 <div class="layui-input-block">
-                    <input type="number" name="invest_amount" id="invest_amount"  placeholder="请输入截至当年企业投资的总金额"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="invest_amount" id="invest_amount"  placeholder="请输入截至当年企业投资的总金额"  class="layui-input">
                 </div>
             </div>
 
              <div class="layui-form-item">
                 <label class="layui-form-label">企业参与招标次数</label>
                 <div class="layui-input-block">
-                    <input type="number" name="bidding_time" id="bidding_time"  placeholder="请输入截至当年企业参与政府招标的总次数"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="bidding_time" id="bidding_time"  placeholder="请输入截至当年企业参与政府招标的总次数"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">企业参与招标总金额</label>
                 <div class="layui-input-block">
-                    <input type="number" name="bidding_amount" id="bidding_amount"  placeholder="请输入截至当年企业参与政府招标的总金额"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="bidding_amount" id="bidding_amount"  placeholder="请输入截至当年企业参与政府招标的总金额"  class="layui-input">
                 </div>
             </div>
 
              <div class="layui-form-item" style="margin: auto">
-                    <button class="layui-btn" type="submit" lay-submit="" lay-filter="demo1" style="margin: auto" >立即提交</button>
+                    <button class="layui-btn" type="button" id="submit_btn" lay-submit="" lay-filter="demo1" style="margin: auto" >立即提交</button>
              </div>
 
         </form>
@@ -406,6 +474,10 @@
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
 
+    function btn_submit()
+    {
+        document.getElementById("mainform").submit();
+    }
 
     layui.use(['form', 'layedit', 'laydate'], function () {
         var $ = layui.jquery;
@@ -416,12 +488,21 @@
 
         //var layArea =layui.layArea
 
+        function maxDate()
+        {
+            var now = new Date();
+            //alert(now.getFullYear() + "-" + (now.getMonth() + '-' + now.getDate());
+            return now.getFullYear() + "-" + (now.getMonth()+1) + '-' + now.getDate();
+        }
+
         //日期
         laydate.render({
             elem: '#date',
+            max: maxDate()
         });
         laydate.render({
-            elem: '#date1'
+            elem: '#date1',
+            max: maxDate()
         });
 
         //创建一个编辑器
@@ -443,6 +524,14 @@
             }
         });
 
+
+        form.verify({
+          Ndouble:[
+              /^[1-9]\d*$/
+              ,'只能输入整数哦'
+          ]
+      });
+
         //监听指定开关
         form.on('switch(switchTest)', function (data) {
             layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
@@ -452,13 +541,13 @@
         });
 
         //监听提交
-        /*
+
         form.on('submit(demo1)', function (data) {
-            layer.alert(JSON.stringify(data.field), {
+           /* layer.alert(JSON.stringify(data.field), {
                 title: '最终的提交信息'
-            })
-            return false;
-        });*/
+            })*/
+            btn_submit()
+        });
 
         //表单初始赋值
         form.val('example', {
@@ -489,34 +578,34 @@
         form.on('select(province)', function (data) {
             //alert("test4")
             var array = layArea.getCityList(data.value);
-            loadAddress(array, "#city", "#city,#area","市")
+            loadAddress(array, "#city", "#city,#area","")
         });
 
         // 市级选择，获取地区/县
         form.on('select(city)', function (data) {
             var name1 = $("#province").val();
             var array = layArea.getAreaList(name1, data.value);
-            loadAddress(array, "#area", "#area","区")
+            loadAddress(array, "#area", "#area","")
         });
 
 
         // 加载省份
-        loadAddress(layArea.array, "#province", "#city,#area","省");
+        loadAddress(layArea.array, "#province", "#city,#area","");
 
          form.on('select(province2)', function (data) {
             //alert("test4")
             var array = layArea.getCityList(data.value);
-            loadAddress(array, "#city2", "#city2,#area2","市")
+            loadAddress(array, "#city2", "#city2,#area2","")
         });
 
         // 市级选择，获取地区/县
         form.on('select(city2)', function (data) {
             var name1 = $("#province2").val();
             var array = layArea.getAreaList(name1, data.value);
-            loadAddress(array, "#area2", "#area2","区")
+            loadAddress(array, "#area2", "#area2","")
         });
 
-        loadAddress(layArea.array, "#province2", "#city2,#area2","省");
+        loadAddress(layArea.array, "#province2", "#city2,#area2","");
 
     });
 </script>
