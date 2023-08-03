@@ -270,52 +270,126 @@
 
                 </div >
                 <div class="layui-inline">
-                      <button class="layui-btn" type="button" id="debt_btn"  style="margin: auto" >点击计算</button>
+                      <button class="layui-btn" type="button" id="debt_btn" onclick="count_debt()" style="margin: auto" >点击计算</button>
                 </div >
                 <div>
                     <div class="layui-form-mid layui-word-aux">总资产负债率=负债总额／资产总额</div>
                 </div>
             </div>
 
+
             <div class="layui-form-item">
-                <label class="layui-form-label">总资产负债率(%)</label>
-                <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="debt" id="debt"  placeholder="请输入总资产负债率"  class="layui-input">
+                <div class="layui-inline">
+                    <label class="layui-form-label">负债总额</label>
+                    <div class="layui-input-block">
+                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="equity1"  placeholder="请输入负债总额"  class="layui-input">
+                    </div>
                 </div>
-                <div class="layui-form-mid layui-word-aux">总资产负债率=负债总额／资产总额</div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">股东权益</label>
+                    <div class="layui-input-block">
+                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="equity2"  placeholder="请输入股东权益"  class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                     <label class="layui-form-label">产权比率(%)</label>
+                    <div class="layui-input-block">
+                        <input type="number"  name="equity" id="equity"  readonly="readonly" placeholder=""  class="layui-input">
+                    </div>
+
+                </div >
+                <div class="layui-inline">
+                      <button class="layui-btn" type="button" id="equity_btn" onclick="count_equity()" style="margin: auto" >点击计算</button>
+                </div >
+                <div>
+                    <div class="layui-form-mid layui-word-aux">产权比率=负债总额／股东权益</div>
+                </div>
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">产权比率(%)</label>
-                <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="equity" id="equity"  placeholder="请输入产权比率"  class="layui-input">
+                <div class="layui-inline">
+                    <label class="layui-form-label">股东权益年初数</label>
+                    <div class="layui-input-block">
+                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="net_worth1"  placeholder="请输入股东权益年初数"  class="layui-input">
+                    </div>
                 </div>
-                <div class="layui-form-mid layui-word-aux">产权比率=负债总额／股东权益</div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">股东权益年末数</label>
+                    <div class="layui-input-block">
+                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="net_worth2"  placeholder="请输入股东权益年末数"  class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                     <label class="layui-form-label">平均净资产</label>
+                    <div class="layui-input-block">
+                        <input type="number"  name="net_worth" id="net_worth"  readonly="readonly" placeholder=""  class="layui-input">
+                    </div>
+
+                </div >
+                <div class="layui-inline">
+                      <button class="layui-btn" type="button" id="net_worth_btn" onclick="count_net_worth()" style="margin: auto" >点击计算</button>
+                </div >
+                <div>
+                    <div class="layui-form-mid layui-word-aux">平均净资产=（股东权益年初数+股东权益年末数）/2</div>
+                </div>
+            </div>
+
+             <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">资产总额年末数</label>
+                    <div class="layui-input-block">
+                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="grate_total1"  placeholder="请输入资产总额年末数"  class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">资产总额年初数</label>
+                    <div class="layui-input-block">
+                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="grate_total2"  placeholder="请输入资产总额年初数"  class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                     <label class="layui-form-label">总资产增长率(%)</label>
+                    <div class="layui-input-block">
+                        <input type="number"  name="grate_total" id="grate_total"  readonly="readonly" placeholder=""  class="layui-input">
+                    </div>
+
+                </div >
+                <div class="layui-inline">
+                      <button class="layui-btn" type="button" id="grate_total_btn" onclick="count_grate_total()" style="margin: auto" >点击计算</button>
+                </div >
+                <div>
+                    <div class="layui-form-mid layui-word-aux">总资产增长率=本年总资产增长额/上年总资产总额（其中，本年总资产增长额=资产总额年末数-资产总额年初数）</div>
+                </div>
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">平均净资产</label>
-                <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="net_worth" id="net_worth"  placeholder="请输入平均净资产"  class="layui-input">
+                <div class="layui-inline">
+                    <label class="layui-form-label">本年营业收入</label>
+                    <div class="layui-input-block">
+                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="grate_bus1"  placeholder="请输入本年营业收入"  class="layui-input">
+                    </div>
                 </div>
-                <div class="layui-form-mid layui-word-aux">平均净资产=（股东权益年初数+股东权益年末数）/2</div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">上年营业收入</label>
+                    <div class="layui-input-block">
+                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="grate_bus2"  placeholder="请输入上年营业收入"  class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                     <label class="layui-form-label">营业收入增长率(%)</label>
+                    <div class="layui-input-block">
+                        <input type="number"  name="grate_bus" id="grate_bus"  readonly="readonly" placeholder=""  class="layui-input">
+                    </div>
+
+                </div >
+                <div class="layui-inline">
+                      <button class="layui-btn" type="button" id="grate_bus_btn" onclick="count_grate_bus()" style="margin: auto" >点击计算</button>
+                </div >
+                <div>
+                    <div class="layui-form-mid layui-word-aux">营业收入增长率=（本年营业收入-上年营业收入）/上年营业收入</div>
+                </div>
             </div>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">总资产增长率(%)</label>
-                <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="grate_total" id="grate_total"  placeholder="请输入总资产增长率"  class="layui-input">
-                </div>
-                <div class="layui-form-mid layui-word-aux">总资产增长率=本年总资产增长额/上年总资产总额（其中，本年总资产增长额=资产总额年末数-资产总额年初数）</div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">营业收入增长率(%)</label>
-                <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="grate_bus" id="grate_bus"  placeholder="请输入营业收入增长率"  class="layui-input">
-                </div>
-                <div class="layui-form-mid layui-word-aux">营业收入增长率=（本年营业收入-上年营业收入）/上年营业收入</div>
-            </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">企业纳税总额</label>
@@ -474,6 +548,154 @@
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
 
+    function count_debt()
+    {
+        var d1 = parseFloat(document.getElementById("debt1").value)
+        var d2 = parseFloat(document.getElementById("debt2").value)
+        if(d1=="")
+        {
+            layer.msg("请填写负债总额",{icon:5})
+        }
+        else
+        {
+            if(d2=="")
+            {
+                layer.msg("请填写资产总额",{icon:5})
+            }
+            else
+            {
+                if(d2==0)
+                {
+                    layer.msg("资产总额不可为0！",{icon:5})
+                }
+                else
+                {
+                    var debt = (d1/d2).toFixed(4)*100
+                    document.getElementById("debt").value=debt
+                    layer.msg("计算完成",{icon:6})
+                }
+            }
+        }
+
+    }
+
+     function count_equity()
+    {
+        var d1 = parseFloat(document.getElementById("equity1").value)
+        var d2 = parseFloat(document.getElementById("equity2").value)
+        if(d1=="")
+        {
+            layer.msg("请填写负债总额",{icon:5})
+        }
+        else
+        {
+            if(d2=="")
+            {
+                layer.msg("请填写股东权益",{icon:5})
+            }
+            else
+            {
+                if(d2==0)
+                {
+                    layer.msg("股东权益不可为0！",{icon:5})
+                }
+                else
+                {
+                    var equity = (d1/d2).toFixed(4)*100
+                    document.getElementById("equity").value=equity
+                    layer.msg("计算完成",{icon:6})
+                }
+            }
+        }
+
+    }
+
+     function count_net_worth()
+    {
+        var d1 = parseFloat(document.getElementById("net_worth1").value)
+        var d2 = parseFloat(document.getElementById("net_worth2").value)
+        if(d1=="")
+        {
+            layer.msg("请填写股东权益年初数",{icon:5})
+        }
+        else
+        {
+            if(d2=="")
+            {
+                layer.msg("请填写股东权益年末数",{icon:5})
+            }
+            else
+            {
+                var net_worth = ((d1+d2)/2).toFixed(2)
+                document.getElementById("net_worth").value=net_worth
+                layer.msg("计算完成",{icon:6})
+            }
+        }
+
+    }
+
+    function count_grate_total()
+    {
+        var d1 = parseFloat(document.getElementById("grate_total1").value)
+        var d2 = parseFloat(document.getElementById("grate_total2").value)
+        if(d1=="")
+        {
+            layer.msg("请填写资产总额年末数",{icon:5})
+        }
+        else
+        {
+            if(d2=="")
+            {
+                layer.msg("请填写资产总额年初数",{icon:5})
+            }
+            else
+            {
+                if(d2==0)
+                {
+                    layer.msg("资产总额年初数不可为0！",{icon:5})
+                }
+                else
+                {
+                    var grate_total = ((d1-d2)/d2).toFixed(4)*100
+                    document.getElementById("grate_total").value=grate_total
+                    layer.msg("计算完成",{icon:6})
+                }
+            }
+        }
+
+    }
+
+     function count_grate_bus()
+    {
+        var d1 = parseFloat(document.getElementById("grate_bus1").value)
+        var d2 = parseFloat(document.getElementById("grate_bus2").value)
+        if(d1=="")
+        {
+            layer.msg("请填写本年营业收入",{icon:5})
+        }
+        else
+        {
+            if(d2=="")
+            {
+                layer.msg("请填写上年营业收入",{icon:5})
+            }
+            else
+            {
+                if(d2==0)
+                {
+                    layer.msg("上年营业收入不可为0！",{icon:5})
+                }
+                else
+                {
+                    var grate_bus = ((d1-d2)/d2).toFixed(4)*100
+                    document.getElementById("grate_bus").value=grate_bus
+                    layer.msg("计算完成",{icon:6})
+                }
+            }
+        }
+
+    }
+
     function btn_submit()
     {
         document.getElementById("mainform").submit();
@@ -532,33 +754,13 @@
           ]
       });
 
-        //监听指定开关
-        form.on('switch(switchTest)', function (data) {
-            layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
-                offset: '6px'
-            });
-            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-        });
 
         //监听提交
 
         form.on('submit(demo1)', function (data) {
-           /* layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息'
-            })*/
             btn_submit()
         });
 
-        //表单初始赋值
-        form.val('example', {
-            "username": "贤心" // "name": "value"
-            , "password": "123456"
-            , "interest": 1
-            , "like[write]": true //复选框选中状态
-            , "close": true //开关状态
-            , "sex": "女"
-            , "desc": "我爱 layui"
-        })
 
         function loadAddress(array, lables, notId,title) {
 
