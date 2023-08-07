@@ -470,8 +470,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">A级纳税人</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="a_taxpayer" value="是" title="是" checked="">
-                    <input type="radio" name="a_taxpayer" value="否" title="否">
+                    <input type="radio" name="a_taxpayer" value="1" title="是" checked="">
+                    <input type="radio" name="a_taxpayer" value="0" title="否">
                 </div>
                  <div class="layui-form-mid layui-word-aux">企业当年是否被评为A级纳税人</div>
             </div>
@@ -479,8 +479,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">是否失信被执行</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="dishonesty" value="是" title="是" checked="">
-                    <input type="radio" name="dishonesty" value="否" title="否">
+                    <input type="radio" name="dishonesty" value="1" title="是" checked="">
+                    <input type="radio" name="dishonesty" value="0" title="否">
                 </div>
                  <div class="layui-form-mid layui-word-aux">企业近3年是否失信被执行</div>
             </div>
@@ -495,8 +495,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">是否受到环保处罚</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="is_ep" value="是" title="是" checked="">
-                    <input type="radio" name="is_ep" value="否" title="否">
+                    <input type="radio" name="is_ep" value="1" title="是" checked="">
+                    <input type="radio" name="is_ep" value="0" title="否">
                 </div>
                  <div class="layui-form-mid layui-word-aux">企业当年是否受到环保处罚</div>
             </div>
@@ -771,7 +771,7 @@
                     s += '<option value="' + obj.address + '" lay-id="' + obj.code + '">' + obj.address + '</option>';
                 }
             }
-            $(notId).empty();
+            //$(notId).empty();
             $(lables).html(s);
             form.render("select");
         }
