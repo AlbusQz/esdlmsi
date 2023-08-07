@@ -1,3 +1,4 @@
+import pytz
 from django.shortcuts import render
 from datetime import datetime
 from django.http import HttpResponse, JsonResponse
@@ -197,6 +198,10 @@ def ent_inputData(request):
         tempinfo.setInvest(invest_time,invest_amount,bidding_time,bidding_amount)
 
         tempinfo.mu = tempuser
+
+        now = datetime.now(pytz.timezone('Asia/Shanghai'))
+        format_time = now.strftime('%Y-%m-%d %H:%M:%S')
+        #tempinfo.create_time = format_time
 
         tempinfo.save()
 

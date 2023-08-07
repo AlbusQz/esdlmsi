@@ -9,7 +9,8 @@ from django.db import models
 from myUser.models import Myuser
 
 class EnterpriseInfo(models.Model):
-    enterprise_id = models.IntegerField(primary_key=True)
+    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    enterprise_id = models.IntegerField(null=False)
     enterprise_name = models.CharField(max_length=64, blank=True, null=True)
     founding_date = models.DateField(blank=True, null=True)
     registered_capital = models.IntegerField(blank=True, null=True)
@@ -43,6 +44,7 @@ class EnterpriseInfo(models.Model):
     environmental_punishment_count = models.PositiveIntegerField(blank=True, null=True)
     investment_count = models.PositiveIntegerField(blank=True, null=True)
     investment_amount = models.PositiveIntegerField(blank=True, null=True)
+    create_time = models.DateTimeField(blank=True, null=True)
     mu = models.OneToOneField(Myuser, on_delete=models.CASCADE)
 
     #用来初始化基础信息模块数据的函数
