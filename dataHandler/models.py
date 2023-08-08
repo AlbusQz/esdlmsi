@@ -24,7 +24,7 @@ class EnterpriseInfo(models.Model):
     actual_district = models.CharField(max_length=64, blank=True, null=True)
     actual_street = models.CharField(max_length=64, blank=True, null=True)
     industry = models.CharField(max_length=64, blank=True, null=True)
-    industry_code = models.IntegerField(blank=True, null=True)
+    industry_code = models.CharField(max_length=64, blank=True, null=True)
     time_to_market = models.DateField(blank=True, null=True)
     bourse = models.CharField(max_length=64, blank=True, null=True)
     service_field = models.CharField(max_length=64, blank=True, null=True)

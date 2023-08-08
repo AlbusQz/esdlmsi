@@ -1,4 +1,5 @@
 import pytz
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from datetime import datetime
 from django.http import HttpResponse, JsonResponse
@@ -12,6 +13,7 @@ import pandas as pd
 from myUser.models import Myuser
 from django.contrib import messages
 from .models import EnterpriseInfo
+import json
 
 # Create your views here.
 #测试函数
@@ -210,3 +212,51 @@ def ent_inputData(request):
         return redirect("/ent/data_input")
 
     return render(request,'data_handler/ent_data_input.html')
+
+#用于向企业用户返回数据查询页面的函数
+@login_required
+def get_ent_research(request):
+    return render(request,"data_handler/ent_data_search.html")
+
+#用于向企业用户数据查询界面返回数据的函数
+@login_required
+def get_ent_data(request):
+    user = request.user
+    myuser = Myuser.objects.get(u=user)
+    data = EnterpriseInfo.objects.filter(mu=myuser)
+    dataCount = data.count()
+    pageIndex = request.POST.get('pageIndex')
+    pageSize = request.POST.get('pageSize')
+
+    list = []
+    res = []
+    for item in data:
+        dict = {}
+        dict['name'] = item.enterprise_name
+        dict['id'] = item.enterprise_id
+        if item.founding_date != None:
+            dict['c_date'] = item.founding_date.strftime('%Y-%m-%d')
+        dict['fund'] = item.registered_capital
+        dict['fund_kind'] = item.registered_capital_currency
+        dict['ind_code'] = item.industry_code
+        if item.time_to_market != None:
+            dict['ipo_time'] = item.time_to_market.strftime('%Y-%m-%d')
+        dict['exchange'] = item.bourse
+        if item.registered_province !=None:
+            dict['reg_add'] = item.registered_province+"/"+item.registered_city+"/"+item.registered_district
+        if item.actual_province != None:
+            dict['real_add'] = item.actual_province+"/"+item.actual_city+"/"+item.actual_district
+        dict['c_time'] = item.create_time.strftime('%Y-%m-%d %H:%M:%S')
+        list.append(dict)
+
+    pageInator = Paginator(list, pageSize)
+    context = pageInator.page(pageIndex)
+    for item in context:
+        res.append(item)
+    result = {
+        'code': 0,
+        'msg': 'nice',
+        'DataCount': dataCount,
+        'data': res
+    }
+    return HttpResponse(json.dumps(result))

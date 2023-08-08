@@ -88,8 +88,8 @@
 
         table.render({
             elem: '#currentTableId',
-            url: '/ent/get_search_data',
-            method:'get',
+            url: '/ent/get_ent_data',
+            method:'post',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print'],
             request:{
@@ -115,6 +115,7 @@
                 {field: 'exchange', minWidth: 100, title: '上市交易所', sort: true},
                 {field: 'reg_add', minWidth:120, title: '企业注册地址', sort:true},
                 {field: 'real_add', minWidth: 150, title: '企业实际地址', sort: true},
+                {field: 'c_time', minWidth: 150, title: '数据上传时间', sort: true},
                // {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
             limits: [5, 10,15, 20, 25, 50, 100],
@@ -133,7 +134,7 @@
 
             //执行搜索重载
             table.reload('currentTableId', {
-                url: '/admin/search_pageinfo',
+                url: '/ent/search_pageinfo',
                 method: "GET",
                 page: {
                     curr: 1

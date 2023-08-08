@@ -63,7 +63,11 @@ dataHandler_urls =[
     path('ent/uploadFile',dataHandler.views.ent_getUpload),
 
     #以下为数据输入有关的url
-    path('ent/data_input',dataHandler.views.ent_inputData)
+    path('ent/data_input',dataHandler.views.ent_inputData),
+
+    #以下为数据查询有关的url
+    path('ent/data_search',dataHandler.views.get_ent_research),
+    path('ent/get_ent_data',dataHandler.views.get_ent_data)
 
     ]
 

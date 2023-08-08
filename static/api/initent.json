@@ -41,7 +41,7 @@
                 },
                 {
                   "title": "数据查询",
-                  "href": "/data_select",
+                  "href": "/ent/data_search",
                   "icon":"fa fa-filter",
                   "target": "_self"
                 }
