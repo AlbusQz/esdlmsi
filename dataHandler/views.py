@@ -232,6 +232,7 @@ def get_ent_data(request):
     res = []
     for item in data:
         dict = {}
+        dict['t_id'] = item.id
         dict['name'] = item.enterprise_name
         dict['id'] = item.enterprise_id
         if item.founding_date != None:

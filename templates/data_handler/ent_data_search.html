@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="{% static '/css/public.css' %}" media="all">
 </head>
 <body>
-<div class="layuimini-container">
-    <div class="layuimini-main">
+<div class="layuimini-container" >
+    <div class="layuimini-main"  >
 
         <fieldset class="table-search-fieldset">
             <legend>搜索信息</legend>
@@ -73,7 +73,7 @@
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="show_detail">查看企业详细信息</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
 
@@ -105,18 +105,19 @@
             },
             cols: [[
                 {type: "checkbox", minWidth: 50},
+                {field: 't_id', minWidth: 90, title: '数据项ID', sort: true},
                 {field: 'name', minWidth: 100, title: '企业名称', sort: true},
                 {field: 'id', minWidth: 150, title: '组织机构代码', sort: true},
                 {field: 'c_date', minWidth: 100, title: '成立日期', sort: true},
-                {field: 'fund', minWidth: 150, title: '注册资本',sort:true},
-                {field: 'fund_kind', minWidth: 150, title: '注册资本币种',sort:true},
-                {field: 'ind_code', minWidth: 100, title: '企业四级行业代码', sort: true},
+                //{field: 'fund', minWidth: 150, title: '注册资本',sort:true},
+                //{field: 'fund_kind', minWidth: 100, title: '注册资本币种',sort:true},
+                //{field: 'ind_code', minWidth: 100, title: '企业四级行业代码', sort: true},
                 {field: 'ipo_time', minWidth: 100, title: '上市时间', sort: true},
-                {field: 'exchange', minWidth: 100, title: '上市交易所', sort: true},
-                {field: 'reg_add', minWidth:120, title: '企业注册地址', sort:true},
+                //{field: 'exchange', minWidth: 100, title: '上市交易所', sort: true},
+                {field: 'reg_add', minWidth:150, title: '企业注册地址', sort:true},
                 {field: 'real_add', minWidth: 150, title: '企业实际地址', sort: true},
                 {field: 'c_time', minWidth: 150, title: '数据上传时间', sort: true},
-               // {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
             limits: [5, 10,15, 20, 25, 50, 100],
             limit: 10,
@@ -191,8 +192,21 @@
 
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
-            if (obj.event === 'edit') {
+            if (obj.event === 'show_detail') {
+                 var id = $("#t_id").val();
+                 var index = layer.open({
+                    title: '查看完整信息',
+                    type: 2,
+                    area: ['720px', '500px'],
+                    shade: 0.6,
+                    maxmin:true,
+                    shadeClose: true,
+                    closeBtn:1,
+                    area: ['100%', '100%'],
+                    content: '/ent/data_input',
+                });
 
+                 /*
                  layer.prompt({ formType:2, title: "编辑表格",btn:['修改数据','关闭'],anim: 4,
                       content:`<div>
                                     账号ID: <input type="text"  style='display:inline-block' disabled="disabled" id="id"><br><br>
@@ -243,7 +257,7 @@
                       $("#email").val(data.email);
                       $("#mobile").val(data.mobile);
                       $("#type").val(data.type)
-
+*/
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('确认进行删除？', function (index) {
