@@ -380,13 +380,13 @@ def search_ent_info(request):
         q = q & Q(registered_district__contains=basic_reg_area)
     basic_real_pro = params['basic_real_pro']
     if (basic_real_pro != '' and basic_real_pro != None):
-        q = q & Q(actual_province__contains=basic_reg_pro)
+        q = q & Q(actual_province__contains=basic_real_pro)
     basic_real_city = params['basic_real_city']
     if (basic_real_city != '' and basic_real_city != None):
-        q = q & Q(actual_city__contains=basic_reg_city)
+        q = q & Q(actual_city__contains=basic_real_city)
     basic_real_area = params['basic_real_area']
     if (basic_real_area != '' and basic_real_area != None):
-        q = q & Q(actual_district__contains=basic_reg_area)
+        q = q & Q(actual_district__contains=basic_real_area)
 
   #  q = Q(name__contains=name)&Q(email__contains=email)&Q(mobile__contains=mobile)&Q(type__contains=type)
 
