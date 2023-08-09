@@ -27,21 +27,28 @@ class EnterpriseInfo(models.Model):
     industry_code = models.CharField(max_length=64, blank=True, null=True)
     time_to_market = models.DateField(blank=True, null=True)
     bourse = models.CharField(max_length=64, blank=True, null=True)
+
     service_field = models.CharField(max_length=64, blank=True, null=True)
+
     head_count = models.IntegerField(blank=True, null=True)
     above_bs_head_count = models.IntegerField(blank=True, null=True)
+
     applicated_patent_count = models.PositiveIntegerField(blank=True, null=True)
     ipc_top10_patent_count = models.PositiveIntegerField(db_column='IPC_top10_patent_count', blank=True, null=True)  # Field name made lowercase.
     multi_applicated_patent_count_this_year = models.PositiveIntegerField(blank=True, null=True)
     sc_count = models.PositiveIntegerField(blank=True, null=True)
     standard_count = models.PositiveIntegerField(blank=True, null=True)
+
     informalization_platform_count = models.PositiveIntegerField(blank=True, null=True)
     icp_count = models.PositiveIntegerField(db_column='ICP_count', blank=True, null=True)  # Field name made lowercase.
+
     honor_count = models.IntegerField(blank=True, null=True)
     a_class_honor = models.IntegerField(db_column='A_class_honor', blank=True, null=True)  # Field name made lowercase.
     dishonest_in_3_years = models.IntegerField(blank=True, null=True)
     civil_action_count = models.PositiveIntegerField(blank=True, null=True)
     environmental_punishment_count = models.PositiveIntegerField(blank=True, null=True)
+
+
     investment_count = models.PositiveIntegerField(blank=True, null=True)
     investment_amount = models.PositiveIntegerField(blank=True, null=True)
     create_time = models.DateTimeField(blank=True, null=True)

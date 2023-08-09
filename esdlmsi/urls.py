@@ -67,7 +67,8 @@ dataHandler_urls =[
 
     #以下为数据查询有关的url
     path('ent/data_search',dataHandler.views.get_ent_research),
-    path('ent/get_ent_data',dataHandler.views.get_ent_data)
+    path('ent/get_ent_data',dataHandler.views.get_ent_data),
+    path('ent/get_data_detail/<int:id>/',dataHandler.views.get_ent_detail)
 
     ]
 

@@ -74,7 +74,7 @@
 
         <script type="text/html" id="currentTableBar">
             <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="show_detail">查看企业详细信息</a>
-            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+            <!--a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a-->
         </script>
 
     </div>
@@ -192,10 +192,16 @@
 
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
+
             if (obj.event === 'show_detail') {
-                 var id = $("#t_id").val();
+                 var id = $("#id").val();
                  var index = layer.open({
                     title: '查看完整信息',
+                     data:{
+                        id:"test",
+                     },
+
+                    method:"post",
                     type: 2,
                     area: ['720px', '500px'],
                     shade: 0.6,
@@ -203,7 +209,7 @@
                     shadeClose: true,
                     closeBtn:1,
                     area: ['100%', '100%'],
-                    content: '/ent/data_input',
+                    content: '/ent/get_data_detail/'+obj.data['t_id']
                 });
 
                  /*

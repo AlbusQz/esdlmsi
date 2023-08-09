@@ -261,3 +261,92 @@ def get_ent_data(request):
         'data': res
     }
     return HttpResponse(json.dumps(result))
+
+#用于向企业用户返回企业数据详细值
+@login_required
+def get_ent_detail(request,id):
+    ent_info = EnterpriseInfo.objects.get(id=id)
+
+    basic_name = ent_info.enterprise_name
+    basic_code = ent_info.enterprise_id
+
+    id = id
+
+
+    c_time = ent_info.create_time.strftime('%Y-%m-%d %H:%M:%S')
+
+    if ent_info.founding_date != None:
+        date = ent_info.founding_date.strftime('%Y-%m-%d ')
+    basic_fund = ent_info.registered_capital
+    basic_fund_kind = ent_info.registered_capital_currency
+    basic_ind = ent_info.industry
+    basic_ind_code = ent_info.industry_code
+    if ent_info.time_to_market != None:
+        basic_IPO_time = ent_info.time_to_market.strftime('%Y-%m-%d ')
+    basic_exchange = ent_info.bourse
+    basic_reg_pro = ent_info.registered_province
+    basic_reg_city = ent_info.registered_city
+    basic_reg_area = ent_info.registered_district
+    basic_real_pro = ent_info.actual_province
+    basic_real_city = ent_info.actual_city
+    basic_real_area = ent_info.actual_district
+
+    ser_field = ent_info.service_field
+
+    peo_count1 = ent_info.head_count
+    peo_count2 = ent_info.above_bs_head_count
+
+    ##财务信息暂时空着
+    debt = 0
+    equity = 0
+    net_worth = 0
+    grate_total = 0
+    grate_bus = 0
+    tax = 0
+
+    ip_total = ent_info.applicated_patent_count
+    ap_total = ent_info.ipc_top10_patent_count
+    jp_total = ent_info.multi_applicated_patent_count_this_year
+    sp_total = ent_info.sc_count
+    ns_total = ent_info.standard_count
+
+    inforplat_total = ent_info.informalization_platform_count
+    icp_total = ent_info.icp_count
+
+    honor_total = ent_info.honor_count
+    a_taxpayer = ent_info.a_class_honor
+    if ent_info.a_class_honor == 1:
+        a_taxpayer = "是"
+    else:
+        a_taxpayer = "否"
+    dishonesty = ent_info.dishonest_in_3_years
+    if ent_info.dishonest_in_3_years ==1:
+        dishonesty = "是"
+    else:
+        dishonesty = "否"
+    lawsuit_total = ent_info.civil_action_count
+    is_ep = ent_info.environmental_punishment_count
+    if is_ep :
+        is_ep = "是"
+    else:
+        is_ep = "否"
+
+    invest_time = ent_info.investment_count
+    invest_amount = ent_info.investment_amount
+    bidding_time = 0
+    bidding_amount = 0
+
+
+    del ent_info
+
+    for item in locals():
+        print(item)
+    '''
+    for item in locals():
+        if item.value == None:
+            print("here")
+            item.value = "空，未填写！"
+        else:
+            print(item)
+'''
+    return render(request,"data_handler/ent_data_detail.html",locals())
