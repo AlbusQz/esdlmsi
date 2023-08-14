@@ -1,4 +1,6 @@
 import pytz
+import sys
+sys.path.append("./")
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from datetime import datetime
@@ -15,7 +17,9 @@ from django.contrib import messages
 from .models import EnterpriseInfo
 import json
 from django.db.models import Q
-
+from dataHandler.VAEGAIN import VAE_GAIN
+from dataHandler.SCIS import SCIS
+from dataHandler.GAIN import GAIN
 # Create your views here.
 #测试函数
 @login_required
@@ -417,6 +421,57 @@ def search_ent_info(request):
         dict['c_time'] = item.create_time.strftime('%Y-%m-%d %H:%M:%S')
         list.append(dict)
 
+    pageInator = Paginator(list, pageSize)
+    context = pageInator.page(pageIndex)
+    for item in context:
+        res.append(item)
+    result = {
+        'code': 0,
+        'msg': 'nice',
+        'DataCount': dataCount,
+        'data': res
+    }
+    return HttpResponse(json.dumps(result))
+
+#用于向企业用户返回数据预处理页面的函数
+@login_required
+def get_ent_process(request):
+    return render(request,"data_handler/ent_data_process.html")
+
+#用于向企业用户数据预处理界面返回数据的函数
+@login_required
+def get_ent_pre_data(request):
+    user = request.user
+    myuser = Myuser.objects.get(u=user)
+    data = EnterpriseInfo.objects.filter(mu=myuser)
+    dataCount = data.count()
+    pageIndex = request.POST.get('pageIndex')
+    pageSize = request.POST.get('pageSize')
+
+    list = []
+    res = []
+    for item in data:
+        if item.needpre:
+            dict = {}
+            dict['t_id'] = item.id
+            dict['name'] = item.enterprise_name
+            dict['id'] = item.enterprise_id
+            if item.founding_date != None:
+                dict['c_date'] = item.founding_date.strftime('%Y-%m-%d')
+            dict['fund'] = item.registered_capital
+            dict['fund_kind'] = item.registered_capital_currency
+            dict['ind_code'] = item.industry_code
+            if item.time_to_market != None:
+                dict['ipo_time'] = item.time_to_market.strftime('%Y-%m-%d')
+            dict['exchange'] = item.bourse
+            if item.registered_province !=None:
+                dict['reg_add'] = item.registered_province+"/"+item.registered_city+"/"+item.registered_district
+            if item.actual_province != None:
+                dict['real_add'] = item.actual_province+"/"+item.actual_city+"/"+item.actual_district
+            dict['c_time'] = item.create_time.strftime('%Y-%m-%d %H:%M:%S')
+            list.append(dict)
+        else:
+            continue
     pageInator = Paginator(list, pageSize)
     context = pageInator.page(pageIndex)
     for item in context:

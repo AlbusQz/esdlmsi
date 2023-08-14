@@ -11,74 +11,11 @@
     <link rel="stylesheet" href="{% static '/css/public.css' %}" media="all">
 </head>
 <body>
-<div class="layuimini-container" >
-    <div class="layuimini-main"  >
-
-        <fieldset class="table-search-fieldset">
-            <legend>搜索信息</legend>
-            <div style="margin: 10px 10px 10px 10px">
-                <form class="layui-form layui-form-pane" action="">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label" style="width: 15%;" >企业名称</label>
-                        <div class="layui-input-inline" style="width: 25%;" >
-                             <input type="text" name="basic_name" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-
-                    <div class="layui-form-item">
-                        <label class="layui-form-label" style="width: 15%;" >组织机构代码</label>
-                        <div class="layui-input-inline" style="width: 25%;" >
-                            <input type="text" name="basic_id" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label" style="width: 15%;" >数据项ID</label>
-                        <div class="layui-input-inline" style="width: 25%;" >
-                            <input type="text" name="id" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label" title="所属省/市/区" style="width: 15%;" >
-                             企业注册地址
-                        </label>
-                        <div class="layui-input-block">
-                            <div class="layui-input-inline"  style="width: 25%;">
-                                <select name="basic_reg_pro" id="province" lay-filter="province" lay-search="" ></select>
-                            </div>
-                            <div class="layui-input-inline"  style="width: 25%;">
-                                <select name="basic_reg_city" id="city" lay-filter="city" lay-search=""></select>
-                            </div>
-                            <div class="layui-input-inline"  style="width: 25%;">
-                                <select name="basic_reg_area" id="area" lay-filter="area" lay-search=""></select>
-                            </div>
-                        </div>
-                    </div>
-
-                <div class="layui-form-item">
-                        <label class="layui-form-label" title="所属省/市/区" style="width: 15%;" >
-                            企业实际地址
-                        </label>
-                        <div class="layui-input-block">
-                            <div class="layui-input-inline"  style="width: 25%;">
-                                <select name="basic_real_pro" id="province2" lay-filter="province2" lay-search=""  ></select>
-                            </div>
-                            <div class="layui-input-inline"  style="width:25%;">
-                                <select name="basic_real_city" id="city2" lay-filter="city2" lay-search=""></select>
-                            </div>
-                            <div class="layui-input-inline"  style="width: 25%;">
-                                <select name="basic_real_area" id="area2" lay-filter="area2" lay-search=""></select>
-                            </div>
-                </div>
-            </div>
-                <div class="layui-inline">
-                    <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
-                </div>
-                </form>
-            </div>
-        </fieldset>
-
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <form class="layui-form layui-form-pane" id="mainform" action="" method="post" >
         <script type="text/html" id="toolbarDemo">
-            <legend style="font-size: large;color: #0a862d;" ><b>用户上传企业表</b></legend>
+            <legend style="font-size: large;color: #0a862d;" ><b>需进行预处理的企业表</b></legend>
             <div class="layui-btn-container">
                 <!--button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button-->
                 <!--button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button-->
@@ -92,23 +29,33 @@
             <!--a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a-->
         </script>
 
-        <div style="margin: auto">
-            <button class="layui-btn" type="button" id="submit_btn" lay-submit="" lay-filter="demo1" style="margin: auto" >立即提交</button>
+        <div class="layui-form-item">
+                <label class="layui-form-label">请选择补全算法</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="alg" value="GAIN" lay-skin="primary" title="GAIN" checked="">
+                    <input type="radio" name="alg" value="VAEGAIN" title="VAEGAIN">
+                    <input type="radio" name="alg" value="SCIS" title="SCIS" >
+                </div>
         </div>
 
+        <div style="margin: auto">
+            <button class="layui-btn" type="button" id="submit_btn" lay-submit="" lay-filter="demo1" style="margin: auto" >点击进行预处理</button>
+        </div>
+        </form>
     </div>
 </div>
+
 <script src="{% static '/lib/layui-v2.6.3/layui.js' %}" charset="utf-8"></script>
 <script type="text/javascript" src="{% static '/lib/area.js' %}" ></script>
 <script>
     layui.use(['form', 'table'], function () {
-        var $ = layui.jquery,
-            form = layui.form,
+        var $ = layui.jquery;
+        var form = layui.form,
             table = layui.table;
 
         table.render({
             elem: '#currentTableId',
-            url: '/ent/get_ent_data',
+            url: '/ent/get_ent_pre_data',
             method:'post',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print'],
@@ -167,52 +114,6 @@
             return false;
         });
 
-        function loadAddress(array, lables, notId,title) {
-
-            var s = '<option value="">'+title+'</option>';
-            if (array) {
-                for (var i = 0; i < array.length; i++) {
-                    var obj = array[i];
-                    s += '<option value="' + obj.address + '" lay-id="' + obj.code + '">' + obj.address + '</option>';
-                }
-            }
-            //$(notId).empty();
-            $(lables).html(s);
-            form.render("select");
-        }
-
-            // 省级选择，获取市
-        form.on('select(province)', function (data) {
-            //alert("test4")
-            var array = layArea.getCityList(data.value);
-            loadAddress(array, "#city", "#city,#area","")
-        });
-
-        // 市级选择，获取地区/县
-        form.on('select(city)', function (data) {
-            var name1 = $("#province").val();
-            var array = layArea.getAreaList(name1, data.value);
-            loadAddress(array, "#area", "#area","")
-        });
-
-
-        // 加载省份
-        loadAddress(layArea.array, "#province", "#city,#area","");
-
-         form.on('select(province2)', function (data) {
-            //alert("test4")
-            var array = layArea.getCityList(data.value);
-            loadAddress(array, "#city2", "#city2,#area2","")
-        });
-
-        // 市级选择，获取地区/县
-        form.on('select(city2)', function (data) {
-            var name1 = $("#province2").val();
-            var array = layArea.getAreaList(name1, data.value);
-            loadAddress(array, "#area2", "#area2","")
-        });
-
-        loadAddress(layArea.array, "#province2", "#city2,#area2","");
 
         /**
          * toolbar监听事件

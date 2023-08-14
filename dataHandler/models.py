@@ -54,6 +54,8 @@ class EnterpriseInfo(models.Model):
     create_time = models.DateTimeField(blank=True, null=True)
     mu = models.OneToOneField(Myuser, on_delete=models.CASCADE)
 
+    needpre = models.PositiveIntegerField(blank=True, null=True)
+
     #用来初始化基础信息模块数据的函数
     def setBasic(self,enterprise_name, enterprise_id, founding_date, registered_capital,
                    registered_capital_currency, industry, industry_code, time_to_market,

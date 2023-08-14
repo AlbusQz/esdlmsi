@@ -71,6 +71,9 @@ dataHandler_urls =[
     path('ent/get_data_detail/<int:id>/',dataHandler.views.get_ent_detail),
     path('ent/search_ent_info',dataHandler.views.search_ent_info),
 
+    # 以下为数据预处理有关的url
+    path('ent/data_process', dataHandler.views.get_ent_process),
+    path('ent/get_ent_pre_data', dataHandler.views.get_ent_pre_data),
     ]
 
 urlpatterns += dataHandler_urls
