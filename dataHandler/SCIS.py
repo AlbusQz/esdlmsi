@@ -393,7 +393,7 @@ def gain(all_data_original, gain_parameters, Initial_num, thre_value, epsilon, v
   imputed_data = renormalization(imputed_data, all_norm_original_parameters)
 
   # Rounding
-  #imputed_data = rounding(imputed_data, all_data_original)
+  imputed_data = rounding(imputed_data, all_data_original)
 
 
   print('ALL-time', end - start)

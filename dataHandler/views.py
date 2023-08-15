@@ -483,3 +483,47 @@ def get_ent_pre_data(request):
         'data': res
     }
     return HttpResponse(json.dumps(result))
+
+#用于对缺失数据进行预处理的函数
+@login_required
+def ent_process_data(request):
+    #此次应为
+    #origindata = EnterpriseInfo.objects.filter(needpre=0)
+    origindata = EnterpriseInfo.objects.all()
+    data = []
+    for item in origindata:
+        data.append(item.getNumberAttr())
+    rawdata = []
+    params = request.POST.get('searchParams')
+    type = request.POST.get("type")
+    print(type)
+    params = json.loads(params)
+    len = 0
+    for param in params:
+        tempid = param['t_id']
+        print(tempid)
+        tempinfo = EnterpriseInfo.objects.get(id=tempid)
+        rawdata.append(tempinfo)
+        data.append(tempinfo.getNumberAttr())
+        len +=1
+
+    print(data)
+
+    if len !=0:
+        data = pd.DataFrame(data)
+        if type == "GAIN":
+            data = GAIN(data)
+        elif type == "VAEGAIN":
+            data = VAE_GAIN(data)
+        elif type == "SCIS":
+            data = SCIS(data)
+
+        results = data.tolist()
+        results = results[-len:]
+        for i in range(len):
+            rawdata[i].setNumberAttr(results[i])
+
+            rawdata[i].needpre = 0
+            rawdata[i].save()
+
+    return get_ent_pre_data(request)

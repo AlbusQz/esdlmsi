@@ -154,6 +154,49 @@ class EnterpriseInfo(models.Model):
         self.investment_count = investment_count
         self.investment_amount = investment_amount
 
+    #用于获得预处理算法中仅数值属性的函数
+    def getNumberAttr(self):
+        result = []
+        result.append(self.head_count)
+        result.append(self.above_bs_head_count)
+
+        result.append(self.applicated_patent_count)
+        result.append(self.ipc_top10_patent_count)
+        result.append(self.multi_applicated_patent_count_this_year)
+        result.append(self.sc_count)
+        result.append(self.standard_count)
+
+        result.append(self.informalization_platform_count)
+        result.append(self.icp_count)
+
+        result.append(self.honor_count)
+        result.append(self.civil_action_count)
+
+        result.append(self.investment_count)
+        result.append(self.investment_amount)
+        return result
+    # 用于填补预处理算法中仅数值属性的函数
+    def setNumberAttr(self,result):
+
+        self.head_count = result[0]
+        self.above_bs_head_count = result[1]
+
+        self.applicated_patent_count = result[2]
+        self.ipc_top10_patent_count = result[3]
+        self.multi_applicated_patent_count_this_year = result[4]
+        self.sc_count = result[5]
+        self.standard_count = result[6]
+
+        self.informalization_platform_count = result[7]
+        self.icp_count = result[8]
+
+        self.honor_count = result[9]
+        self.civil_action_count = result[10]
+
+        self.investment_count = result[11]
+        self.investment_amount = result[12]
+
+
     class Meta:
         managed = False
         db_table = 'enterprise_info'

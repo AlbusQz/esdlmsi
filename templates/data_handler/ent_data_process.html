@@ -30,16 +30,16 @@
         </script>
 
         <div class="layui-form-item">
-                <label class="layui-form-label">请选择补全算法</label>
+                <label class="layui-form-label" style="width: 150px" >请选择补全算法</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="alg" value="GAIN" lay-skin="primary" title="GAIN" checked="">
-                    <input type="radio" name="alg" value="VAEGAIN" title="VAEGAIN">
-                    <input type="radio" name="alg" value="SCIS" title="SCIS" >
+                    <input type="radio" id="alg" name="alg" value="GAIN" lay-skin="primary" title="GAIN" checked="">
+                    <input type="radio" id="alg" name="alg" value="VAEGAIN" title="VAEGAIN">
+                    <input type="radio" id="alg" name="alg" value="SCIS" title="SCIS" >
                 </div>
         </div>
 
         <div style="margin: auto">
-            <button class="layui-btn" type="button" id="submit_btn" lay-submit="" lay-filter="demo1" style="margin: auto" >点击进行预处理</button>
+            <button class="layui-btn" name="submit_btn" type="button" id="submit_btn" lay-submit="" lay-filter="submit_btn" style="margin: auto" >点击进行预处理</button>
         </div>
         </form>
     </div>
@@ -93,24 +93,29 @@
         });
 
         // 监听搜索操作
-        form.on('submit(data-search-btn)', function (data) {
-            var result = JSON.stringify(data.field);
-            /*layer.alert(result, {
-                title: '最终的搜索信息'
-            });*/
+        form.on('submit(submit_btn)', function (data) {
+            //alert("test")
 
+            var type = document.getElementById("alg").value
+            //alert(data)
             //执行搜索重载
-            table.reload('currentTableId', {
-                url: '/ent/search_ent_info',
+            var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+            var result = JSON.stringify(data);
+                layer.confirm('确认进行预处理？', function (index) {
+                table.reload('currentTableId', {
+                url: '/ent/process_data',
                 method: "POST",
                 page: {
                     curr: 1
                 }
                 , where: {
-                    searchParams: result
+                    searchParams: result,
+                    type: type
                 }
-            }, 'data');
-
+            }, 'data'),
+                layer.msg("预处理成功提交", {icon: 6});
+                layer.close(index)});
             return false;
         });
 
@@ -118,6 +123,9 @@
         /**
          * toolbar监听事件
          */
+
+
+
         table.on('toolbar(currentTableFilter)', function (obj) {
             if (obj.event === 'add') {  // 监听添加操作
                 var index = layer.open({
@@ -138,8 +146,8 @@
                 var result = JSON.stringify(data)
                 layer.confirm('确认进行删除？', function (index) {
                 table.reload('currentTableId', {
-                url: '/admin/delete_pageinfo',
-                method: "GET",
+                url: '/ent/process_data',
+                method: "POST",
                 page: {
                     curr: 1
                 }
