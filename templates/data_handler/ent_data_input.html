@@ -107,7 +107,7 @@
 
                 <label class="layui-form-label required">组织机构代码</label>
                 <div class="layui-input-block">
-                    <input type="text" name="basic_code" id="basic_name" lay-verify="required" lay-reqtext="组织机构代码不能为空" placeholder="请输入组织机构代码"  class="layui-input">
+                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="basic_code" id="basic_name" lay-verify="required" lay-reqtext="组织机构代码不能为空" placeholder="请输入组织机构代码"  class="layui-input">
                 </div>
 
             </div>
