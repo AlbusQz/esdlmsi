@@ -196,7 +196,14 @@ class EnterpriseInfo(models.Model):
         self.investment_count = result[11]
         self.investment_amount = result[12]
 
-
+    #用于判断是否需要预处理的函数
+    def getNeedpre(self):
+        temp = self.getNumberAttr()
+        for item in temp:
+            #print("here")
+            if item is None:
+                return True
+        return False
     class Meta:
         managed = False
         db_table = 'enterprise_info'

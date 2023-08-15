@@ -210,6 +210,11 @@ def ent_inputData(request):
         format_time = now.strftime('%Y-%m-%d %H:%M:%S')
         tempinfo.create_time = format_time
 
+        if tempinfo.getNeedpre():
+            tempinfo.needpre = 1
+        else:
+            tempinfo.needpre = 0
+
         tempinfo.save()
 
         messages.add_message(request,messages.SUCCESS,"上传成功！")
