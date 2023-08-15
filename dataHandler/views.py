@@ -208,7 +208,7 @@ def ent_inputData(request):
 
         now = datetime.now(pytz.timezone('Asia/Shanghai'))
         format_time = now.strftime('%Y-%m-%d %H:%M:%S')
-        #tempinfo.create_time = format_time
+        tempinfo.create_time = format_time
 
         tempinfo.save()
 
