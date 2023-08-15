@@ -40,6 +40,12 @@
                   "target": "_self"
                 },
                 {
+                  "title": "数据预处理",
+                  "href": "/ent/data_process",
+                  "icon": "fa fa-tachometer",
+                  "target": "_self"
+                },
+                {
                   "title": "数据查询",
                   "href": "/ent/data_search",
                   "icon":"fa fa-filter",
@@ -47,12 +53,7 @@
                 }
               ]
             },
-            {
-              "title": "数据预处理",
-              "href": "/data_process",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
-            },
+
             {
               "title": "数据下载",
               "href": "/data_download",
