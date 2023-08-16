@@ -208,3 +208,24 @@ class EnterpriseInfo(models.Model):
         managed = False
         db_table = 'enterprise_info'
         unique_together = (('enterprise_id', 'mu'),)
+
+#预处理算法的参数类
+class PreParams(models.Model):
+    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    type = models.CharField(max_length=255)
+    batch_size = models.IntegerField()
+    hint_rate = models.FloatField()
+    alpha = models.IntegerField()
+    iterations = models.IntegerField()
+    epoch = models.IntegerField()
+    guarantee = models.FloatField()
+    thre_value = models.FloatField()
+    initial_value = models.IntegerField()
+    epsilon = models.FloatField()
+    value = models.IntegerField()
+    s_miss = models.IntegerField()
+    create_time = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'pre_params'
