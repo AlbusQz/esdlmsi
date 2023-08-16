@@ -75,7 +75,8 @@ dataHandler_urls =[
     path('ent/data_process', dataHandler.views.get_ent_process),
     path('ent/get_ent_pre_data', dataHandler.views.get_ent_pre_data),
     path('ent/process_data', dataHandler.views.ent_process_data),
-
+    path('admin/pre_params',dataHandler.views.admin_get_preparams),
+    path('admin/update_preparams/',dataHandler.views.admin_update_preparams),
     ]
 
 urlpatterns += dataHandler_urls

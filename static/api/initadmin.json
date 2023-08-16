@@ -67,6 +67,12 @@
           "icon": "fa fa-wrench",
           "target": "_self",
           "child": [
+             {
+              "title": "预处理参数调整",
+              "href": "/admin/pre_params",
+              "icon": "fa fa-sliders",
+              "target": "_self"
+            },
             {
               "title": "模型选择",
               "href": "/model_select",
@@ -127,7 +133,7 @@
           "child": [
             {
               "title": "用户信息管理",
-              "href": "/user_managfrom django.contrib.auth.decorators import login_requirede",
+              "href": "/user_manage",
               "icon": "fa fa-group",
               "target": "_self"
             },

@@ -219,7 +219,10 @@ def ent_inputData(request):
         tempinfo.save()
 
         messages.add_message(request,messages.SUCCESS,"上传成功！")
-        messages.add_message(request, messages.SUCCESS, "您可以在数据查询界面查询到这次的数据了！")
+        if tempinfo.getNeedpre():
+            messages.add_message(request, messages.WARNING, "输入的数据存在空缺数据项，需要进行预处理！")
+        else:
+            messages.add_message(request, messages.SUCCESS, "您可以在数据查询界面查询到这次的数据了！")
         return redirect("/ent/data_input")
 
     return render(request,'data_handler/ent_data_input.html')
@@ -234,7 +237,7 @@ def get_ent_research(request):
 def get_ent_data(request):
     user = request.user
     myuser = Myuser.objects.get(u=user)
-    data = EnterpriseInfo.objects.filter(mu=myuser)
+    data = EnterpriseInfo.objects.filter(mu=myuser,needpre=0)
     dataCount = data.count()
     pageIndex = request.POST.get('pageIndex')
     pageSize = request.POST.get('pageSize')
@@ -536,3 +539,58 @@ def ent_process_data(request):
             rawdata[i].save()
 
     return get_ent_pre_data(request)
+
+#用于提供修改预处理算法参数页面的函数
+@login_required
+def admin_get_preparams(request):
+    scis = PreParams.objects.filter(type="SCIS").latest('id')
+    gain = PreParams.objects.filter(type="GAIN").latest('id')
+
+    return render(request,"data_handler/admin_pre_params.html",locals())
+
+#用于修改预处理算法参数的函数
+@login_required
+def admin_update_preparams(request):
+    print("test")
+    temp_scis = PreParams()
+    temp_gain = PreParams()
+    temp_scis.type = "SCIS"
+    temp_gain.type = "GAIN"
+    try:
+        temp_scis.batch_size = request.POST.get("scis_bs")
+        temp_scis.hint_rate = request.POST.get("scis_hr")
+        temp_scis.alpha = request.POST.get("scis_al")
+        temp_scis.iterations = request.POST.get("scis_iter")
+        temp_scis.epoch = request.POST.get("scis_ep")
+        temp_scis.guarantee = request.POST.get("scis_gu")
+        temp_scis.thre_value = request.POST.get("scis_tv")
+        temp_scis.initial_value = request.POST.get("scis_iv")
+        temp_scis.epsilon = request.POST.get("scis_eps")
+        temp_scis.value = request.POST.get("scis_va")
+        temp_scis.s_miss = request.POST.get("scis_sm")
+
+        temp_gain.batch_size = request.POST.get("gain_bs")
+        temp_gain.hint_rate = request.POST.get("gain_hr")
+        temp_gain.alpha = request.POST.get("gain_al")
+        temp_gain.iterations = request.POST.get("gain_iter")
+        temp_gain.epoch = request.POST.get("gain_ep")
+        temp_gain.guarantee = request.POST.get("gain_gu")
+        temp_gain.thre_value = request.POST.get("gain_tv")
+        temp_gain.initial_value = request.POST.get("gain_iv")
+        temp_gain.epsilon = request.POST.get("gain_eps")
+        temp_gain.value = request.POST.get("gain_va")
+        temp_gain.s_miss = request.POST.get("gain_sm")
+
+        now = datetime.now(pytz.timezone('Asia/Shanghai'))
+        format_time = now.strftime('%Y-%m-%d %H:%M:%S')
+        temp_scis.create_time = format_time
+        temp_gain.create_time = format_time
+        temp_scis.save()
+        temp_gain.save()
+        messages.add_message(request, messages.SUCCESS, '修改成功！')
+
+    except Exception as e :
+        messages.add_message(request,messages.ERROR,str(e))
+
+
+    return redirect("/admin/pre_params")

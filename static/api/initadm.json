@@ -67,6 +67,12 @@
           "icon": "fa fa-wrench",
           "target": "_self",
           "child": [
+             {
+              "title": "预处理参数调整",
+              "href": "/admin/pre_params",
+              "icon": "fa fa-sliders",
+              "target": "_self"
+            },
             {
               "title": "模型选择",
               "href": "/model_select",
