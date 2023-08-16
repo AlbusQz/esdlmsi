@@ -414,6 +414,19 @@ class temp_parameter():
         self.value = 2
         self.s_miss = 1
 
+    def setSelf(self, para):
+      # para = PreParams(para)
+      self.batch_size = para.batch_size
+      self.hint_rate = para.hint_rate
+      self.alpha = para.alpha
+      self.iterations = para.iterations
+      self.epoch = para.epoch
+      self.guarantee = para.guarantee
+      self.thre_value = para.thre_value
+      self.initial_value = para.initial_value
+      self.epsilon = para.epsilon
+      self.value = para.value
+      self.s_miss = para.s_miss
 
 '''
 data: type of pd.DataFrame

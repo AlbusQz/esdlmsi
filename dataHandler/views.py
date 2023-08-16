@@ -15,6 +15,7 @@ import pandas as pd
 from myUser.models import Myuser
 from django.contrib import messages
 from .models import EnterpriseInfo
+from .models import PreParams
 import json
 from django.db.models import Q
 from dataHandler.VAEGAIN import VAE_GAIN
@@ -514,14 +515,17 @@ def ent_process_data(request):
 
     print(data)
 
-    if len !=0:
+    if len != 10:
         data = pd.DataFrame(data)
         if type == "GAIN":
-            data = GAIN(data)
+            params = PreParams.objects.filter(type=type).latest('id')
+            #print(params)
+            data = GAIN(data,params)
         elif type == "VAEGAIN":
             data = VAE_GAIN(data)
         elif type == "SCIS":
-            data = SCIS(data)
+            params = PreParams.objects.filter(type=type).latest('id')
+            data = SCIS(data,params)
 
         results = data.tolist()
         results = results[-len:]
