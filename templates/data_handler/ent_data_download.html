@@ -76,9 +76,11 @@
                 </form>
             </div>
         </fieldset>
-
+        <blockquote class="layui-elem-quote">
+            请选择你需要下载数据的企业
+        </blockquote>
         <script type="text/html" id="toolbarDemo">
-            <legend style="font-size: large;color: #0a862d;" ><b>用户上传企业表</b></legend>
+            <legend style="font-size: large;color: #0a862d;" ><b>可供下载企业信息表</b></legend>
             <div class="layui-btn-container">
                 <!--button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button-->
                 <!--button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button-->
@@ -89,12 +91,12 @@
 
         <script type="text/html" id="currentTableBar">
             <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="show_detail">查看企业详细信息</a>
-            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-download" lay-event="download">下载</a>
             <!--a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a-->
         </script>
 
         <div style="margin: auto">
-            <button class="layui-btn" type="button" id="submit_btn" lay-submit="" lay-filter="demo1" style="margin: auto" >立即提交</button>
+            <button class="layui-btn" name="submit_btn" type="button" id="submit_btn" lay-submit="" lay-filter="download_btn" style="margin: auto" >点击下载</button>
         </div>
 
     </div>
@@ -173,7 +175,8 @@
             return false;
         });
 
-        function loadAddress(array, lables, notId,title) {
+
+           function loadAddress(array, lables, notId,title) {
 
             var s = '<option value="">'+title+'</option>';
             if (array) {
@@ -220,42 +223,73 @@
 
         loadAddress(layArea.array, "#province2", "#city2,#area2","");
 
-        /**
-         * toolbar监听事件
-         */
-        table.on('toolbar(currentTableFilter)', function (obj) {
-            if (obj.event === 'add') {  // 监听添加操作
-                var index = layer.open({
-                    title: '添加用户',
-                    type: 2,
-                    shade: 0.2,
-                    maxmin:true,
-                    shadeClose: true,
-                    area: ['100%', '100%'],
-                    content: '{% static '/page/table/add.html' %}',
-                });
-                $(window).on("resize", function () {
-                    layer.full(index);
-                });
-            } else if (obj.event === 'delete') {  // 监听删除操作
-                var checkStatus = table.checkStatus('currentTableId')
+
+        // 监听搜索操作
+        form.on('submit(download_btn)', function (data) {
+            //alert("test")
+
+
+            //执行搜索重载
+            var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
-                var result = JSON.stringify(data)
-                layer.confirm('确认进行删除？', function (index) {
+            var result = JSON.stringify(data);
+            alert(result.length)
+            //layer.confirm('确认进行下载？', function (index) {
+                $.ajax({
+                    type: "POST",
+                    url: '/ent/download_data',
+                    data: {
+                        "ids": result
+                    },
+                    text: "json",
+                    success: function (response,status,request) {
+                        alert("test")
+                        console.log(data);
+                        DownloadCsv(data, '企业数据.csv')
+
+                    },
+
+                            error : function(XMLHttpRequest, textStatus, errorThrown) {
+                                //这个error函数调试时非常有用，如果解析不正确，将会弹出错误框
+                                　　　　alert(XMLHttpRequest.responseText);
+                                alert(XMLHttpRequest.status);
+                                alert(XMLHttpRequest.readyState);
+                                alert(textStatus); // parser error;
+                            }
+                })
+           // })
+/*
+                layer.confirm('确认进行下载？', function (index) {
                 table.reload('currentTableId', {
-                url: '/admin/delete_pageinfo',
-                method: "GET",
+                url: '/ent/download_data',
+                method: "POST",
                 page: {
                     curr: 1
                 }
                 , where: {
-                    searchParams: result
+                    ids: result,
                 }
             }, 'data'),
-                layer.msg("修改已完成", {icon: 6});
-                layer.close(index)});
-            }
+                //layer.msg("预处理成功提交", {icon: 6});
+                layer.close(index)
+                });*/
+            return false;
         });
+
+        const DownloadCsv = (function() {
+          const a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style = "display: none";
+          return function(data, fileName) {
+            const blob = new Blob([data], {type: "octet/stream"}),
+              url = window.URL.createObjectURL(blob);
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            window.URL.revokeObjectURL(url);
+          };
+        }());
+
 
         //监听表格复选框选择
         table.on('checkbox(currentTableFilter)', function (obj) {
@@ -286,18 +320,19 @@
 
 
                 return false;
-            } else if (obj.event === 'delete') {
-                layer.confirm('确认进行删除？', function (index) {
-
+            } else if (obj.event === 'download') {
+                layer.confirm('确认进行下载？', function (index) {
+                var id = $("#t_id").val();
+                 window.location.href="/ent/download_singleinfo/"+obj.data['t_id']
                     $.ajax({
-                        url:"/ent/delete_ent_info",
+                        url:"/ent/download_singleinfo",
                         type:'GET',
                         data:{'id':obj.data['t_id']},
                         success:function(recv){
-                            layer.msg("成功删除此行数据",{icon:6});
+                         //   layer.msg("成功删除此行数据",{icon:6});
                         }
                     });
-                    obj.del();
+                    //obj.del();
                     layer.close(index);
                 });
             }

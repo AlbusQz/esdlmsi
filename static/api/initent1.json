@@ -56,7 +56,7 @@
 
             {
               "title": "数据下载",
-              "href": "/data_download",
+              "href": "/ent/data_download",
               "icon": "fa fa-floppy-o",
               "target": "_self"
             }

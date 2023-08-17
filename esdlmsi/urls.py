@@ -59,7 +59,7 @@ dataHandler_urls =[
 
     #以下为数据上传有关的url
     path('ent/data_upload',dataHandler.views.ent_uploadData),
-    path('ent/data_download',dataHandler.views.ent_downloadSample),
+    path('ent/sample_data_download',dataHandler.views.ent_downloadSample),
     path('ent/uploadFile',dataHandler.views.ent_getUpload),
 
     #以下为数据输入有关的url
@@ -70,6 +70,7 @@ dataHandler_urls =[
     path('ent/get_ent_data',dataHandler.views.get_ent_data),
     path('ent/get_data_detail/<int:id>/',dataHandler.views.get_ent_detail),
     path('ent/search_ent_info',dataHandler.views.search_ent_info),
+    path('ent/delete_ent_info', dataHandler.views.delete_ent_info),
 
     # 以下为数据预处理有关的url
     path('ent/data_process', dataHandler.views.get_ent_process),
@@ -77,7 +78,15 @@ dataHandler_urls =[
     path('ent/process_data', dataHandler.views.ent_process_data),
     path('admin/pre_params',dataHandler.views.admin_get_preparams),
     path('admin/update_preparams/',dataHandler.views.admin_update_preparams),
+
+
+    # 以下为数据下载有关的url
+    path('ent/data_download', dataHandler.views.ent_data_download),
+    path("ent/download_singleinfo/<int:id>/",dataHandler.views.ent_download_singledata),
+    path('ent/download_data',dataHandler.views.ent_download_data),
     ]
+
+
 
 urlpatterns += dataHandler_urls
 

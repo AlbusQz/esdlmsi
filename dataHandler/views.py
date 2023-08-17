@@ -529,6 +529,13 @@ def search_ent_info(request):
     }
     return HttpResponse(json.dumps(result))
 
+#用于向企业用户删除选中的企业数据
+@login_required
+def delete_ent_info(request):
+    get_id = request.GET.get('id')
+    EnterpriseInfo.objects.filter(id=get_id).delete()
+    return HttpResponse('nice')
+
 #用于向企业用户返回数据预处理页面的函数
 @login_required
 def get_ent_process(request):
@@ -681,3 +688,59 @@ def admin_update_preparams(request):
 
 
     return redirect("/admin/pre_params")
+
+#用于提供企业数据下载页面的函数
+@login_required
+def ent_data_download(request):
+    return render(request,"data_handler/ent_data_download.html")
+
+#用于提供下载单个企业数据的函数
+@login_required
+def ent_download_singledata(request,id):
+    get_id = id
+    info = EnterpriseInfo.objects.filter(id=get_id).values()
+    print(type(info))
+    df = pd.DataFrame.from_records(info)
+    del df['registered_street']
+    del df['actual_street']
+    del df['mu_id']
+    del df['needpre']
+    now = datetime.now(pytz.timezone('Asia/Shanghai'))
+    format_time = now.strftime('%Y-%m-%d %H:%M:%S')
+    filename = f"{get_id}_企业数据_{format_time}.csv"
+    response = HttpResponse(content_type='text/csv')
+    response = HttpResponse(content_type='text/csv')  # 定义一个HttpResponse，类型是csv
+    response.charset = 'utf-8-sig' if "Windows" in request.headers.get('User-Agent') else 'utf-8'
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    df.to_csv(path_or_buf=response, index=False,encoding="utf_8")
+    return response
+
+#用于提供下载多个企业数据的函数
+@login_required
+def ent_download_data(request):
+    ids = request.POST.get("ids")
+    ids = json.loads(ids)
+    #for id
+    print(ids)
+    result = EnterpriseInfo.objects.filter(id=-1)
+    for id in ids:
+
+        print(id['id'])
+        print(type(id))
+        info = EnterpriseInfo.objects.filter(id=id['t_id'])
+        print(info[0].enterprise_id)
+        result = info | result
+    df = pd.DataFrame.from_records(result.values())
+    print(df)
+    del df['registered_street']
+    del df['actual_street']
+    del df['mu_id']
+    del df['needpre']
+    now = datetime.now(pytz.timezone('Asia/Shanghai'))
+    format_time = now.strftime('%Y-%m-%d %H:%M:%S')
+    filename = f"企业数据_{format_time}.csv"
+    response = HttpResponse(content_type='text/csv')  # 定义一个HttpResponse，类型是csv
+    response.charset = 'utf-8-sig' if "Windows" in request.headers.get('User-Agent') else 'utf-8'
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    df.to_csv(path_or_buf=response, index=False, encoding="utf_8")
+    return response
