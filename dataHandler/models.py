@@ -6,9 +6,10 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from datetime import datetime
-
+import pandas as pd
 from django.db import models
 from myUser.models import Myuser
+import numpy as np
 
 class EnterpriseInfo(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
@@ -64,13 +65,31 @@ class EnterpriseInfo(models.Model):
     @staticmethod
     def isValid(input):
         def check_time_format(time_str):
+            if time_str == None or str(time_str) == "nan":
+                return True
             try:
                 datetime.strptime(time_str, '%Y-%m-%d')
                 return True
             except ValueError:
                 return False
-        types = [int, float, str, int, str, str, str, str, float, str, str, str, float, str, int, str, str, float, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int]
-        titles = ["enterprise_id","enterprise_name","founding_date","registered_capital","registered_capital_currency","registered_province","registered_city","registered_district","registered_street","actual_province","actual_city","actual_district","actual_street","industry","industry_code","time_to_market","bourse","service_field","head_count","above_bs_head_count","applicated_patent_count","IPC_top10_patent_count","multi_applicated_patent_count_this_year","sc_count","standard_count","informalization_platform_count","ICP_count","honor_count","A_class_honor","dishonest_in_3_years","civil_action_count","environmental_punishment_count","investment_count","investment_amount"]
+        types = [str, int, str, float,str,
+                 str, float, str,str,
+                  str, str, str,
+
+                 str, str, str,
+
+                  str, float, float,
+                 float, float, float, float,
+                 float, float, float, float,
+                 float, float, float, float,
+                 float, float]
+        titles = ["enterprise_name","enterprise_id","founding_date","registered_capital", "registered_capital_currency",
+                  "industry", "industry_code", "time_to_market","bourse",
+                 "registered_province","registered_city","registered_district",
+
+                  "actual_province","actual_city","actual_district",
+
+                  "service_field","head_count","above_bs_head_count","applicated_patent_count","IPC_top10_patent_count","multi_applicated_patent_count_this_year","sc_count","standard_count","informalization_platform_count","ICP_count","honor_count","A_class_honor","dishonest_in_3_years","civil_action_count","environmental_punishment_count","investment_count","investment_amount"]
 
         if(len(input)!=len(types)):
             return False,"上传文件的数据项长度不同！"
@@ -78,19 +97,49 @@ class EnterpriseInfo(models.Model):
         temp1 = ''
         for i in range(len(input)):
             if input[i] is not None:
-                if(type(input[i])!=types[i]):
-                    temp1 +=titles[i]+"列数据格式不匹配！\n"
+                if(type(input[i])!=types[i] and str(input[i])!="nan"):
+                    if (type(input[i])==int and types[i]==float) or(type(input[i])==pd._libs.tslibs.timestamps.Timestamp and types[i]==str):
+                        continue
+                    else:
+                        temp1 +=titles[i]+"列数据格式不匹配！\n"
+
+                        print(i)
+                        #print(i == )
+                        print(input[i])
+                        print(titles[i])
+                        print(input[i])
+                        print((types[i]))
+                        print(type(input[i]))
+
         if(temp1 != ''):
             return False,temp1
 
-        if(input[0] is None):
-            return False,"数据必填项"+titles[0]+"为空！"
+        if(input[1] is None or str(input[1])=="nan" ):
+            return False,"数据必填项"+titles[1]+"为空！"
 
-        if( check_time_format(input[2])==False or check_time_format(input[15])==False ):
+        if str(input[2])=="nan":
+            input[2] = None
+        if str(input[7]) == "nan":
+            input[7] = None
+        if(check_time_format(input[2])==False or check_time_format(input[7])==False ):
+            print(input[2])
             return False, "时间项格式错误！"
 
         print("here")
         return True,"nice!111"
+
+    #用来处理上传数据的函数
+    def setAll(self,input):
+        print(input[0])
+
+        self.setBasic(input[0:15])
+        self.setScope(input[15])
+        self.setPeople(input[16],input[17])
+        self.setPatent(input[18:23])
+        self.setInfromation(input[23],input[24])
+        self.setHonor(input[25:30])
+        self.setInvest(input[30],input[31],0,0)
+
 
     #用来初始化基础信息模块数据的函数
     def setBasic(self,enterprise_name, enterprise_id, founding_date, registered_capital,

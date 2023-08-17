@@ -44,7 +44,11 @@ def ent_downloadSample(request):
 #企业用户上传文件函数
 @login_required
 def ent_getUpload(request):
+    user = request.user
+    mu = Myuser.objects.get(u=user)
     if request.method == "POST":
+        flag = False
+        msg = ''
         tempuser = request.user
         #tempmyUser = Myuser.objects.get(u=tempuser)
         #type =
@@ -68,28 +72,94 @@ def ent_getUpload(request):
             #conn = create_engine('mysql+pymysql://root:123456@localhost:3306/esdlmsi?charset=utf8')
 
             if(filename[-3:] == "csv"):
-                temp_data = pd.read_csv(tempfile.file,sep='\s|,|;',error_bad_lines = False,encoding='UTF-8').values.tolist()[0]
-                #temp_data.to_sql("enterprise_info",con=conn,index = False , if_exists = 'append', chunksize = None)
-                #temp_data.to_csv(path+filename,encoding='utf_8_sig')
-                print(temp_data)
-                print(len(temp_data))
-                temp = []
-                for i in temp_data:
-                    temp.append(type(i))
-                print(temp)
-                print(temp[0]==float)
-                print(EnterpriseInfo.isValid(temp_data))
+                try:
+                    temp_data = pd.read_csv(tempfile.file,sep='\s|,|;',error_bad_lines = False)
+                    #temp_data.fillna(value=None, inplace=True)
+                    #temp_data = temp_data.where(temp_data.notnull(), None)
+                    temp_data = temp_data.values.tolist()
+                    #temp_data.to_sql("enterprise_info",con=conn,index = False , if_exists = 'append', chunksize = None)
+                    #temp_data.to_csv(path+filename,encoding='utf_8_sig')
+
+                    #print(temp_data)
+                    #print(len(temp_data))
+                    temp = []
+                    for i in temp_data:
+                        print(type(i[2]))
+                        if i[2] != None and type(i[2]) == pd._libs.tslibs.timestamps.Timestamp:
+                            i[2] = i[2].strftime('%Y-%m-%d')
+                            print(i[2])
+                        if i[7] != None and type(i[7]) == pd._libs.tslibs.timestamps.Timestamp:
+                            i[7] = i[7].strftime('%Y-%m-%d')
+                            #i[7] = str(i[7])
+                        for j in range(len(i)):
+                            # print(str(j)=="nan")
+                            if str(i[j]) == "nan":
+                                i[j] = None
+                        # print(i)
+                        flag, msg = EnterpriseInfo.isValid(i)
+                        if flag :
+
+                            temp = EnterpriseInfo()
+                            temp.setAll(i)
+                            if temp.getNeedpre():
+                                temp.needpre = 1
+                            else:
+                                temp.needpre = 0
+                            temp.mu = mu
+                            temp.save()
+
+
+                        print(flag)
+                        print(msg)
+                except Exception as e:
+                    flag = False
+                    msg = str(e)
+                #print(temp)
+                #print(temp[0]==float)
+                #print(EnterpriseInfo.isValid(temp_data))
             else:
-                print('haha')
-                temp_data = pd.read_excel(tempfile.file)
-                temp_data.to_excel(path+filename,encoding='utf_8_sig')
-                print(temp_data)
+                #print('haha')
+                #try:
+                    temp_data = pd.read_excel(tempfile.file,)
+                    temp_data = temp_data.values.tolist()
+
+                    for i in temp_data:
+                        if i[2] != None and type(i[2]) == pd._libs.tslibs.timestamps.Timestamp:
+                            i[2] = i[2].strftime('%Y-%m-%d')
+                            print(i[2])
+                        if i[7] != None and type(i[7]) == pd._libs.tslibs.timestamps.Timestamp:
+                            i[7] = i[7].strftime('%Y-%m-%d')
+                            #i[7] = str(i[7])
+                        for j in range(len(i)) :
+                            #print(str(j)=="nan")
+                            if str(i[j])=="nan":
+                                i[j] = None
+                        #print(i)
+                        flag, msg = EnterpriseInfo.isValid(i)
+                        if flag:
+
+                            temp = EnterpriseInfo()
+                            temp.setAll(i)
+                            if temp.getNeedpre():
+                                temp.needpre = 1
+                            else:
+                                temp.needpre = 0
+                            temp.mu = mu
+                            temp.save()
+
+                #except Exception as e:
+                    #flag = False
+                   # print(e)
+                    #msg = str(e)
+
             #csv_writer = csv.writer(tempfile.file)
             #csv_writer.
-            print(tempfile.name)
-            print('nice!')
-            return HttpResponse("文件"+filename+"上传成功!")
-
+               # print(tempfile.name)
+                #print('nice!')
+            if flag :
+                return HttpResponse("文件"+filename+"上传成功!")
+            else:
+                return HttpResponse("文件" + filename + "上传失败!失败原因："+msg)
 
 #企业用户数据输入函数
 @login_required
