@@ -1,6 +1,5 @@
 import pytz
-import sys
-sys.path.append("./")
+
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from datetime import datetime
@@ -21,6 +20,10 @@ from django.db.models import Q
 from dataHandler.VAEGAIN import VAE_GAIN
 from dataHandler.SCIS import SCIS
 from dataHandler.GAIN import GAIN
+from sqlalchemy import create_engine
+
+
+from django.db import connection
 # Create your views here.
 #测试函数
 @login_required
@@ -52,16 +55,30 @@ def ent_getUpload(request):
             print("File not found!")
             return HttpResponse('file not found')
         else:
+            #'''
             toppath = "static/file/tempfile/ent/"
             endpath = tempuser.username + "/"
             path = toppath+endpath
+            '''
             if not os.path.exists(path):
                 os.makedirs(path)
+            '''
             filename = tempfile.name
+
+            #conn = create_engine('mysql+pymysql://root:123456@localhost:3306/esdlmsi?charset=utf8')
+
             if(filename[-3:] == "csv"):
-                temp_data = pd.read_csv(tempfile.file,sep='\s|,|;',error_bad_lines = False,encoding='UTF-8')
-                temp_data.to_csv(path+filename,encoding='utf_8_sig')
+                temp_data = pd.read_csv(tempfile.file,sep='\s|,|;',error_bad_lines = False,encoding='UTF-8').values.tolist()[0]
+                #temp_data.to_sql("enterprise_info",con=conn,index = False , if_exists = 'append', chunksize = None)
+                #temp_data.to_csv(path+filename,encoding='utf_8_sig')
                 print(temp_data)
+                print(len(temp_data))
+                temp = []
+                for i in temp_data:
+                    temp.append(type(i))
+                print(temp)
+                print(temp[0]==float)
+                print(EnterpriseInfo.isValid(temp_data))
             else:
                 print('haha')
                 temp_data = pd.read_excel(tempfile.file)
@@ -94,7 +111,7 @@ def ent_inputData(request):
 
         tempinfo = EnterpriseInfo()
 
-        basic_name = request.POST.get('basic','')
+        basic_name = request.POST.get('basic_name','')
         tempdata.append(basic_name)
         basic_code = request.POST.get('basic_code','')
         tempdata.append(basic_code)

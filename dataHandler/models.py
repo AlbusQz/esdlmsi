@@ -5,11 +5,14 @@
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
+from datetime import datetime
+
 from django.db import models
 from myUser.models import Myuser
 
 class EnterpriseInfo(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+
     enterprise_id = models.IntegerField(null=False)
     enterprise_name = models.CharField(max_length=64, blank=True, null=True)
     founding_date = models.DateField(blank=True, null=True)
@@ -51,10 +54,43 @@ class EnterpriseInfo(models.Model):
 
     investment_count = models.PositiveIntegerField(blank=True, null=True)
     investment_amount = models.PositiveIntegerField(blank=True, null=True)
+
     create_time = models.DateTimeField(blank=True, null=True)
     mu = models.OneToOneField(Myuser, on_delete=models.CASCADE)
 
     needpre = models.PositiveIntegerField(blank=True, null=True)
+
+    #用来判断上传数据是否符合要求的函数
+    @staticmethod
+    def isValid(input):
+        def check_time_format(time_str):
+            try:
+                datetime.strptime(time_str, '%Y-%m-%d')
+                return True
+            except ValueError:
+                return False
+        types = [int, float, str, int, str, str, str, str, float, str, str, str, float, str, int, str, str, float, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int]
+        titles = ["enterprise_id","enterprise_name","founding_date","registered_capital","registered_capital_currency","registered_province","registered_city","registered_district","registered_street","actual_province","actual_city","actual_district","actual_street","industry","industry_code","time_to_market","bourse","service_field","head_count","above_bs_head_count","applicated_patent_count","IPC_top10_patent_count","multi_applicated_patent_count_this_year","sc_count","standard_count","informalization_platform_count","ICP_count","honor_count","A_class_honor","dishonest_in_3_years","civil_action_count","environmental_punishment_count","investment_count","investment_amount"]
+
+        if(len(input)!=len(types)):
+            return False,"上传文件的数据项长度不同！"
+
+        temp1 = ''
+        for i in range(len(input)):
+            if input[i] is not None:
+                if(type(input[i])!=types[i]):
+                    temp1 +=titles[i]+"列数据格式不匹配！\n"
+        if(temp1 != ''):
+            return False,temp1
+
+        if(input[0] is None):
+            return False,"数据必填项"+titles[0]+"为空！"
+
+        if( check_time_format(input[2])==False or check_time_format(input[15])==False ):
+            return False, "时间项格式错误！"
+
+        print("here")
+        return True,"nice!111"
 
     #用来初始化基础信息模块数据的函数
     def setBasic(self,enterprise_name, enterprise_id, founding_date, registered_capital,
