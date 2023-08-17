@@ -36,6 +36,24 @@
                     <input type="radio" id="alg" name="alg" value="VAEGAIN" title="VAEGAIN">
                     <input type="radio" id="alg" name="alg" value="SCIS" title="SCIS" >
                 </div>
+                 <blockquote class="layui-elem-quote">
+                    GAIN算法：GAIN (Generative Adversarial Imputation Networks) 算法是一种用于缺失数据填充的生成对抗网络（GAN）算法。
+                    它能够有效地处理缺失数据，通过对抗性训练，生成器可以生成接近真实数据的填充值。
+                    它的局限性在于，对于大规模的数据集，训练生成器和判别器可能会消耗大量的时间。
+                    GAIN算法适用于规模相对较小的数据集。
+                </blockquote>
+                <blockquote class="layui-elem-quote">
+                    VAEGAIN算法：VAEGAIN是一种用于缺失数据填充的生成式模型。
+                    它结合了变分自动编码器（Variational Autoencoder，VAE）和生成对抗网络（Generative Adversarial Network，GAN）的思想。
+                    在GAIN的基础上引入VAE，可以提高缺失数据填充的准确性、多样性和连续性，使得填充结果更加贴近原始数据的分布和特征。
+                    VAEGAIN算法适用于规模相对较小的数据集。
+                </blockquote>
+                <blockquote class="layui-elem-quote">
+                    SCIS算法：SCIS算法是GAIN算法的一种改进版本。
+                    它通过使用合适大小的样本来训练生成对抗网络输入模型，从而提高模型训练速度。
+                    在大规模数据集上，它可以在更短时间内完成模型训练，同时保证精度基本不变。
+                    SCIS算法适用于大规模数据集。
+                </blockquote>
         </div>
 
         <div style="margin: auto">
