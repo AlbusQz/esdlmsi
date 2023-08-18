@@ -120,6 +120,12 @@
             var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
             var result = JSON.stringify(data);
+            if(data.length<1)
+            {
+                layer.msg("请选择进行预处理的企业信息",{icon:5})
+            }
+            else
+            {
                 layer.confirm('确认进行预处理？', function (index) {
                 table.reload('currentTableId', {
                 url: '/ent/process_data',
@@ -134,6 +140,7 @@
             }, 'data'),
                 layer.msg("预处理成功提交", {icon: 6});
                 layer.close(index)});
+            }
             return false;
         });
 

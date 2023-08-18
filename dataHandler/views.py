@@ -147,15 +147,7 @@ def ent_getUpload(request):
                             temp.mu = mu
                             temp.save()
 
-                #except Exception as e:
-                    #flag = False
-                   # print(e)
-                    #msg = str(e)
 
-            #csv_writer = csv.writer(tempfile.file)
-            #csv_writer.
-               # print(tempfile.name)
-                #print('nice!')
             if flag :
                 return HttpResponse("文件"+filename+"上传成功!")
             else:
@@ -864,7 +856,38 @@ def ent_download_data(request):
     return response
 
 #用于测试process类
-def ent_process_generate(request):
-    temppro = Process.objects.get(id="100000")
-    print(temppro.ent_info.all())
-    return HttpResponse("nice")
+def ent_generate_process(request):
+    user = request.user
+    mu = Myuser.objects.get(u=user)
+    ids = request.POST.get("ids")
+    ids = json.loads(ids)
+    status = "已添加数据，请选择指标"
+    temptype = 1
+    if len(ids)>1 :
+        temptype = 2
+
+    now = datetime.now(pytz.timezone('Asia/Shanghai'))
+    format_time = now.strftime('%Y-%m-%d %H:%M:%S')
+    create_time = format_time
+    update_time = format_time
+
+    temppro = Process.objects.create(mu = mu, status = status , create_time = create_time, update_time = update_time, type = temptype)
+
+    for id in ids:
+        tempinfo = EnterpriseInfo.objects.get(id=id['t_id'])
+        temppro.ent_info.add(tempinfo)
+
+    '''
+    temppro.mu = mu
+    temppro.status = "已添加数据，请选择指标"
+    now = datetime.now(pytz.timezone('Asia/Shanghai'))
+    format_time = now.strftime('%Y-%m-%d %H:%M:%S')
+    temppro.create_time = format_time
+    temppro.update_time = format_time
+    '''
+
+    temppro.save()
+
+    messages.add_message(request, messages.SUCCESS, "上传成功！")
+
+    return render(request,"data_handler/ent_data_search.html")

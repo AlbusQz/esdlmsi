@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="{% static '/lib/layui-v2.6.3/css/layui.css' %}" media="all">
     <link rel="stylesheet" href="{% static '/css/public.css' %}" media="all">
 </head>
+
+  {% if messages %}
+        <script>
+            {% for msg in messages %}
+                //layer.msg('test',{icon:6})
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
+
 <body>
 <div class="layuimini-container" >
     <div class="layuimini-main"  >
@@ -94,7 +104,7 @@
         </script>
 
         <div style="margin: auto">
-            <button class="layui-btn" type="button" id="submit_btn" lay-submit="" lay-filter="demo1" style="margin: auto" >立即提交</button>
+            <button class="layui-btn" type="button" id="submit_btn" lay-submit="" lay-filter="submit_info" style="margin: auto" >立即提交</button>
         </div>
 
     </div>
@@ -170,6 +180,75 @@
                 }
             }, 'data');
 
+            return false;
+        });
+
+
+         form.on('submit(submit_info)', function (data) {
+
+            var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+            var result = JSON.stringify(data);
+            //alert(data.length)
+            if(data.length<1)
+            {
+                layer.msg("请选择上传的企业信息",{icon:5})
+            }
+            else
+            {
+                //document.getElementById("mainform").submit();
+                form = $("<form></form>")
+                form.attr('action',"/ent/generate_process")
+                form.attr('method','post')
+                input1 = $("<input type='hidden' name='ids' />")
+                input1.val(result)
+                //input1.attr(result)
+                form.append(input1)
+                form.appendTo("body")
+                form.css('display','none')
+                form.submit()
+            }
+            /*
+
+            //layer.confirm('确认进行下载？', function (index) {
+                $.ajax({
+                    type: "POST",
+                    url: '/ent/download_data',
+                    data: {
+                        "ids": result
+                    },
+                    text: "json",
+                    success: function (response,status,request) {
+                        alert("test")
+                        console.log(data);
+                        DownloadCsv(data, '企业数据.csv')
+
+                    },
+
+                            error : function(XMLHttpRequest, textStatus, errorThrown) {
+                                //这个error函数调试时非常有用，如果解析不正确，将会弹出错误框
+                                　　　　alert(XMLHttpRequest.responseText);
+                                alert(XMLHttpRequest.status);
+                                alert(XMLHttpRequest.readyState);
+                                alert(textStatus); // parser error;
+                            }
+                })
+           // })
+/*
+                layer.confirm('确认进行下载？', function (index) {
+                table.reload('currentTableId', {
+                url: '/ent/download_data',
+                method: "POST",
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    ids: result,
+                }
+            }, 'data'),
+                //layer.msg("预处理成功提交", {icon: 6});
+                layer.close(index)
+                });*/
             return false;
         });
 

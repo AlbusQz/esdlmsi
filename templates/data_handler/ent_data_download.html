@@ -86,7 +86,6 @@
                 <!--button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button-->
             </div>
         </script>
-        <form class="layui-form layui-form-pane" id="mainform" action="/ent/download_data" method="post" >
         <table class="layui-hide" id="currentTableId" name="testtable" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
@@ -98,7 +97,7 @@
         <div style="margin: auto">
             <button class="layui-btn" name="submit_btn" type="button" id="submit_btn" lay-submit="" lay-filter="download_btn" style="margin: auto" >点击下载</button>
         </div>
-        </form>
+
     </div>
 </div>
 <script src="{% static '/lib/layui-v2.6.3/layui.js' %}" charset="utf-8"></script>
