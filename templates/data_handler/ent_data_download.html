@@ -86,8 +86,8 @@
                 <!--button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button-->
             </div>
         </script>
-
-        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+        <form class="layui-form layui-form-pane" id="mainform" action="/ent/download_data" method="post" >
+        <table class="layui-hide" id="currentTableId" name="testtable" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
             <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="show_detail">查看企业详细信息</a>
@@ -98,7 +98,7 @@
         <div style="margin: auto">
             <button class="layui-btn" name="submit_btn" type="button" id="submit_btn" lay-submit="" lay-filter="download_btn" style="margin: auto" >点击下载</button>
         </div>
-
+        </form>
     </div>
 </div>
 <script src="{% static '/lib/layui-v2.6.3/layui.js' %}" charset="utf-8"></script>
@@ -229,11 +229,32 @@
             //alert("test")
 
 
+
             //执行搜索重载
             var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
             var result = JSON.stringify(data);
-            alert(result.length)
+            //alert(data.length)
+            if(data.length<1)
+            {
+                layer.msg("请选择下载的企业信息",{icon:5})
+            }
+            else
+            {
+                //document.getElementById("mainform").submit();
+                form = $("<form></form>")
+                form.attr('action',"/ent/download_data")
+                form.attr('method','post')
+                input1 = $("<input type='hidden' name='ids' />")
+                input1.val(result)
+                //input1.attr(result)
+                form.append(input1)
+                form.appendTo("body")
+                form.css('display','none')
+                form.submit()
+            }
+            /*
+
             //layer.confirm('确认进行下载？', function (index) {
                 $.ajax({
                     type: "POST",

@@ -720,11 +720,8 @@ def ent_download_singledata(request,id):
 def ent_download_data(request):
     ids = request.POST.get("ids")
     ids = json.loads(ids)
-    #for id
-    print(ids)
     result = EnterpriseInfo.objects.filter(id=-1)
     for id in ids:
-
         print(id['id'])
         print(type(id))
         info = EnterpriseInfo.objects.filter(id=id['t_id'])
