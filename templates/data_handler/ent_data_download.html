@@ -115,7 +115,7 @@
 
         table.render({
             elem: '#currentTableId',
-            url: '/ent/get_ent_data',
+            url: '/ent/get_ent_data_all',
             method:'post',
             //skin:"row",
             toolbar: '#toolbarDemo',
@@ -162,7 +162,7 @@
 
             //执行搜索重载
             table.reload('currentTableId', {
-                url: '/ent/search_ent_info',
+                url: '/ent/search_ent_info_all',
                 method: "POST",
                 page: {
                     curr: 1

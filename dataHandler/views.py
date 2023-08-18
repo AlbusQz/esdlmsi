@@ -363,6 +363,50 @@ def get_ent_data(request):
     }
     return HttpResponse(json.dumps(result))
 
+#用于向企业用户数据查询界面返回所有数据的函数
+@login_required
+def get_ent_data_all(request):
+    user = request.user
+    myuser = Myuser.objects.get(u=user)
+    data = EnterpriseInfo.objects.filter(mu=myuser)
+    dataCount = data.count()
+    pageIndex = request.POST.get('pageIndex')
+    pageSize = request.POST.get('pageSize')
+
+    list = []
+    res = []
+    for item in data:
+        dict = {}
+        dict['t_id'] = item.id
+        dict['name'] = item.enterprise_name
+        dict['id'] = item.enterprise_id
+        if item.founding_date != None:
+            dict['c_date'] = item.founding_date.strftime('%Y-%m-%d')
+        dict['fund'] = item.registered_capital
+        dict['fund_kind'] = item.registered_capital_currency
+        dict['ind_code'] = item.industry_code
+        if item.time_to_market != None:
+            dict['ipo_time'] = item.time_to_market.strftime('%Y-%m-%d')
+        dict['exchange'] = item.bourse
+        if item.registered_province !=None:
+            dict['reg_add'] = item.registered_province+"/"+item.registered_city+"/"+item.registered_district
+        if item.actual_province != None:
+            dict['real_add'] = item.actual_province+"/"+item.actual_city+"/"+item.actual_district
+        dict['c_time'] = item.create_time.strftime('%Y-%m-%d %H:%M:%S')
+        list.append(dict)
+
+    pageInator = Paginator(list, pageSize)
+    context = pageInator.page(pageIndex)
+    for item in context:
+        res.append(item)
+    result = {
+        'code': 0,
+        'msg': 'nice',
+        'DataCount': dataCount,
+        'data': res
+    }
+    return HttpResponse(json.dumps(result))
+
 #用于向企业用户返回企业数据详细值
 @login_required
 def get_ent_detail(request,id):
@@ -455,6 +499,83 @@ def get_ent_detail(request,id):
 #用于向企业用户返回搜索后的企业数据
 @login_required
 def search_ent_info(request):
+    print("here")
+    params = request.POST.get('searchParams')
+    print(params)
+    params = json.loads(params)
+    q = Q()
+    id = params['id']
+    if(id!=''):
+        q = q&Q(id__contains=id)
+    basic_name = params['basic_name']
+    if (basic_name != ''):
+        q = q & Q(enterprise_name__contains=basic_name)
+    basic_id = params['basic_id']
+    if (basic_id != ''):
+        q = q & Q(enterprise_id__contains=basic_id)
+    basic_reg_pro = params['basic_reg_pro']
+    if (basic_reg_pro != ''and basic_reg_pro != None):
+        q = q & Q(registered_province__contains=basic_reg_pro)
+    basic_reg_city = params['basic_reg_city']
+    if (basic_reg_city != '' and basic_reg_city != None):
+        q = q & Q(registered_city__contains=basic_reg_city)
+    basic_reg_area = params['basic_reg_area']
+    if (basic_reg_area != '' and basic_reg_area != None):
+        q = q & Q(registered_district__contains=basic_reg_area)
+    basic_real_pro = params['basic_real_pro']
+    if (basic_real_pro != '' and basic_real_pro != None):
+        q = q & Q(actual_province__contains=basic_real_pro)
+    basic_real_city = params['basic_real_city']
+    if (basic_real_city != '' and basic_real_city != None):
+        q = q & Q(actual_city__contains=basic_real_city)
+    basic_real_area = params['basic_real_area']
+    if (basic_real_area != '' and basic_real_area != None):
+        q = q & Q(actual_district__contains=basic_real_area)
+
+  #  q = Q(name__contains=name)&Q(email__contains=email)&Q(mobile__contains=mobile)&Q(type__contains=type)
+
+    data = EnterpriseInfo.objects.filter(q,needpre=0)
+    dataCount = data.count()
+    pageIndex = request.POST.get('pageIndex')
+    pageSize = request.POST.get('pageSize')
+
+    list = []
+    res = []
+    for item in data:
+        dict = {}
+        dict['t_id'] = item.id
+        dict['name'] = item.enterprise_name
+        dict['id'] = item.enterprise_id
+        if item.founding_date != None:
+            dict['c_date'] = item.founding_date.strftime('%Y-%m-%d')
+        dict['fund'] = item.registered_capital
+        dict['fund_kind'] = item.registered_capital_currency
+        dict['ind_code'] = item.industry_code
+        if item.time_to_market != None:
+            dict['ipo_time'] = item.time_to_market.strftime('%Y-%m-%d')
+        dict['exchange'] = item.bourse
+        if item.registered_province != None:
+            dict['reg_add'] = item.registered_province + "/" + item.registered_city + "/" + item.registered_district
+        if item.actual_province != None:
+            dict['real_add'] = item.actual_province + "/" + item.actual_city + "/" + item.actual_district
+        dict['c_time'] = item.create_time.strftime('%Y-%m-%d %H:%M:%S')
+        list.append(dict)
+
+    pageInator = Paginator(list, pageSize)
+    context = pageInator.page(pageIndex)
+    for item in context:
+        res.append(item)
+    result = {
+        'code': 0,
+        'msg': 'nice',
+        'DataCount': dataCount,
+        'data': res
+    }
+    return HttpResponse(json.dumps(result))
+
+#用于向企业用户返回搜索后的全部企业数据
+@login_required
+def search_ent_info_all(request):
     print("here")
     params = request.POST.get('searchParams')
     print(params)
