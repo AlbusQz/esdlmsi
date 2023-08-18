@@ -86,6 +86,10 @@ dataHandler_urls =[
     path('ent/data_download', dataHandler.views.ent_data_download),
     path("ent/download_singleinfo/<int:id>/",dataHandler.views.ent_download_singledata),
     path('ent/download_data',dataHandler.views.ent_download_data),
+
+    #以下为生成处理过程有关的url
+    path("ent/process_test",dataHandler.views.ent_process_generate),
+
     ]
 
 

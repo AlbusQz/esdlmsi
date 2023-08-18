@@ -21,7 +21,7 @@ from dataHandler.VAEGAIN import VAE_GAIN
 from dataHandler.SCIS import SCIS
 from dataHandler.GAIN import GAIN
 from sqlalchemy import create_engine
-
+from dataHandler.models import Process
 
 from django.db import connection
 # Create your views here.
@@ -862,3 +862,9 @@ def ent_download_data(request):
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     df.to_csv(path_or_buf=response, index=False, encoding="utf_8")
     return response
+
+#用于测试process类
+def ent_process_generate(request):
+    temppro = Process.objects.get(id="100000")
+    print(temppro.ent_info.all())
+    return HttpResponse("nice")
