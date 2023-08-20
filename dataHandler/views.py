@@ -1,15 +1,10 @@
 import pytz
-
 from django.core.paginator import Paginator
-from django.shortcuts import render
 from datetime import datetime
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import FileResponse,Http404
-from django.contrib.auth.models import User
-import os
-import csv
 import pandas as pd
 from myUser.models import Myuser
 from django.contrib import messages
@@ -20,10 +15,8 @@ from django.db.models import Q
 from dataHandler.VAEGAIN import VAE_GAIN
 from dataHandler.SCIS import SCIS
 from dataHandler.GAIN import GAIN
-from sqlalchemy import create_engine
-from dataHandler.models import Process
+from myProcess.models import Process
 
-from django.db import connection
 # Create your views here.
 #测试函数
 @login_required

@@ -108,7 +108,7 @@
             },
             {
               "title": "分析历史记录",
-              "href": "/history",
+              "href": "/ent/process_history",
               "icon": "fa fa-history",
               "target": "_self"
             }

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     #'users',
     'myUser',
     'dataHandler',
+    'myProcess',
 ]
 
 MIDDLEWARE = [

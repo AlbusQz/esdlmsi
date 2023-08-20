@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path,re_path
 import myUser.views
 import dataHandler.views
+import myProcess.views
 urlpatterns = []
 
 ##以下为有关myUser类的url（即用户信息有关的功能）
@@ -89,14 +90,23 @@ dataHandler_urls =[
     path("ent/download_singleinfo/<int:id>/",dataHandler.views.ent_download_singledata),
     path('ent/download_data',dataHandler.views.ent_download_data),
 
-    #以下为生成处理过程有关的url
-    path("ent/generate_process",dataHandler.views.ent_generate_process),
 
     ]
 
-
-
 urlpatterns += dataHandler_urls
+
+##以下为有关myProcess类的url（即分析过程有关的功能）
+myProcess_urls = [
+
+    #以下为生成处理过程有关的url
+    path("ent/generate_process",myProcess.views.ent_generate_process),
+    path('ent/process_history',myProcess.views.ent_get_processhistorypage),
+    path('ent/get_process_his',myProcess.views.ent_get_processhis),
+
+
+]
+
+urlpatterns += myProcess_urls
 
 '''
     path('',views.login),
