@@ -107,7 +107,7 @@
 
                 <label class="layui-form-label required">组织机构代码</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="basic_code" id="basic_name" lay-verify="required" lay-reqtext="组织机构代码不能为空" placeholder="请输入组织机构代码"  class="layui-input">
+                    <input type="text" name="basic_code" id="basic_name" lay-verify="required" lay-reqtext="组织机构代码不能为空" placeholder="请输入组织机构代码"  class="layui-input">
                 </div>
 
             </div>
@@ -124,7 +124,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">注册资本</label>
                     <div class="layui-input-inline">
-                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="basic_fund"  autocomplete="off"  placeholder=""  onkeyup="RegularNum(this)" class="layui-input">
+                        <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')" name="basic_fund"  autocomplete="off"  placeholder="请输入注册资本"  onkeyup="RegularNum(this)" class="layui-input">
                     </div>
                     <div class="layui-form-mid layui-word-aux">（单位：万元）</div>
                 </div>
@@ -169,7 +169,8 @@
                     <label class="layui-form-label">上市交易所</label>
                     <div class="layui-input-block">
                          <select name="basic_exchange" lay-filter="fund_kind">
-                            <option value="上海证券交易所" selected="">上海证券交易所</option>
+                             <option value="无" selected="" >无</option>
+                            <option value="上海证券交易所">上海证券交易所</option>
                             <option value="深圳证券交易所">深圳证券交易所</option>
                             <option value="香港证券交易所">香港证券交易所</option>
                             <option value="纽约证券交易所">纽约证券交易所</option>
@@ -233,14 +234,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">人才招聘数量</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="peo_count1" id="peo_count1"  placeholder="请输入企业当年人才招聘数量"  class="layui-input">
+                    <input type="text"  oninput="value=value.replace(/[^0-9]/g,'')"  name="peo_count1" id="peo_count1"  placeholder="请输入企业当年人才招聘数量"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">本科以上学历招聘数量</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="peo_count2" id="peo_count2" placeholder="请输入企业当年本科以上学历招聘数量"  class="layui-input">
+                    <input  type="text"  oninput="value=value.replace(/[^0-9]/g,'')" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="peo_count2" id="peo_count2" placeholder="请输入企业当年本科以上学历招聘数量"  class="layui-input">
                 </div>
             </div>
 
@@ -253,19 +254,19 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">负债总额</label>
                     <div class="layui-input-block">
-                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="debt1"  placeholder="请输入负债总额"  class="layui-input">
+                        <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')" id="debt1" onblur="count_debt()" placeholder="请输入负债总额"  class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">资产总额</label>
                     <div class="layui-input-block">
-                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="debt2"  placeholder="请输入资产总额"  class="layui-input">
+                        <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')" id="debt2" onblur="count_debt()" placeholder="请输入资产总额"  class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                      <label class="layui-form-label">总资产负债率(%)</label>
                     <div class="layui-input-block">
-                        <input type="number" name="debt" id="debt" readonly="readonly" placeholder=""  class="layui-input">
+                        <input type="number" name="debt" id="debt" readonly="readonly" placeholder=" " class="layui-input">
                     </div>
 
                 </div >
@@ -282,13 +283,13 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">负债总额</label>
                     <div class="layui-input-block">
-                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="equity1"  placeholder="请输入负债总额"  class="layui-input">
+                        <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')" id="equity1" onblur="count_equity()" placeholder="请输入负债总额"  class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">股东权益</label>
                     <div class="layui-input-block">
-                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="equity2"  placeholder="请输入股东权益"  class="layui-input">
+                        <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')" id="equity2" onblur="count_equity()" placeholder="请输入股东权益"  class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -310,13 +311,13 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">股东权益年初数</label>
                     <div class="layui-input-block">
-                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="net_worth1"  placeholder="请输入股东权益年初数"  class="layui-input">
+                        <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')"  id="net_worth1" onblur="count_net_worth()"  placeholder="请输入股东权益年初数"  class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">股东权益年末数</label>
                     <div class="layui-input-block">
-                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="net_worth2"  placeholder="请输入股东权益年末数"  class="layui-input">
+                        <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')" id="net_worth2" onblur="count_net_worth()" placeholder="请输入股东权益年末数"  class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -338,13 +339,13 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">资产总额年末数</label>
                     <div class="layui-input-block">
-                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="grate_total1"  placeholder="请输入资产总额年末数"  class="layui-input">
+                        <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')" onblur="count_grate_total()" id="grate_total1"  placeholder="请输入资产总额年末数"  class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">资产总额年初数</label>
                     <div class="layui-input-block">
-                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="grate_total2"  placeholder="请输入资产总额年初数"  class="layui-input">
+                        <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')" onblur="count_grate_total()" id="grate_total2"  placeholder="请输入资产总额年初数"  class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -366,13 +367,13 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">本年营业收入</label>
                     <div class="layui-input-block">
-                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="grate_bus1"  placeholder="请输入本年营业收入"  class="layui-input">
+                        <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')" onblur="count_grate_bus()"  id="grate_bus1"  placeholder="请输入本年营业收入"  class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">上年营业收入</label>
                     <div class="layui-input-block">
-                        <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  id="grate_bus2"  placeholder="请输入上年营业收入"  class="layui-input">
+                        <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')" onblur="count_grate_bus()" id="grate_bus2"  placeholder="请输入上年营业收入"  class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -394,7 +395,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">企业纳税总额</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="tax" id="tax"  placeholder="请输入企业当年纳税总额企业当年纳税总额"  class="layui-input">
+                    <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')" name="tax" id="tax"  placeholder="请输入企业当年纳税总额企业当年纳税总额"  class="layui-input">
                 </div>
             </div>
 
@@ -405,7 +406,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">发明专利总数</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="ip_total" id="ip_total"  placeholder="请输入截至本年企业申请的发明专利总数"  class="layui-input">
+                    <input  type="text"  oninput="value=value.replace(/[^0-9]/g,'')" name="ip_total" id="ip_total"  placeholder="请输入截至本年企业申请的发明专利总数"  class="layui-input">
                 </div>
             </div>
 
@@ -413,28 +414,28 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">高级专利数量</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="ap_total" id="ap_total"  placeholder="请输入企业截至当年IPC类别（二级分类，例如A01）前10类及对应的专利数量"  class="layui-input">
+                    <input  type="text"  oninput="value=value.replace(/[^0-9]/g,'')" name="ap_total" id="ap_total"  placeholder="请输入企业截至当年IPC类别（二级分类，例如A01）前10类及对应的专利数量"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">合作开发专利数</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="jp_total" id="jp_total"  placeholder="请输入企业本年合作开发申请专利数"  class="layui-input">
+                    <input  type="text"  oninput="value=value.replace(/[^0-9]/g,'')" name="jp_total" id="jp_total"  placeholder="请输入企业本年合作开发申请专利数"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">软件著作数量</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="sp_total" id="sp_total"  placeholder="请输入截至当年企业软件著作累计数量"  class="layui-input">
+                    <input  type="text"  oninput="value=value.replace(/[^0-9]/g,'')" name="sp_total" id="sp_total"  placeholder="请输入截至当年企业软件著作累计数量"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">参与制定新标准数</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="ns_total" id="ns_total"  placeholder="请输入截至当年参与制定新标准数"  class="layui-input">
+                    <input  type="text"  oninput="value=value.replace(/[^0-9]/g,'')" name="ns_total" id="ns_total"  placeholder="请输入截至当年参与制定新标准数"  class="layui-input">
                 </div>
             </div>
 
@@ -445,14 +446,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">信息化平台数量</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="inforplat_total" id="inforplat_total"  placeholder="请输入企业APP、网站、公众号等信息化平台的数量"  class="layui-input">
+                    <input  type="text"  oninput="value=value.replace(/[^0-9]/g,'')" name="inforplat_total" id="inforplat_total"  placeholder="请输入企业APP、网站、公众号等信息化平台的数量"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">ICP申请数</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="icp_total" id="icp_total"  placeholder="请输入企业截至当年ICP申请的数量"  class="layui-input">
+                    <input  type="text"  oninput="value=value.replace(/[^0-9]/g,'')" name="icp_total" id="icp_total"  placeholder="请输入企业截至当年ICP申请的数量"  class="layui-input">
                 </div>
             </div>
 
@@ -463,7 +464,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">获得荣誉数量</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="honor_total" id="honor_total"  placeholder="请输入企业截止当年获得的荣誉数量"  class="layui-input">
+                    <input  type="text"  oninput="value=value.replace(/[^0-9]/g,'')" name="honor_total" id="honor_total"  placeholder="请输入企业截止当年获得的荣誉数量"  class="layui-input">
                 </div>
             </div>
 
@@ -488,7 +489,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">民事诉讼数量</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="lawsuit_total" id="lawsuit_total"  placeholder="请输入企业当年被民事诉讼的数量"  class="layui-input">
+                    <input  type="text"  oninput="value=value.replace(/[^0-9]/g,'')" name="lawsuit_total" id="lawsuit_total"  placeholder="请输入企业当年被民事诉讼的数量"  class="layui-input">
                 </div>
             </div>
 
@@ -508,28 +509,28 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">企业投资总次数</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="invest_time" id="invest_time"  placeholder="请输入截至当年企业投资的总次数"  class="layui-input">
+                    <input type="text"  oninput="value=value.replace(/[^0-9]/g,'')" name="invest_time" id="invest_time"  placeholder="请输入截至当年企业投资的总次数"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">企业投资总金额</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="invest_amount" id="invest_amount"  placeholder="请输入截至当年企业投资的总金额"  class="layui-input">
+                    <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')" name="invest_amount" id="invest_amount"  placeholder="请输入截至当年企业投资的总金额"  class="layui-input">
                 </div>
             </div>
 
              <div class="layui-form-item">
                 <label class="layui-form-label">企业参与招标次数</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="bidding_time" id="bidding_time"  placeholder="请输入截至当年企业参与政府招标的总次数"  class="layui-input">
+                    <input  type="text"  oninput="value=value.replace(/[^0-9]/g,'')" name="bidding_time" id="bidding_time"  placeholder="请输入截至当年企业参与政府招标的总次数"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">企业参与招标总金额</label>
                 <div class="layui-input-block">
-                    <input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" name="bidding_amount" id="bidding_amount"  placeholder="请输入截至当年企业参与政府招标的总金额"  class="layui-input">
+                    <input type="text"  oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,3})?).*$/g, '$1')" name="bidding_amount" id="bidding_amount"  placeholder="请输入截至当年企业参与政府招标的总金额"  class="layui-input">
                 </div>
             </div>
 
@@ -548,11 +549,18 @@
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
 
-    function count_debt()
+    function test_blur()
     {
-        var d1 = parseFloat(document.getElementById("debt1").value)
-        var d2 = parseFloat(document.getElementById("debt2").value)
-        if(d1=="")
+        layer.msg("测试",{icon:7})
+    }
+
+    function count_debt1()
+    {
+
+        var d1 = (document.getElementById("debt1").value)
+        var d2 = (document.getElementById("debt2").value)
+        alert(d2)
+        if(d1==""||d2==Number.NaN)
         {
             layer.msg("请填写负债总额",{icon:5})
         }
@@ -570,6 +578,45 @@
                 }
                 else
                 {
+                    d1 = parseFloat(d1)
+                    d2 = parseFloat(d2)
+                    var debt = (d1/d2).toFixed(4)*100
+                    document.getElementById("debt").value=debt
+                    layer.msg("计算完成",{icon:6})
+                }
+            }
+        }
+
+    }
+
+    function count_debt()
+    {
+
+        var d1 = (document.getElementById("debt1").value)
+        var d2 = (document.getElementById("debt2").value)
+
+        if(d1=="")
+        {
+            layer.msg("请填写负债总额",{icon:7})
+        }
+        else
+        {
+            if(d2=="")
+            {
+                layer.msg("请填写资产总额",{icon:7})
+            }
+            else
+            {
+                d1 = parseFloat(d1)
+                d2 = parseFloat(d2)
+
+                if(d2==0)
+                {
+                    layer.msg("资产总额不可为0！",{icon:5})
+                }
+                else
+                {
+
                     var debt = (d1/d2).toFixed(4)*100
                     document.getElementById("debt").value=debt
                     layer.msg("计算完成",{icon:6})
@@ -581,20 +628,24 @@
 
      function count_equity()
     {
-        var d1 = parseFloat(document.getElementById("equity1").value)
-        var d2 = parseFloat(document.getElementById("equity2").value)
+
+        var d1 = (document.getElementById("equity1").value)
+        var d2 = (document.getElementById("equity2").value)
         if(d1=="")
         {
-            layer.msg("请填写负债总额",{icon:5})
+            layer.msg("请填写负债总额",{icon:7})
         }
         else
         {
             if(d2=="")
             {
-                layer.msg("请填写股东权益",{icon:5})
+                layer.msg("请填写股东权益",{icon:7})
             }
             else
             {
+                d1 = parseFloat(d1)
+                d2 = parseFloat(d2)
+
                 if(d2==0)
                 {
                     layer.msg("股东权益不可为0！",{icon:5})
@@ -612,20 +663,23 @@
 
      function count_net_worth()
     {
-        var d1 = parseFloat(document.getElementById("net_worth1").value)
-        var d2 = parseFloat(document.getElementById("net_worth2").value)
+        var d1 = (document.getElementById("net_worth1").value)
+        var d2 = (document.getElementById("net_worth2").value)
         if(d1=="")
         {
-            layer.msg("请填写股东权益年初数",{icon:5})
+            layer.msg("请填写股东权益年初数",{icon:7})
         }
         else
         {
             if(d2=="")
             {
-                layer.msg("请填写股东权益年末数",{icon:5})
+                layer.msg("请填写股东权益年末数",{icon:7})
             }
             else
             {
+                d1 = parseFloat(d1)
+                d2 = parseFloat(d2)
+
                 var net_worth = ((d1+d2)/2).toFixed(2)
                 document.getElementById("net_worth").value=net_worth
                 layer.msg("计算完成",{icon:6})
@@ -636,20 +690,23 @@
 
     function count_grate_total()
     {
-        var d1 = parseFloat(document.getElementById("grate_total1").value)
-        var d2 = parseFloat(document.getElementById("grate_total2").value)
+        var d1 = (document.getElementById("grate_total1").value)
+        var d2 = (document.getElementById("grate_total2").value)
         if(d1=="")
         {
-            layer.msg("请填写资产总额年末数",{icon:5})
+            layer.msg("请填写资产总额年末数",{icon:7})
         }
         else
         {
             if(d2=="")
             {
-                layer.msg("请填写资产总额年初数",{icon:5})
+                layer.msg("请填写资产总额年初数",{icon:7})
             }
             else
             {
+                d1 = parseFloat(d1)
+                d2 = parseFloat(d2)
+
                 if(d2==0)
                 {
                     layer.msg("资产总额年初数不可为0！",{icon:5})
@@ -667,20 +724,23 @@
 
      function count_grate_bus()
     {
-        var d1 = parseFloat(document.getElementById("grate_bus1").value)
-        var d2 = parseFloat(document.getElementById("grate_bus2").value)
+        var d1 = (document.getElementById("grate_bus1").value)
+        var d2 = (document.getElementById("grate_bus2").value)
         if(d1=="")
         {
-            layer.msg("请填写本年营业收入",{icon:5})
+            layer.msg("请填写本年营业收入",{icon:7})
         }
         else
         {
             if(d2=="")
             {
-                layer.msg("请填写上年营业收入",{icon:5})
+                layer.msg("请填写上年营业收入",{icon:7})
             }
             else
             {
+                d1 = parseFloat(d1)
+                d2 = parseFloat(d2)
+
                 if(d2==0)
                 {
                     layer.msg("上年营业收入不可为0！",{icon:5})

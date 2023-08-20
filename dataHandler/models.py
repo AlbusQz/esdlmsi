@@ -14,7 +14,7 @@ import numpy as np
 class EnterpriseInfo(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
 
-    enterprise_id = models.IntegerField(null=False)
+    enterprise_id = models.CharField(max_length=64, blank=True, null=False)
     enterprise_name = models.CharField(max_length=64, blank=True, null=True)
     founding_date = models.DateField(blank=True, null=True)
     registered_capital = models.IntegerField(blank=True, null=True)
