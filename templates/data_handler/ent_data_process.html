@@ -25,7 +25,9 @@
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="show_detail">查看企业详细信息</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="show_detail">详细信息</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="update">修改信息</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
             <!--a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a-->
         </script>
 
@@ -89,6 +91,8 @@
                 dataName:'data'
             },
             cols: [[
+
+
                 {type: "checkbox", minWidth: 50},
                 {field: 't_id', minWidth: 90, title: '数据项ID', sort: true},
                 {field: 'name', minWidth: 100, title: '企业名称', sort: true},
@@ -102,7 +106,7 @@
                 {field: 'reg_add', minWidth:150, title: '企业注册地址', sort:true},
                 {field: 'real_add', minWidth: 150, title: '企业实际地址', sort: true},
                 {field: 'c_time', minWidth: 150, title: '数据上传时间', sort: true},
-                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+                {title: '操作', minWidth: 250, toolbar: '#currentTableBar', align: "center"}
             ]],
             limits: [5, 10,15, 20, 25, 50, 100],
             limit: 10,
@@ -212,66 +216,35 @@
                     content: '/ent/get_data_detail/'+obj.data['t_id']
                 });
 
-                 /*
-                 layer.prompt({ formType:2, title: "编辑表格",btn:['修改数据','关闭'],anim: 4,
-                      content:`<div>
-                                    账号ID: <input type="text"  style='display:inline-block' disabled="disabled" id="id"><br><br>
-                                    用户名: <input type="text" style='display:inline-block' id="name"  autocomplete="off"><br><br>
-                                    邮&nbsp&nbsp&nbsp&nbsp箱: <input type="text" lay-verify="email" style='display:inline-block'  autocomplete="off" id="email"><br><br>
-                                    手机号: <input type="text" style='display:inline-block' lay-verify="phone" id="mobile"  autocomplete="off" ><br><br>
-                                    用户类型：<select id="type">
-                                                <option value="企业用户">企业用户</option>
-                                                <option value="政府用户">政府用户</option>
-                                                <option value="管理员用户">管理员用户</option>
-                                                <option value="专家用户">专家用户</option>
-                                            </select>
-                               </div>`,
-                      yes:function (index,layero)
-                      {
-                          console.log("点击yes触发事件:" + index);
-                          var id = $("#id").val();
-                          var name = $("#name").val();
-                          var email = $("#email").val();
-                          var mobile = $("#mobile").val();
-                          var type =  $("#type").val();
-                          $.ajax({
-                              url: "/admin/update_singleinfo",
-                              type: "get",
-                              data: {"id": id,
-                                      "name": name,
-                                      "email": email,
-                                      "mobile": mobile,
-                                      "type":type
-                              },
-                              success:function (recv) {
-                                // 修改完成后,本地直接更新数据,这样就无需刷新一次了
-                                  obj.update({
-                                      id: id,
-                                      name: name,
-                                      email: email,
-                                      mobile: mobile,
-                                      type: type
-                                  });
-                                  layer.msg("修改已完成", {icon: 6});
-                                  layer.close(index);
-                              }
-                          });
-                      }
-                  });
-                      $("#id").val(data.id);
-                      $("#name").val(data.name);
-                      $("#email").val(data.email);
-                      $("#mobile").val(data.mobile);
-                      $("#type").val(data.type)
-*/
+
                 return false;
-            } else if (obj.event === 'delete') {
+            }
+            else if (obj.event === 'update'){
+                var id = $("#id").val();
+                 var index = layer.open({
+                     title: '查看完整信息',
+                     data: {
+                         id: "test",
+                     },
+
+                     method: "post",
+                     type: 2,
+                     area: ['720px', '500px'],
+                     shade: 0.6,
+                     maxmin: true,
+                     shadeClose: true,
+                     closeBtn: 1,
+                     area: ['100%', '100%'],
+                     content: '/ent/get_data_updatepage/' + obj.data['t_id']
+                 })
+            }
+            else if (obj.event === 'delete') {
                 layer.confirm('确认进行删除？', function (index) {
 
                     $.ajax({
-                        url:"/admin/delete_singleinfo",
+                        url:"/ent/delete_ent_info",
                         type:'GET',
-                        data:{'id':obj.data['id']},
+                        data:{'id':obj.data['t_id']},
                         success:function(recv){
                             layer.msg("成功删除此行数据",{icon:6});
                         }
@@ -280,6 +253,7 @@
                     layer.close(index);
                 });
             }
+
         });
 
     });
