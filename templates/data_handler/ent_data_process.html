@@ -10,6 +10,14 @@
     <link rel="stylesheet" href="{% static '/lib/layui-v2.6.3/css/layui.css' %}" media="all">
     <link rel="stylesheet" href="{% static '/css/public.css' %}" media="all">
 </head>
+  {% if messages %}
+        <script>
+            {% for msg in messages %}
+                //layer.msg('test',{icon:6})
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
@@ -130,6 +138,7 @@
             }
             else
             {
+
                 layer.confirm('确认进行预处理？', function (index) {
                 table.reload('currentTableId', {
                 url: '/ent/process_data',
@@ -140,7 +149,11 @@
                 , where: {
                     searchParams: result,
                     type: type
+                },
+                done:function () {
+                    layer.msg("预处理已成功完成！", {icon: 6});
                 }
+
             }, 'data'),
                 layer.msg("预处理成功提交", {icon: 6});
                 layer.close(index)});
@@ -258,6 +271,10 @@
 
     });
 </script>
-
+<script type="text/javascript">
+    {% for msg in messages %}
+        alert('{{ msg.message }}');
+    {% endfor %}
+</script>
 </body>
 </html>

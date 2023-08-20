@@ -656,10 +656,12 @@ def get_ent_process(request):
 
 #用于向企业用户数据预处理界面返回数据的函数
 @login_required
-def get_ent_pre_data(request):
+def get_ent_pre_data(request,flag = 0):
+    #if flag ==1 :
+
     user = request.user
     myuser = Myuser.objects.get(u=user)
-    data = EnterpriseInfo.objects.filter(mu=myuser)
+    data = EnterpriseInfo.objects.filter(mu=myuser,needpre = 1)
     dataCount = data.count()
     pageIndex = request.POST.get('pageIndex')
     pageSize = request.POST.get('pageSize')
@@ -744,8 +746,8 @@ def ent_process_data(request):
 
             rawdata[i].needpre = 0
             rawdata[i].save()
-
-    return get_ent_pre_data(request)
+    #messages.add_message(request, messages.SUCCESS, '预处理成功！')
+    return get_ent_pre_data(request,1)
 
 #用于提供修改预处理算法参数页面的函数
 @login_required
