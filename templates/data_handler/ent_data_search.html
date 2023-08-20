@@ -98,7 +98,8 @@
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="show_detail">查看企业详细信息</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="show_detail">查看详细</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="update">修改信息</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
             <!--a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a-->
         </script>
@@ -153,7 +154,7 @@
                 {field: 'reg_add', minWidth:150, title: '企业注册地址', sort:true},
                 {field: 'real_add', minWidth: 150, title: '企业实际地址', sort: true},
                 {field: 'c_time', minWidth: 150, title: '数据上传时间', sort: true},
-                {title: '操作', minWidth: 200, toolbar: '#currentTableBar', align: "center"}
+                {title: '操作', minWidth: 220, toolbar: '#currentTableBar', align: "center"}
             ]],
             limits: [5, 10,15, 20, 25, 50, 100],
             limit: 10,
@@ -208,47 +209,7 @@
                 form.css('display','none')
                 form.submit()
             }
-            /*
 
-            //layer.confirm('确认进行下载？', function (index) {
-                $.ajax({
-                    type: "POST",
-                    url: '/ent/download_data',
-                    data: {
-                        "ids": result
-                    },
-                    text: "json",
-                    success: function (response,status,request) {
-                        alert("test")
-                        console.log(data);
-                        DownloadCsv(data, '企业数据.csv')
-
-                    },
-
-                            error : function(XMLHttpRequest, textStatus, errorThrown) {
-                                //这个error函数调试时非常有用，如果解析不正确，将会弹出错误框
-                                　　　　alert(XMLHttpRequest.responseText);
-                                alert(XMLHttpRequest.status);
-                                alert(XMLHttpRequest.readyState);
-                                alert(textStatus); // parser error;
-                            }
-                })
-           // })
-/*
-                layer.confirm('确认进行下载？', function (index) {
-                table.reload('currentTableId', {
-                url: '/ent/download_data',
-                method: "POST",
-                page: {
-                    curr: 1
-                }
-                , where: {
-                    ids: result,
-                }
-            }, 'data'),
-                //layer.msg("预处理成功提交", {icon: 6});
-                layer.close(index)
-                });*/
             return false;
         });
 
@@ -365,7 +326,27 @@
 
 
                 return false;
-            } else if (obj.event === 'delete') {
+            }
+            else if (obj.event === 'update'){
+                var id = $("#id").val();
+                 var index = layer.open({
+                     title: '查看完整信息',
+                     data: {
+                         id: "test",
+                     },
+
+                     method: "post",
+                     type: 2,
+                     area: ['720px', '500px'],
+                     shade: 0.6,
+                     maxmin: true,
+                     shadeClose: true,
+                     closeBtn: 1,
+                     area: ['100%', '100%'],
+                     content: '/ent/get_data_updatepage/' + obj.data['t_id']
+                 })
+            }
+            else if (obj.event === 'delete') {
                 layer.confirm('确认进行删除？', function (index) {
 
                     $.ajax({

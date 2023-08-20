@@ -299,7 +299,7 @@ def ent_inputData(request):
 
         messages.add_message(request,messages.SUCCESS,"上传成功！")
         if tempinfo.getNeedpre():
-            messages.add_message(request, messages.WARNING, "输入的数据存在空缺数据项，需要进行预处理！")
+            messages.add_message(request, messages.WARNING, "输入的数据存在空缺数据项，需要进行处理！")
         else:
             messages.add_message(request, messages.SUCCESS, "您可以在数据查询界面查询到这次的数据了！")
         return redirect("/ent/data_input")
@@ -891,3 +891,217 @@ def ent_generate_process(request):
     messages.add_message(request, messages.SUCCESS, "上传成功！")
 
     return render(request,"data_handler/ent_data_search.html")
+
+#用于向企业用户返回企业数据修改页面值
+@login_required
+def get_ent_updatepage(request,id):
+    ent_info = EnterpriseInfo.objects.get(id=id)
+
+    basic_name = ent_info.enterprise_name
+    #print(basic_name)
+    if basic_name == None:
+
+        basic_name = ''
+    basic_code = ent_info.enterprise_id
+
+    id = id
+
+
+    c_time = ent_info.create_time.strftime('%Y-%m-%d %H:%M:%S')
+
+    if ent_info.founding_date != None:
+        date = ent_info.founding_date.strftime('%Y-%m-%d')
+    basic_fund = ent_info.registered_capital
+    basic_fund_kind = ent_info.registered_capital_currency
+    basic_ind = ent_info.industry
+    if basic_ind == None:
+        basic_ind = ''
+    basic_ind_code = ent_info.industry_code
+    if basic_ind_code == None:
+        basic_ind_code = ''
+    if ent_info.time_to_market != None:
+        basic_IPO_time = ent_info.time_to_market.strftime('%Y-%m-%d')
+    basic_exchange = ent_info.bourse
+    basic_reg_pro = ent_info.registered_province
+    basic_reg_city = ent_info.registered_city
+    basic_reg_area = ent_info.registered_district
+    basic_real_pro = ent_info.actual_province
+    basic_real_city = ent_info.actual_city
+    basic_real_area = ent_info.actual_district
+
+    ser_field = ent_info.service_field
+    if ser_field == None:
+        ser_field = ""
+    #print(ser_field)
+
+    peo_count1 = ent_info.head_count
+    peo_count2 = ent_info.above_bs_head_count
+
+    ##财务信息暂时空着
+    debt = 0
+    equity = 0
+    net_worth = 0
+    grate_total = 0
+    grate_bus = 0
+    tax = 0
+
+    ip_total = ent_info.applicated_patent_count
+    ap_total = ent_info.ipc_top10_patent_count
+    jp_total = ent_info.multi_applicated_patent_count_this_year
+    sp_total = ent_info.sc_count
+    ns_total = ent_info.standard_count
+
+    inforplat_total = ent_info.informalization_platform_count
+    icp_total = ent_info.icp_count
+
+    honor_total = ent_info.honor_count
+    a_taxpayer = ent_info.a_class_honor
+    if a_taxpayer >0 :
+        a_taxpayer = 1
+        ent_info.a_class_honor = 1
+    dishonesty = ent_info.dishonest_in_3_years
+    if dishonesty >0 :
+        dishonesty = 1
+        ent_info.dishonest_in_3_years = 1
+    lawsuit_total = ent_info.civil_action_count
+    is_ep = ent_info.environmental_punishment_count
+    if is_ep > 0:
+        is_ep = 1
+        ent_info.environmental_punishment_count = 1
+    invest_time = ent_info.investment_count
+    invest_amount = ent_info.investment_amount
+    bidding_time = 0
+    bidding_amount = 0
+
+    ent_info.save()
+
+    del ent_info
+    #print(globals())
+    return render(request,"data_handler/ent_data_update.html",locals())
+
+#企业用户数据修改函数
+@login_required
+def ent_update_info(request):
+
+    tempdata = []
+    if request.method == "POST":
+        request.POST._mutable= True
+        form_data =[]
+        #print(request.POST.items())
+        for key,value in request.POST.items():
+            if  value == "" :
+                print(key,value)
+                #form_data
+                request.POST[key] = None
+
+        id = request.POST.get("data_id")
+        print(id)
+        user = request.user
+        tempuser = Myuser.objects.get(u=user)
+        #print(id)
+        info = EnterpriseInfo.objects.get(id=id)
+        info.enterprise_name = request.POST.get('basic_name','')
+        info.founding_date = request.POST.get('basic_date','')
+        basic_fund = request.POST.get('basic_fund', 0)
+        if basic_fund == '':
+            basic_fund = 0
+        info.registered_capital = basic_fund
+        info.registered_capital_currency =  request.POST.get('basic_fund_kind', '')
+        info.industry = request.POST.get('basic_ind', '')
+        basic_ind_code = request.POST.get('basic_ind_code', 0)
+        if basic_ind_code == "":
+            basic_ind_code = None
+        info.industry_code = basic_ind_code
+        info.time_to_market = request.POST.get('basic_IPO_time', '')
+        info.bourse = request.POST.get('basic_exchange', '')
+        info.registered_province = request.POST.get('basic_reg_pro', '')
+        info.registered_city = request.POST.get('basic_reg_city', '')
+        info.registered_district = request.POST.get('basic_reg_area', '')
+        info.actual_province = request.POST.get('basic_real_pro', '')
+        info.actual_city = request.POST.get('basic_real_city', '')
+        info.actual_district = request.POST.get('basic_real_area', '')
+
+        info.service_field = request.POST.get('ser_field', '')
+
+        peo_count1 = request.POST.get('peo_count1', 0)
+        if peo_count1 == "":
+            peo_count1 = 0
+        info.head_count = peo_count1
+        peo_count2 = request.POST.get('peo_count2', 0)
+        if peo_count2 == "":
+            peo_count2 = 0
+        info.above_bs_head_count = peo_count2
+
+        debt = request.POST.get('debt', 0)
+        tempdata.append(debt)
+        equity = request.POST.get('equity', 0)
+        tempdata.append(equity)
+        net_worth = request.POST.get('net_worth', 0)
+        tempdata.append(net_worth)
+        grate_total = request.POST.get('grate_total', 0)
+        tempdata.append(grate_total)
+        grate_bus = request.POST.get('grate_bus', 0)
+        tempdata.append(grate_bus)
+        tax = request.POST.get('tax', 0)
+        tempdata.append(tax)
+        info.setFinance()
+        tempdata.clear()
+
+        ip_total = request.POST.get('ip_total', 0)
+        tempdata.append(ip_total)
+        ap_total = request.POST.get('ap_total', 0)
+        tempdata.append(ap_total)
+        jp_total = request.POST.get('jp_total', 0)
+        tempdata.append(jp_total)
+        sp_total = request.POST.get('sp_total', 0)
+        tempdata.append(sp_total)
+        ns_total = request.POST.get('ns_total', 0)
+        tempdata.append(ns_total)
+        info.setPatent(tempdata)
+        tempdata.clear()
+
+        inforplat_total = request.POST.get('inforplat_total', 0)
+        tempdata.append(inforplat_total)
+        icp_total = request.POST.get('icp_total', 0)
+        tempdata.append(icp_total)
+        info.setInfromation(inforplat_total,icp_total)
+        tempdata.clear()
+
+        honor_total = request.POST.get('honor_total', 0)
+        tempdata.append(honor_total)
+        a_taxpayer = request.POST.get('a_taxpayer', '')
+        tempdata.append(a_taxpayer)
+        dishonesty = request.POST.get('dishonesty', '')
+        tempdata.append(dishonesty)
+        lawsuit_total = request.POST.get('lawsuit_total', 0)
+        tempdata.append(lawsuit_total)
+        is_ep = request.POST.get('is_ep', '')
+        tempdata.append(is_ep)
+        info.setHonor(tempdata)
+        tempdata.clear()
+
+        invest_time = request.POST.get('invest_time', 0)
+        tempdata.append(invest_time)
+        invest_amount = request.POST.get('invest_amount', 0)
+        tempdata.append(invest_amount)
+        bidding_time = request.POST.get('bidding_time', 0)
+        tempdata.append(bidding_time)
+        bidding_amount = request.POST.get('bidding_amount', 0)
+        tempdata.append(bidding_amount)
+        info.setInvest(invest_time,invest_amount,bidding_time,bidding_amount)
+
+        if info.getNeedpre():
+            info.needpre = 1
+        else:
+            info.needpre = 0
+
+        info.save()
+
+        messages.add_message(request,messages.SUCCESS,"上传成功！")
+        if info.getNeedpre():
+            messages.add_message(request, messages.WARNING, "输入的数据存在空缺数据项，需要进行处理！")
+        else:
+            messages.add_message(request, messages.SUCCESS, "您可以在数据查询界面查询到这次的数据了！")
+        return redirect("/ent/get_data_updatepage/"+id+"/")
+
+    return render(request,'data_handler/ent_data_update.html')

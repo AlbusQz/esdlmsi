@@ -73,6 +73,8 @@ dataHandler_urls =[
     path('ent/search_ent_info',dataHandler.views.search_ent_info),
     path('ent/search_ent_info_all', dataHandler.views.search_ent_info_all),
     path('ent/delete_ent_info', dataHandler.views.delete_ent_info),
+    path('ent/get_data_updatepage/<int:id>/',dataHandler.views.get_ent_updatepage),
+    path("ent/update_ent_info",dataHandler.views.ent_update_info),
 
     # 以下为数据预处理有关的url
     path('ent/data_process', dataHandler.views.get_ent_process),
