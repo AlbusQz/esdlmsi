@@ -149,3 +149,10 @@ def ent_search_processhis(request):
         'data': res
     }
     return HttpResponse(json.dumps(result))
+
+#用于向企业用户删除选中的处理过程数据
+@login_required
+def delete_ent_process_his(request):
+    get_id = request.POST.get('id')
+    Process.objects.filter(id=get_id).delete()
+    return HttpResponse('nice')
