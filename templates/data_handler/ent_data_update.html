@@ -184,7 +184,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">上市交易所</label>
                     <div class="layui-input-block">
-                         <select name="basic_exchange"  value='{{ basic_exchange }}' lay-filter="fund_kind">
+                         <select name="basic_exchange"   lay-filter="fund_kind">
                             <option value="无" selected="" >无</option>
                             <option value="上海证券交易所">上海证券交易所</option>
                             <option value="深圳证券交易所">深圳证券交易所</option>
@@ -571,7 +571,18 @@
     document.querySelector(`[name=a_taxpayer][value="{{ a_taxpayer }}"]`).checked = true;
     document.querySelector(`[name=dishonesty][value="{{ dishonesty }}"]`).checked = true;
     document.querySelector(`[name=is_ep][value="{{ is_ep }}"]`).checked = true;
-    document.querySelector(`[name=basic_exchange] [value="{{ basic_exchange }}"]`).selected = true;
+    //alert({{ basic_exchange }})
+    /*
+    var test = {{ basic_exchange }}
+    if( test ==null )
+    {
+        document.querySelector(`[name=basic_exchange] [value="无"]`).selected = true
+    }
+    else
+    {
+        document.querySelector(`[name=basic_exchange] [value="{{ basic_exchange }}"]`).selected = true;
+    }*/
+
 
     function count_debt()
     {

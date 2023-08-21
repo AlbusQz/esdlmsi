@@ -906,7 +906,8 @@ def get_ent_updatepage(request,id):
 
     if ent_info.founding_date != None:
         date = ent_info.founding_date.strftime('%Y-%m-%d')
-    basic_fund = ent_info.registered_capital
+    if ent_info.registered_capital != None:
+        basic_fund = ent_info.registered_capital
     basic_fund_kind = ent_info.registered_capital_currency
     basic_ind = ent_info.industry
     if basic_ind == None:
@@ -998,7 +999,7 @@ def ent_update_info(request):
         info.enterprise_name = request.POST.get('basic_name','')
         info.founding_date = request.POST.get('basic_date','')
         basic_fund = request.POST.get('basic_fund', 0)
-        if basic_fund == '':
+        if basic_fund == '' or basic_fund == None:
             basic_fund = 0
         info.registered_capital = basic_fund
         info.registered_capital_currency =  request.POST.get('basic_fund_kind', '')
