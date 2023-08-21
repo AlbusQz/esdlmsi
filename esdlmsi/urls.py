@@ -102,7 +102,7 @@ myProcess_urls = [
     path("ent/generate_process",myProcess.views.ent_generate_process),
     path('ent/process_history',myProcess.views.ent_get_processhistorypage),
     path('ent/get_process_his',myProcess.views.ent_get_processhis),
-
+    path('ent/search_process_his',myProcess.views.ent_search_processhis),
 
 ]
 

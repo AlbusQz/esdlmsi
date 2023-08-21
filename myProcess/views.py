@@ -95,3 +95,57 @@ def ent_get_processhis(request):
         'data': res
     }
     return HttpResponse(json.dumps(result))
+
+#用于搜索企业用户个人分析历史数据的函数
+@login_required
+def ent_search_processhis(request):
+    #print("here")
+    params = request.POST.get('searchParams')
+    #print(params)
+    params = json.loads(params)
+    q = Q()
+    id = params['id']
+    if (id != ''):
+        q = q & Q(id__contains=id)
+    type = params['type']
+    #print(type)
+    if (type != '' and type !='0' and type !=0):
+        #print("here")
+        q = q & Q(type__contains=type)
+    status = params['status']
+    if (status != ''):
+        q = q & Q(status__contains=status)
+
+
+    #  q = Q(name__contains=name)&Q(email__contains=email)&Q(mobile__contains=mobile)&Q(type__contains=type)
+
+    data = Process.objects.filter(q)
+    dataCount = data.count()
+    pageIndex = request.POST.get('pageIndex')
+    pageSize = request.POST.get('pageSize')
+
+    list = []
+    res = []
+    for item in data:
+        dict = {}
+        dict['id'] = item.id
+        if item.type == 1:
+            dict['type'] = "单个企业分析"
+        else:
+            dict['type'] = "多个企业分析"
+        dict['c_time'] = item.create_time.strftime('%Y-%m-%d %H:%M:%S')
+        dict['u_time'] = item.update_time.strftime('%Y-%m-%d %H:%M:%S')
+        dict['status'] = item.status
+        list.append(dict)
+
+    pageInator = Paginator(list, pageSize)
+    context = pageInator.page(pageIndex)
+    for item in context:
+        res.append(item)
+    result = {
+        'code': 0,
+        'msg': 'nice',
+        'DataCount': dataCount,
+        'data': res
+    }
+    return HttpResponse(json.dumps(result))

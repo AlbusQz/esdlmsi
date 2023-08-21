@@ -20,22 +20,23 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">分析过程ID</label>
+                            <label class="layui-form-label" style="width: 150px" >分析过程ID</label>
                             <div class="layui-input-inline">
                                 <input type="text" name="id" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">分析过程类型</label>
+                            <label class="layui-form-label" style="width: 150px" >分析过程类型</label>
                             <div class="layui-input-inline">
                                 <select name="type" lay-filter="fund_kind">
-                                    <option value=1 selected="" >单个企业分析</option>
+                                    <option value=0 selected=""></option>
+                                    <option value=1 >单个企业分析</option>
                                     <option value=2>多个企业分析</option>
                                 </select>
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">分析过程状态</label>
+                            <label class="layui-form-label" style="width: 150px" >分析过程状态</label>
                             <div class="layui-input-inline">
                                 <input type="text" name="status" autocomplete="off" class="layui-input">
                             </div>
@@ -116,7 +117,7 @@
             //执行搜索重载
             table.reload('currentTableId', {
                 url: '/ent/search_process_his',
-                method: "GET",
+                method: "POST",
                 page: {
                     curr: 1
                 }
