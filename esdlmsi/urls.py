@@ -104,6 +104,8 @@ myProcess_urls = [
     path('ent/get_process_his',myProcess.views.ent_get_processhis),
     path('ent/search_process_his',myProcess.views.ent_search_processhis),
     path('ent/delete_process_his',myProcess.views.delete_ent_process_his),
+    path('ent/get_processhis_detail/<int:id>/',myProcess.views.get_ent_process_detail),
+    path('ent/get_processhis_data/<int:id>',myProcess.views.get_ent_processhis_data)
 
 ]
 

@@ -60,7 +60,7 @@
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="see_detail">查看详细信息</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="show_detail">查看详细信息</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
 
@@ -147,7 +147,7 @@
                     shadeClose: true,
                     closeBtn:1,
                     area: ['100%', '100%'],
-                    content: '/ent/get_data_detail/'+obj.data['t_id']
+                    content: '/ent/get_processhis_detail/'+obj.data['id']
                 });
 
 

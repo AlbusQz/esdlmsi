@@ -469,8 +469,8 @@ def get_ent_detail(request,id):
 
     del ent_info
 
-    for item in locals():
-        print(item)
+    #for item in locals():
+    #    print(item)
     '''
     for item in locals():
         if item.value == None:

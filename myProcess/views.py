@@ -150,9 +150,69 @@ def ent_search_processhis(request):
     }
     return HttpResponse(json.dumps(result))
 
-#用于向企业用户删除选中的处理过程数据
+#用于向企业用户删除选中的处理过程数据的函数
 @login_required
 def delete_ent_process_his(request):
     get_id = request.POST.get('id')
     Process.objects.filter(id=get_id).delete()
     return HttpResponse('nice')
+
+#用于向企业用户返回处理过程详细信息的函数
+@login_required
+def get_ent_process_detail(request,id):
+    process = Process.objects.get(id=id)
+    id = process.id
+    type = process.type
+    status = process.status
+    c_time = process.create_time.strftime('%Y-%m-%d %H:%M:%S')
+    u_time = process.update_time.strftime('%Y-%m-%d %H:%M:%S')
+
+    del process
+
+    return render(request,"my_process/ent_processhis_detail.html",locals())
+
+#用于获得处理过程所包含数据信息的函数
+@login_required
+def get_ent_processhis_data(request,id):
+    print("test")
+    print(id)
+    process = Process.objects.get(id=id)
+    data = process.ent_info.all()
+
+    dataCount = data.count()
+    pageIndex = request.POST.get('pageIndex')
+    pageSize = request.POST.get('pageSize')
+
+    list = []
+    res = []
+    for item in data:
+        dict = {}
+        dict['t_id'] = item.id
+        dict['name'] = item.enterprise_name
+        dict['id'] = item.enterprise_id
+        if item.founding_date != None:
+            dict['c_date'] = item.founding_date.strftime('%Y-%m-%d')
+        dict['fund'] = item.registered_capital
+        dict['fund_kind'] = item.registered_capital_currency
+        dict['ind_code'] = item.industry_code
+        if item.time_to_market != None:
+            dict['ipo_time'] = item.time_to_market.strftime('%Y-%m-%d')
+        dict['exchange'] = item.bourse
+        if item.registered_province != None:
+            dict['reg_add'] = item.registered_province + "/" + item.registered_city + "/" + item.registered_district
+        if item.actual_province != None:
+            dict['real_add'] = item.actual_province + "/" + item.actual_city + "/" + item.actual_district
+        dict['c_time'] = item.create_time.strftime('%Y-%m-%d %H:%M:%S')
+        list.append(dict)
+
+    pageInator = Paginator(list, pageSize)
+    context = pageInator.page(pageIndex)
+    for item in context:
+        res.append(item)
+    result = {
+        'code': 0,
+        'msg': 'nice',
+        'DataCount': dataCount,
+        'data': res
+    }
+    return HttpResponse(json.dumps(result))
