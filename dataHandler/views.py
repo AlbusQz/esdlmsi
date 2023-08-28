@@ -98,6 +98,11 @@ def ent_getUpload(request):
                                 temp.needpre = 1
                             else:
                                 temp.needpre = 0
+
+                            now = datetime.now(pytz.timezone('Asia/Shanghai'))
+                            format_time = now.strftime('%Y-%m-%d %H:%M:%S')
+                            temp.create_time = format_time
+
                             temp.mu = mu
                             temp.save()
 
@@ -138,6 +143,11 @@ def ent_getUpload(request):
                             else:
                                 temp.needpre = 0
                             temp.mu = mu
+
+                            now = datetime.now(pytz.timezone('Asia/Shanghai'))
+                            format_time = now.strftime('%Y-%m-%d %H:%M:%S')
+                            temp.create_time = format_time
+
                             temp.save()
 
 
