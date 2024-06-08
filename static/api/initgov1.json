@@ -1,7 +1,7 @@
 {
   "homeInfo": {
     "title": "首页",
-    "href": "test"
+    "href": "/gov/index"
   },
   "logoInfo": {
     "title": "",
@@ -36,14 +36,8 @@
               ]
             },
             {
-              "title": "数据预处理",
-              "href": "/data_process",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
-            },
-            {
               "title": "数据下载",
-              "href": "/data_download",
+              "href": "/ent/data_download",
               "icon": "fa fa-floppy-o",
               "target": "_self"
             }

@@ -39,6 +39,12 @@ myUser_urls = [
     path('admin/',myUser.views.admin_index),
     path('ent/',myUser.views.ent_index),
     path('gov/',myUser.views.gov_index),
+    path('main/',myUser.views.admin_index),
+
+    #以下为返回主页的url
+    path('admin/index/',myUser.views.get_main),
+    path('ent/index/',myUser.views.get_main),
+    path('gov/index/',myUser.views.get_main),
 
     #以下为管理员用户管理功能相关的url
     path('admin/user_manage/',myUser.views.user_manage),
@@ -76,6 +82,16 @@ dataHandler_urls =[
     path('ent/delete_ent_info', dataHandler.views.delete_ent_info),
     path('ent/get_data_updatepage/<int:id>/',dataHandler.views.get_ent_updatepage),
     path("ent/update_ent_info",dataHandler.views.ent_update_info),
+
+    path('gov/data_search',dataHandler.views.get_ent_research),
+    path('gov/get_ent_data',dataHandler.views.get_ent_data),
+    path('gov/get_ent_data_all',dataHandler.views.get_ent_data_all),
+    path('gov/get_data_detail/<int:id>/',dataHandler.views.get_ent_detail),
+    path('gov/search_ent_info',dataHandler.views.search_ent_info),
+    path('gov/search_ent_info_all', dataHandler.views.search_ent_info_all),
+    path('gov/delete_ent_info', dataHandler.views.delete_ent_info),
+    path('gov/get_data_updatepage/<int:id>/',dataHandler.views.get_ent_updatepage),
+    path("gov/update_ent_info",dataHandler.views.ent_update_info),
 
     # 以下为数据预处理有关的url
     path('ent/data_process', dataHandler.views.get_ent_process),

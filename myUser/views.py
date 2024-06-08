@@ -590,3 +590,18 @@ def update_personalinfo(request):
 # 单纯的测试函数
 def test(request):
     return render(request, "index_admin.html")
+
+
+#返回主页的函数
+def get_main(request):
+    user = request.user
+    tempuser = Myuser.objects.get(u=user)
+    if tempuser.type == '企业用户':
+        url = 'index_ent.html'
+    elif tempuser.type == '政府用户':
+        url = 'index_admin.html'
+    elif tempuser.type == '管理员用户':
+        url = 'main_admin.html'
+    elif tempuser.type == '专家用户':
+        url = 'main.html'
+    return render(request, url)
