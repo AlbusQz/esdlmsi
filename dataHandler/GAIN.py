@@ -18,7 +18,7 @@ import time
 import os
 from dataHandler.models import PreParams
 os.environ["CUDA_VISIBLE_DEVICES"] = '2'
-gpu_options = tf.GPUOptions(allow_growth=True)
+gpu_options = tf.compat.v1.GPUOptions(allow_growth=True)#
 
 import pandas as pd
 

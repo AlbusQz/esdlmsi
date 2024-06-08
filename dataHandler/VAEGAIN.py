@@ -10,7 +10,7 @@ import tensorflow.compat.v1 as tf
 from dataHandler.utils import  rounding
 
 tf.disable_v2_behavior()
-gpu_options = tf.GPUOptions(allow_growth=True)
+gpu_options = tf.compat.v1.GPUOptions(allow_growth=True)
 Normal = tf.distributions.Normal
 
 # normalize the input imputing dataset

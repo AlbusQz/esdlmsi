@@ -17,7 +17,7 @@ from dataHandler.utils import binary_sampler, uniform_sampler, sample_batch_inde
 import time
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = '2'
-gpu_options = tf.GPUOptions(allow_growth=True)
+gpu_options = tf.compat.v1.GPUOptions(allow_growth=True)
 
 
 
