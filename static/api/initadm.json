@@ -1,7 +1,7 @@
 {
   "homeInfo": {
     "title": "首页",
-    "href": "test"
+    "href": "./index"
   },
   "logoInfo": {
     "title": "",
@@ -30,18 +30,21 @@
                 {
                   "title": "数据批量上传",
                   "href": "/data_upload",
+                  "href": "/ent/data_upload",
                   "icon":"fa fa-upload",
                   "target": "_self"
                 },
                 {
                   "title": "数据库数据导入",
                   "href": "/data_input",
+                  "href": "/ent/data_input",
                   "icon":"fa fa-database",
                   "target": "_self"
                 },
                 {
                   "title": "数据查询",
                   "href": "/data_select",
+                  "href": "/ent/data_select",
                   "icon":"fa fa-filter",
                   "target": "_self"
                 }
@@ -76,18 +79,21 @@
             {
               "title": "模型选择",
               "href": "/model_select",
+              "href": "/admin/404",
               "icon": "fa fa-list-ul",
               "target": "_self"
             },
             {
               "title": "参数调整",
               "href": "/process_method",
+              "href": "/admin/404",
               "icon": "fa fa-sliders",
               "target": "_self"
             },
              {
               "title": "模型确认",
               "href": "/model_upload",
+              "href": "/admin/404",
               "icon": "fa fa-check-circle-o",
               "target": "_self"
             }
@@ -102,24 +108,28 @@
             {
               "title": "指标分析",
               "href": "/ent_analyse",
+              "href": "/admin/ent_analyse",
               "icon": "fa fa-bar-chart",
               "target": "_self"
             },
             {
               "title": "报告生成/预览",
               "href": "/report_generate",
+              "href": "/admin/404",
               "icon": "fa fa-file-text-o",
               "target": "_self"
             },
             {
               "title": "报告下载",
               "href": "/report_download",
+              "href": "/admin/404_2",
               "icon": "fa fa-download",
               "target": "_self"
             },
             {
               "title": "分析评论上传",
               "href": "/remark_upload",
+              "href": "/admin/404_3",
               "icon": "fa fa-comment",
               "target": "_self"
             }

@@ -1,7 +1,7 @@
 {
   "homeInfo": {
     "title": "首页",
-    "href": "/ent/index"
+    "href": "./index"
   },
   "logoInfo": {
     "title": "",
@@ -70,7 +70,7 @@
           "child": [
             {
               "title": "指标分析",
-              "href": "/ent_analyse",
+              "href": "/ent/ent_analyse",
               "icon": "fa fa-bar-chart",
               "target": "_self"
             },

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% load static %}
+    link rel="stylesheet" href="{% static '/lib/layui-v2.6.3/css/layui.css' %}" media="all">
+    <link rel="stylesheet" href="{% static '/css/public.css' %}" media="all">
     <meta charset="UTF-8">
     <title>404</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -9,7 +12,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="{% static '/css/public.css' %}" media="all">
     <style>
         .error .clip .shadow {height:180px;}
         .error .clip:nth-of-type(2) .shadow {width:130px;}
@@ -67,11 +70,13 @@
                     <span class="triangle"></span>
                 </div>
             </div>
-            <h2 class="h1">很抱歉，你访问的页面找不到了</h2>
+            <h2 class="h1">当前页面还在开发中！</h2>
         </div>
     </div>
 </div>
-<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+{#<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>#}
+{% load static %}
+<script src="{% static 'lib/layui-v2.6.3/layui.js' %}" charset="utf-8"></script>
 <script>
     function randomNum() {
         return Math.floor(Math.random() * 9) + 1;

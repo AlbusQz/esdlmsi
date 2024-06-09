@@ -597,9 +597,9 @@ def get_main(request):
     user = request.user
     tempuser = Myuser.objects.get(u=user)
     if tempuser.type == '企业用户':
-        url = 'index_ent.html'
+        url = 'main_ent.html'
     elif tempuser.type == '政府用户':
-        url = 'index_admin.html'
+        url = 'main_gov.html'
     elif tempuser.type == '管理员用户':
         url = 'main_admin.html'
     elif tempuser.type == '专家用户':

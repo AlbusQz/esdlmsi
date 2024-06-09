@@ -1,7 +1,7 @@
 {
   "homeInfo": {
     "title": "首页",
-    "href": "/main"
+    "href": "./index"
   },
   "logoInfo": {
     "title": "",
@@ -27,21 +27,24 @@
               "icon": "fa fa-table",
               "target": "_self",
               "child": [
-                {
+               {
                   "title": "数据批量上传",
                   "href": "/data_upload",
+                  "href": "/ent/data_upload",
                   "icon":"fa fa-upload",
                   "target": "_self"
                 },
                 {
                   "title": "数据库数据导入",
                   "href": "/data_input",
+                  "href": "/ent/data_input",
                   "icon":"fa fa-database",
                   "target": "_self"
                 },
                 {
                   "title": "数据查询",
                   "href": "/data_select",
+                  "href": "/ent/data_select",
                   "icon":"fa fa-filter",
                   "target": "_self"
                 }

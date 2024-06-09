@@ -1,7 +1,7 @@
 {
   "homeInfo": {
     "title": "首页",
-    "href": "/gov/index"
+    "href": "./index"
   },
   "logoInfo": {
     "title": "",
@@ -10,7 +10,7 @@
   },
   "menuInfo": [
     {
-      "title": "政府用户功能",
+      "title": "企业用户功能",
       "icon": "fa fa-tasks",
       "href": "",
       "target": "_self",
@@ -28,22 +28,35 @@
               "target": "_self",
               "child": [
                 {
+                  "title": "数据上传",
+                  "href": "/ent/data_upload",
+                  "icon":"fa fa-upload",
+                  "target": "_self"
+                },
+                {
+                  "title": "数据输入",
+                  "href": "/ent/data_input",
+                  "icon":"fa fa-keyboard-o",
+                  "target": "_self"
+                },
+                {
+                  "title": "数据预处理",
+                  "href": "/ent/data_process",
+                  "icon": "fa fa-tachometer",
+                  "target": "_self"
+                },
+                {
                   "title": "数据查询",
-                  "href": "/gov/data_search",
+                  "href": "/ent/data_search",
                   "icon":"fa fa-filter",
                   "target": "_self"
                 }
               ]
             },
-            {
-              "title": "数据预处理",
-              "href": "/data_process",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
-            },
+
             {
               "title": "数据下载",
-              "href": "/data_download",
+              "href": "/ent/data_download",
               "icon": "fa fa-floppy-o",
               "target": "_self"
             }
@@ -57,25 +70,28 @@
           "child": [
             {
               "title": "指标分析",
-              "href": "/ent_analyse",
+              "href": "/ent/ent_analyse",
               "icon": "fa fa-bar-chart",
               "target": "_self"
             },
             {
               "title": "报告生成/预览",
               "href": "/report_generate",
+              "href": "/ent/404",
               "icon": "fa fa-file-text-o",
               "target": "_self"
             },
             {
               "title": "报告下载",
               "href": "/report_download",
+              "href": "/ent/404_2",
               "icon": "fa fa-download",
               "target": "_self"
             },
             {
               "title": "分析评论上传",
               "href": "/remark_upload",
+              "href": "/ent/404_3",
               "icon": "fa fa-comment",
               "target": "_self"
             }
@@ -95,7 +111,7 @@
             },
             {
               "title": "分析历史记录",
-              "href": "/history",
+              "href": "/ent/process_history",
               "icon": "fa fa-history",
               "target": "_self"
             }

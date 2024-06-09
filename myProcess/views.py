@@ -216,3 +216,14 @@ def get_ent_processhis_data(request,id):
         'data': res
     }
     return HttpResponse(json.dumps(result))
+
+#用于返回临时指标选择页面的函数
+@login_required
+def temp_get_select(request):
+    return render(request,"select_index.html")
+
+#用于返回临时404页面的函数
+@login_required
+def temp_404(request):
+    return render(request,"404_2.html")
+

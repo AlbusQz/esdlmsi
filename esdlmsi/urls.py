@@ -121,7 +121,30 @@ myProcess_urls = [
     path('ent/search_process_his',myProcess.views.ent_search_processhis),
     path('ent/delete_process_his',myProcess.views.delete_ent_process_his),
     path('ent/get_processhis_detail/<int:id>/',myProcess.views.get_ent_process_detail),
-    path('ent/get_processhis_data/<int:id>',myProcess.views.get_ent_processhis_data)
+    path('ent/get_processhis_data/<int:id>',myProcess.views.get_ent_processhis_data),
+
+    #temp
+    path('ent/ent_analyse',myProcess.views.temp_get_select),
+    path('gov/ent_analyse',myProcess.views.temp_get_select),
+    path('admin/ent_analyse',myProcess.views.temp_get_select),
+
+    path('ent/404',myProcess.views.temp_404),
+    path('gov/404',myProcess.views.temp_404),
+    path('admin/404',myProcess.views.temp_404),
+
+    path('ent/404_2',myProcess.views.temp_404),
+    path('gov/404_2',myProcess.views.temp_404),
+    path('admin/404_2',myProcess.views.temp_404),
+
+    path('ent/404_3',myProcess.views.temp_404),
+    path('gov/404_3',myProcess.views.temp_404),
+    path('admin/404_3',myProcess.views.temp_404),
+
+    path('ent/404_4',myProcess.views.temp_404),
+    path('gov/404_4',myProcess.views.temp_404),
+    path('admin/404_4',myProcess.views.temp_404),
+    # path('ent/delete_process_his',myProcess.views.delete_ent_process_his),
+    # path('ent/delete_process_his',myProcess.views.delete_ent_process_his),
 
 ]
 
