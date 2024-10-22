@@ -14,7 +14,7 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Remote Python 3.7.16 (/home/dell/anaconda3/envs/esdlmsi/bin/python3.7)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Remote Python 3.7.16 (sftp://qz@10.71.96.8:1523/home/dell/anaconda3/envs/esdlmsi/bin/python3) (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">

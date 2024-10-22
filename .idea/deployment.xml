@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="qz@10.71.96.8:1523 password (2)" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="qz@10.71.96.8:1523" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
-      <paths name="qz@10.71.96.8:1523 password">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/tmp/pycharm_project_410" local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="qz@10.71.96.8:1523 password (2)">
+      <paths name="qz@10.71.96.8:1523">
         <serverdata>
           <mappings>
             <mapping deploy="/home/quzheng/data/esdlmsi" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>
-      <paths name="qz@10.71.96.8:1523 password (3)">
+      <paths name="qz@10.71.96.8:1523 agent">
         <serverdata>
           <mappings>
             <mapping deploy="/home/quzheng/data/esdlmsi" local="$PROJECT_DIR$" web="/" />
